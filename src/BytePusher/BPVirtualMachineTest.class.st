@@ -19,7 +19,8 @@ BPVirtualMachineTest >> setUp [
 BPVirtualMachineTest >> testExtractBytesStartingAt [
 	vm memory: #[16rFF 16r0F 16r42 16r22].
 	
-	self assert: (vm extract: 2 bytesStartingAt: 2) equals: 16r4222
+	self assert: (vm extract: 2 bytesStartingAt: 0) equals: 16rFF0F.
+	self assert: (vm extract: 2 bytesStartingAt: 2) equals: 16r4222.
 ]
 
 { #category : #'tests-memory manipulation' }
