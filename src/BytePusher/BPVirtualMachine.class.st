@@ -41,9 +41,8 @@ BPVirtualMachine >> ioDriver: anObject [
 { #category : #'rom - loading' }
 BPVirtualMachine >> loadROMFromFile: aFileReference [
 	self resetMemory.
-	aFileReference readStreamDo: [ :stream |
+	aFileReference binaryReadStreamDo: [ :stream |
 		|i|
-		stream binary.
 		i := 0.
 		[ stream atEnd ]
 			whileFalse: [ 
