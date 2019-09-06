@@ -9,6 +9,7 @@ Class {
 		'INSTRUCTIONS_PER_STEP',
 		'INSTRUCTION_SIZE',
 		'KEYBOARD_STATE_ADDRESS',
+		'MEMORY_SIZE',
 		'PIXELS_COUNT',
 		'PIXEL_POINTER_ADDRESS',
 		'PROGRAM_COUNTER_ADDRESS'
@@ -23,7 +24,8 @@ BPVirtualMachine class >> initialize [
 	PIXEL_POINTER_ADDRESS := 5.
 	INSTRUCTIONS_PER_STEP := 65536.
 	INSTRUCTION_SIZE := 3.
-	PIXELS_COUNT := 256*256
+	PIXELS_COUNT := 256*256.
+	MEMORY_SIZE := 16r1000008
 ]
 
 { #category : #'memory manipulation' }
@@ -98,7 +100,7 @@ BPVirtualMachine >> memoryCopy: n bytesFrom: startAddress [
 
 { #category : #'memory manipulation' }
 BPVirtualMachine >> resetMemory [
-	self memory: (ByteArray new: 16r1000008)
+	self memory: (ByteArray new: MEMORY_SIZE)
 ]
 
 { #category : #running }
