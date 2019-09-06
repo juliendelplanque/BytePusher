@@ -30,18 +30,9 @@ BPVirtualMachineTest >> testInnerStep [
 	"Write 43 data at address 10."
 	vm memoryAt: 51 put: 43.
 	"Let's write a simple instruction that copy data at address 50 to address 51 and then jump to address 50."
-	vm
-		memoryAt: vm userMemoryAddress put: 0;
-		memoryAt: vm userMemoryAddress + 1 put: 0;
-		memoryAt: vm userMemoryAddress + 2 put: 50.
-	vm
-		memoryAt: vm userMemoryAddress + 3 put: 0;
-		memoryAt: vm userMemoryAddress + 4 put: 0;
-		memoryAt: vm userMemoryAddress + 5 put: 51.
-	vm
-		memoryAt: vm userMemoryAddress + 6 put: 0;
-		memoryAt: vm userMemoryAddress + 7 put: 0;
-		memoryAt: vm userMemoryAddress + 8 put: 50.
+	vm memoryAt: vm userMemoryAddress putInteger: 50.
+	vm memoryAt: vm userMemoryAddress + 3 putInteger: 51.
+	vm memoryAt: vm userMemoryAddress + 6 putInteger: 50.
 	"Set the program counter."
 	vm programCounter: vm userMemoryAddress.
 	
@@ -50,6 +41,15 @@ BPVirtualMachineTest >> testInnerStep [
 	self assert: vm programCounter equals: 50.
 	self assert: (vm memoryAt: 50) equals: 42.
 	self assert: (vm memoryAt: 51) equals: 42
+]
+
+{ #category : #test }
+BPVirtualMachineTest >> testMemoryAtPutInteger [
+	vm memoryAt: 10 putInteger: 16r123456.
+	
+	self assert: (vm memoryAt: 10) equals: 16r12.
+	self assert: (vm memoryAt: 11) equals: 16r34.
+	self assert: (vm memoryAt: 12) equals: 16r56.
 ]
 
 { #category : #'tests-memory manipulation' }

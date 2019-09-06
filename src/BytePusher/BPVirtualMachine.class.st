@@ -114,6 +114,14 @@ BPVirtualMachine >> memoryAt: anInteger put: aByte [
 ]
 
 { #category : #'memory manipulation' }
+BPVirtualMachine >> memoryAt: address putInteger: anInteger [
+	self
+		memoryAt: address put: (anInteger & 16rFF0000) >> 16;
+		memoryAt: address + 1 put: (anInteger & 16rFF00) >> 8;
+		memoryAt: address + 2 put: (anInteger & 16rFF).
+]
+
+{ #category : #'memory manipulation' }
 BPVirtualMachine >> memoryCopy: n bytesFrom: startAddress [
 	"Returns a copy of a sub-range of the memory starting at #startAddress and of size #n."
 	^ self memory copyFrom: startAddress + 1 to: startAddress + n
