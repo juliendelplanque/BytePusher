@@ -6,11 +6,25 @@ Class {
 		'ioDriver'
 	],
 	#classVars : [
+		'INSTRUCTIONS_PER_STEP',
+		'INSTRUCTION_SIZE',
 		'KEYBOARD_STATE_ADDRESS',
+		'PIXELS_COUNT',
+		'PIXEL_POINTER_ADDRESS',
 		'PROGRAM_COUNTER_ADDRESS'
 	],
 	#category : #BytePusher
 }
+
+{ #category : #'class initialization' }
+BPVirtualMachine class >> initialize [
+	KEYBOARD_STATE_ADDRESS := 0.
+	PROGRAM_COUNTER_ADDRESS := 2.
+	PIXEL_POINTER_ADDRESS := 5.
+	INSTRUCTIONS_PER_STEP := 65536.
+	INSTRUCTION_SIZE := 3.
+	PIXELS_COUNT := 256*256
+]
 
 { #category : #'memory manipulation' }
 BPVirtualMachine >> extract: n bytesStartingAt: startAddress [
@@ -89,21 +103,21 @@ BPVirtualMachine >> resetMemory [
 
 { #category : #running }
 BPVirtualMachine >> step [
-	| keyPressed instructionsLeftToExecute programCounter |
+	| keyPressed programCounter |
 	keyPressed := 0"self ioDriver keyPressed".
-	self memory
-		at: 0 put: (keyPressed >> 8) & 16rFF;
-		at: 1 put: keyPressed & 16rFF.
+	self 
+		memoryAt: KEYBOARD_STATE_ADDRESS put: (keyPressed >> 8) & 16rFF;
+		memoryAt: KEYBOARD_STATE_ADDRESS + 1 put: keyPressed & 16rFF.
 		
-	instructionsLeftToExecute := 16r10000.
-	programCounter :=  self extract: 3 bytesStartingAt: 2.
-	[ (instructionsLeftToExecute := instructionsLeftToExecute - 1) = 0 ]
-		whileFalse: [ 
+	programCounter :=  self extract: 3 bytesStartingAt: PROGRAM_COUNTER_ADDRESS.
+	INSTRUCTIONS_PER_STEP 
+		timesRepeat: [ 
 			self
-				memoryAt: (self extract: 3 bytesStartingAt: programCounter + 3)
-				put: (self memoryAt: (self extract: 3 bytesStartingAt: programCounter)).
-			programCounter := self extract: 3 bytesStartingAt: programCounter + 6 ].
+				memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter + 3)
+				put: (self memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter)).
+			programCounter := self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter + 6 ].
 	
-	self ioDriver renderDisplayFrame: (self memoryCopy: 256 * 256 bytesFrom: (self extract: 1 bytesStartingAt: 5) << 16).
+	self ioDriver
+		renderDisplayFrame: (self memoryCopy: PIXELS_COUNT bytesFrom: (self memoryAt: PIXEL_POINTER_ADDRESS) << 16).
 	
 ]
