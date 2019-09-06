@@ -3,16 +3,19 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'memory',
-		'ioDriver'
+		'ioDriver',
+		'programCounter'
 	],
 	#classVars : [
+		'AUDIO_POINTER_ADDRESS',
 		'INSTRUCTIONS_PER_STEP',
 		'INSTRUCTION_SIZE',
 		'KEYBOARD_STATE_ADDRESS',
 		'MEMORY_SIZE',
 		'PIXELS_COUNT',
 		'PIXEL_POINTER_ADDRESS',
-		'PROGRAM_COUNTER_ADDRESS'
+		'PROGRAM_COUNTER_ADDRESS',
+		'USER_MEMORY_ADDRESS'
 	],
 	#category : #BytePusher
 }
@@ -22,6 +25,8 @@ BPVirtualMachine class >> initialize [
 	KEYBOARD_STATE_ADDRESS := 0.
 	PROGRAM_COUNTER_ADDRESS := 2.
 	PIXEL_POINTER_ADDRESS := 5.
+	AUDIO_POINTER_ADDRESS := 6.
+	USER_MEMORY_ADDRESS := 9.
 	INSTRUCTIONS_PER_STEP := 65536.
 	INSTRUCTION_SIZE := 3.
 	PIXELS_COUNT := 256*256.
@@ -48,6 +53,17 @@ BPVirtualMachine >> initialize [
 		ioDriver: BPIODriver default
 ]
 
+{ #category : #running }
+BPVirtualMachine >> innerStep [
+	self
+		memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter + 3)
+		put: (self memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter)).
+	
+	programCounter := self
+		extract: INSTRUCTION_SIZE
+		bytesStartingAt: programCounter + 6
+]
+
 { #category : #accessing }
 BPVirtualMachine >> ioDriver [
 	^ ioDriver
@@ -56,6 +72,11 @@ BPVirtualMachine >> ioDriver [
 { #category : #accessing }
 BPVirtualMachine >> ioDriver: anObject [
 	ioDriver := anObject
+]
+
+{ #category : #accessing }
+BPVirtualMachine >> keyboardStateAddress [
+	^ KEYBOARD_STATE_ADDRESS
 ]
 
 { #category : #'rom - loading' }
@@ -98,6 +119,21 @@ BPVirtualMachine >> memoryCopy: n bytesFrom: startAddress [
 	^ self memory copyFrom: startAddress + 1 to: startAddress + n
 ]
 
+{ #category : #accessing }
+BPVirtualMachine >> pixelPointerAddress [
+	^ PIXEL_POINTER_ADDRESS
+]
+
+{ #category : #accessing }
+BPVirtualMachine >> programCounter [
+	^ programCounter
+]
+
+{ #category : #accessing }
+BPVirtualMachine >> programCounter: anObject [
+	programCounter := anObject
+]
+
 { #category : #'memory manipulation' }
 BPVirtualMachine >> resetMemory [
 	self memory: (ByteArray new: MEMORY_SIZE)
@@ -105,7 +141,7 @@ BPVirtualMachine >> resetMemory [
 
 { #category : #running }
 BPVirtualMachine >> step [
-	| keyPressed programCounter |
+	| keyPressed |
 	keyPressed := 0"self ioDriver keyPressed".
 	self 
 		memoryAt: KEYBOARD_STATE_ADDRESS put: (keyPressed >> 8) & 16rFF;
@@ -113,13 +149,14 @@ BPVirtualMachine >> step [
 		
 	programCounter :=  self extract: 3 bytesStartingAt: PROGRAM_COUNTER_ADDRESS.
 	INSTRUCTIONS_PER_STEP 
-		timesRepeat: [ 
-			self
-				memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter + 3)
-				put: (self memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter)).
-			programCounter := self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter + 6 ].
+		timesRepeat: [ self innerStep ].
 	
 	self ioDriver
 		renderDisplayFrame: (self memoryCopy: PIXELS_COUNT bytesFrom: (self memoryAt: PIXEL_POINTER_ADDRESS) << 16).
 	
+]
+
+{ #category : #accessing }
+BPVirtualMachine >> userMemoryAddress [
+	^ USER_MEMORY_ADDRESS
 ]
