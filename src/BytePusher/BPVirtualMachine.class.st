@@ -5,6 +5,10 @@ Class {
 		'memory',
 		'ioDriver'
 	],
+	#classVars : [
+		'KEYBOARD_STATE_ADDRESS',
+		'PROGRAM_COUNTER_ADDRESS'
+	],
 	#category : #BytePusher
 }
 
@@ -84,12 +88,12 @@ BPVirtualMachine >> resetMemory [
 ]
 
 { #category : #running }
-BPVirtualMachine >> run [
+BPVirtualMachine >> step [
 	| keyPressed instructionsLeftToExecute programCounter |
 	keyPressed := 0"self ioDriver keyPressed".
 	self memory
-		at: 1 put: (keyPressed >> 8) & 16rFF;
-		at: 2 put: keyPressed & 16rFF.
+		at: 0 put: (keyPressed >> 8) & 16rFF;
+		at: 1 put: keyPressed & 16rFF.
 		
 	instructionsLeftToExecute := 16r10000.
 	programCounter :=  self extract: 3 bytesStartingAt: 2.
