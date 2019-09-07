@@ -1,15 +1,15 @@
 Class {
 	#name : #BPOpcodeBankBuilder,
 	#superclass : #Object,
-	#category : #BytePusher
+	#category : #'BytePusher-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 BPOpcodeBankBuilder >> endAddress [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 BPOpcodeBankBuilder >> startAddress [
 	^ self subclassResponsibility
 ]

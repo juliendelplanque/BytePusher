@@ -1,7 +1,7 @@
 Class {
 	#name : #BPIODriver,
 	#superclass : #Object,
-	#category : #BytePusher
+	#category : #'BytePusher-Core'
 }
 
 { #category : #accessing }

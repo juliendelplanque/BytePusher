@@ -1,7 +1,7 @@
 Class {
 	#name : #BPAddBankBuilder,
 	#superclass : #BPOpcodeBankBuilder,
-	#category : #BytePusher
+	#category : #'BytePusher-Core'
 }
 
 { #category : #writing }

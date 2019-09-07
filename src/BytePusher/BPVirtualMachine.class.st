@@ -17,7 +17,7 @@ Class {
 		'PROGRAM_COUNTER_ADDRESS',
 		'USER_MEMORY_ADDRESS'
 	],
-	#category : #BytePusher
+	#category : #'BytePusher-Core'
 }
 
 { #category : #'class initialization' }
