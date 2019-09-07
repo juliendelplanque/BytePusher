@@ -115,6 +115,9 @@ BPVirtualMachine >> memoryAt: anInteger put: aByte [
 
 { #category : #'memory manipulation' }
 BPVirtualMachine >> memoryAt: address putInteger: anInteger [
+	"Write anInteger on the 3 consecutive bytes at address, address+1 and address+2.
+	 Little endian encoding is used.
+	"
 	self
 		memoryAt: address put: (anInteger & 16rFF0000) >> 16;
 		memoryAt: address + 1 put: (anInteger & 16rFF00) >> 8;
