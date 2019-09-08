@@ -5,6 +5,7 @@ Class {
 		'ADDRESS_SIZE',
 		'AUDIO_POINTER_ADDRESS',
 		'INSTRUCTIONS_PER_STEP',
+		'INSTRUCTION_SIZE',
 		'KEYBOARD_STATE_ADDRESS',
 		'MEMORY_SIZE',
 		'PIXELS_COUNT',
@@ -12,7 +13,7 @@ Class {
 		'PROGRAM_COUNTER_ADDRESS',
 		'USER_MEMORY_ADDRESS'
 	],
-	#category : #BytePusher
+	#category : #'BytePusher-Core'
 }
 
 { #category : #'class initialization' }
@@ -24,6 +25,7 @@ BPConstants class >> initialize [
 	USER_MEMORY_ADDRESS := 9.
 	INSTRUCTIONS_PER_STEP := 65536.
 	ADDRESS_SIZE := 3.
+	INSTRUCTION_SIZE := ADDRESS_SIZE * 3.
 	PIXELS_COUNT := 256*256.
 	MEMORY_SIZE := 16r1000008
 ]
