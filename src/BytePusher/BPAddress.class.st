@@ -71,6 +71,14 @@ BPAddress >> memoryAddress: anObject [
 	memoryAddress := anObject
 ]
 
+{ #category : #printing }
+BPAddress >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPut: $(.
+	aStream nextPutAll: (self memoryAddress printPaddedWith: $0 to: 7 base: 16).
+	aStream nextPut: $)
+]
+
 { #category : #writing }
 BPAddress >> writeOn: aByteArray at: address [
 	aByteArray
