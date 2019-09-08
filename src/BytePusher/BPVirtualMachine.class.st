@@ -12,19 +12,6 @@ Class {
 	#category : #'BytePusher-Core'
 }
 
-{ #category : #'class initialization' }
-BPVirtualMachine class >> initialize [
-	KEYBOARD_STATE_ADDRESS := 0.
-	PROGRAM_COUNTER_ADDRESS := 2.
-	PIXEL_POINTER_ADDRESS := 5.
-	AUDIO_POINTER_ADDRESS := 6.
-	USER_MEMORY_ADDRESS := 9.
-	INSTRUCTIONS_PER_STEP := 65536.
-	INSTRUCTION_SIZE := 3.
-	PIXELS_COUNT := 256*256.
-	MEMORY_SIZE := 16r1000008
-]
-
 { #category : #'memory manipulation' }
 BPVirtualMachine >> extract: n bytesStartingAt: startAddress [
 	"Extract #n bytes starting at the #startAddress and returns the integer formed by those #n bytes concatenated.
@@ -48,11 +35,11 @@ BPVirtualMachine >> initialize [
 { #category : #running }
 BPVirtualMachine >> innerStep [
 	self
-		memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter + 3)
-		put: (self memoryAt: (self extract: INSTRUCTION_SIZE bytesStartingAt: programCounter)).
+		memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter + 3)
+		put: (self memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter)).
 	
 	programCounter := self
-		extract: INSTRUCTION_SIZE
+		extract: ADDRESS_SIZE
 		bytesStartingAt: programCounter + 6
 ]
 

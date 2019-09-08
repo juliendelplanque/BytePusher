@@ -1,0 +1,29 @@
+Class {
+	#name : #BPConstants,
+	#superclass : #SharedPool,
+	#classVars : [
+		'ADDRESS_SIZE',
+		'AUDIO_POINTER_ADDRESS',
+		'INSTRUCTIONS_PER_STEP',
+		'KEYBOARD_STATE_ADDRESS',
+		'MEMORY_SIZE',
+		'PIXELS_COUNT',
+		'PIXEL_POINTER_ADDRESS',
+		'PROGRAM_COUNTER_ADDRESS',
+		'USER_MEMORY_ADDRESS'
+	],
+	#category : #BytePusher
+}
+
+{ #category : #'class initialization' }
+BPConstants class >> initialize [
+	KEYBOARD_STATE_ADDRESS := 0.
+	PROGRAM_COUNTER_ADDRESS := 2.
+	PIXEL_POINTER_ADDRESS := 5.
+	AUDIO_POINTER_ADDRESS := 6.
+	USER_MEMORY_ADDRESS := 9.
+	INSTRUCTIONS_PER_STEP := 65536.
+	ADDRESS_SIZE := 3.
+	PIXELS_COUNT := 256*256.
+	MEMORY_SIZE := 16r1000008
+]
