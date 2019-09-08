@@ -6,16 +6,8 @@ Class {
 		'ioDriver',
 		'programCounter'
 	],
-	#classVars : [
-		'AUDIO_POINTER_ADDRESS',
-		'INSTRUCTIONS_PER_STEP',
-		'INSTRUCTION_SIZE',
-		'KEYBOARD_STATE_ADDRESS',
-		'MEMORY_SIZE',
-		'PIXELS_COUNT',
-		'PIXEL_POINTER_ADDRESS',
-		'PROGRAM_COUNTER_ADDRESS',
-		'USER_MEMORY_ADDRESS'
+	#pools : [
+		'BPConstants'
 	],
 	#category : #'BytePusher-Core'
 }
@@ -116,7 +108,7 @@ BPVirtualMachine >> memoryAt: anInteger put: aByte [
 { #category : #'memory manipulation' }
 BPVirtualMachine >> memoryAt: address putInteger: anInteger [
 	"Write anInteger on the 3 consecutive bytes at address, address+1 and address+2.
-	 Little endian encoding is used.
+	 Big endian encoding is used.
 	"
 	self
 		memoryAt: address put: (anInteger & 16rFF0000) >> 16;
