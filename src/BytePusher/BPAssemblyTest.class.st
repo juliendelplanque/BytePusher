@@ -74,6 +74,92 @@ BPAssemblyTest >> testAddToThenMoveTo [
 ]
 
 { #category : #test }
+BPAssemblyTest >> testCmpWith [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 5.
+	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	
+	assembly cmp: #A with: #B.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	3 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 0.
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 5.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6
+]
+
+{ #category : #test }
+BPAssemblyTest >> testCmpWith2 [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 6.
+	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	
+	assembly cmp: #A with: #B.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	3 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 3.
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6
+]
+
+{ #category : #test }
+BPAssemblyTest >> testCmpWith3 [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 6.
+	
+	assembly cmp: #A with: 5.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	4 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 0.
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 0
+]
+
+{ #category : #test }
+BPAssemblyTest >> testCmpWith4 [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 6.
+	
+	assembly cmp: #A with: 6.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	4 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 3.
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 0
+]
+
+{ #category : #test }
 BPAssemblyTest >> testInitialize [
 	| assembly |
 	assembly := BPAssembly new.

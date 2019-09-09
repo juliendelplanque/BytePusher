@@ -93,6 +93,35 @@ BPAssembly >> addressOfNextInstructionToGenerate: anObject [
 ]
 
 { #category : #instructions }
+BPAssembly >> cmp: x with: y [
+	"Compares two values and sets the zero flag to true if they are equal.
+	 SP can be used as operand with CMP.
+	 Use this instruction before a conditional jump.
+
+	CMP reg, reg
+	CMP reg, address
+	CMP reg, constant
+	"
+	| xAddress yAddress |
+	xAddress := x forAssembly: self.
+	yAddress := y forAssembly: self.
+	(BPInstruction
+		from: xAddress
+		to: addressOfNextInstructionToGenerate + 19
+		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+	(BPInstruction
+		from: yAddress
+		to: addressOfNextInstructionToGenerate + 20
+		jump: addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) writeOn: self memory at: (addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) memoryAddress.
+	(BPInstruction
+		from: BPCmpPageBuilder startAddress
+		to: (self registerNamed: #ZERO)
+		jump: addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE)) writeOn: self memory at: (addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) memoryAddress.
+	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE)
+	
+]
+
+{ #category : #instructions }
 BPAssembly >> db: constant [
 	"Defines a variable. A variable can either be a single number, character or a string.
 
@@ -128,6 +157,7 @@ BPAssembly >> initializeMemory [
 	BPAddPageBuilder writeBankOn: memory.
 	BPAddCarryFlagPageBuilder writeBankOn: memory.
 	BPAddZeroFlagPageBuilder writeBankOn: memory.
+	BPCmpPageBuilder writeBankOn: memory.
 	^ memory
 ]
 
@@ -143,6 +173,7 @@ BPAssembly >> jump: address [
 		from: 0
 		to: 0
 		jump: jmpAddress) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
 ]
 
 { #category : #accessing }
