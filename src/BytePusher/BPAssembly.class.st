@@ -3,8 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'registers',
-		'lastBPInstructionIndex',
-		'memory'
+		'memory',
+		'addressOfNextInstructionToGenerate'
 	],
 	#pools : [
 		'BPConstants'
@@ -28,29 +28,29 @@ BPAssembly >> add: source to: target [
 	"First, copy data at fromAddress to location of the add, carry and zero instructions."
 	(BPInstruction
 		from: fromAddress
-		to: lastBPInstructionIndex + 55
-		jump: lastBPInstructionIndex + INSTRUCTION_SIZE) writeOn: self memory at: lastBPInstructionIndex memoryAddress.
+		to: addressOfNextInstructionToGenerate + 55
+		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
 	(BPInstruction
 		from: fromAddress
-		to: lastBPInstructionIndex + 64
-		jump: lastBPInstructionIndex + (2*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + INSTRUCTION_SIZE.
+		to: addressOfNextInstructionToGenerate + 64
+		jump: addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + INSTRUCTION_SIZE.
 	(BPInstruction
 		from: fromAddress
-		to: lastBPInstructionIndex + 73
-		jump: lastBPInstructionIndex + (3*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (2*INSTRUCTION_SIZE).
+		to: addressOfNextInstructionToGenerate + 73
+		jump: addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + (2*INSTRUCTION_SIZE).
 	"Second, copy data at toAddress to location of the add, carry and zero instructions."
 	(BPInstruction
 		from: toAddress
-		to: lastBPInstructionIndex + 56
-		jump: lastBPInstructionIndex + (4*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (3*INSTRUCTION_SIZE).
+		to: addressOfNextInstructionToGenerate + 56
+		jump: addressOfNextInstructionToGenerate + (4*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + (3*INSTRUCTION_SIZE).
 	(BPInstruction
 		from: toAddress
-		to: lastBPInstructionIndex + 65
-		jump: lastBPInstructionIndex + (5*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (4*INSTRUCTION_SIZE).
+		to: addressOfNextInstructionToGenerate + 65
+		jump: addressOfNextInstructionToGenerate + (5*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + (4*INSTRUCTION_SIZE).
 	(BPInstruction
 		from: toAddress
-		to: lastBPInstructionIndex + 74
-		jump: lastBPInstructionIndex + (6*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (5*INSTRUCTION_SIZE).
+		to: addressOfNextInstructionToGenerate + 74
+		jump: addressOfNextInstructionToGenerate + (6*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + (5*INSTRUCTION_SIZE).
 	"Third, create the actual add instruction (beware the 16 least
 	 significant bit of the #from address
 	 will be set by the 2 previous instructions, so they it will be
@@ -59,7 +59,7 @@ BPAssembly >> add: source to: target [
 	(BPInstruction
 		from: BPAddPageBuilder startAddress
 		to: fromAddress
-		jump: lastBPInstructionIndex + (7*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (6*INSTRUCTION_SIZE).
+		jump: addressOfNextInstructionToGenerate + (7*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + (6*INSTRUCTION_SIZE).
 	"Fourth, create the actual carry flag instruction (beware the 16 least
 	 significant bit of the #from address
 	 will be set by the 2 previous instructions, so they it will be
@@ -68,7 +68,7 @@ BPAssembly >> add: source to: target [
 	(BPInstruction
 		from: BPAddCarryFlagPageBuilder startAddress
 		to: (self registerNamed: #CARRY)
-		jump: lastBPInstructionIndex + (8*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (7*INSTRUCTION_SIZE).
+		jump: addressOfNextInstructionToGenerate + (8*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + (7*INSTRUCTION_SIZE).
 	"Third, create the actual zero flag instruction (beware the 16 least
 	 significant bit of the #from address
 	 will be set by the 2 previous instructions, so they it will be
@@ -77,8 +77,18 @@ BPAssembly >> add: source to: target [
 	(BPInstruction
 		from: BPAddZeroFlagPageBuilder startAddress
 		to: (self registerNamed: #ZERO)
-		jump: lastBPInstructionIndex + (9*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (8*INSTRUCTION_SIZE).
-	lastBPInstructionIndex := lastBPInstructionIndex + (9*INSTRUCTION_SIZE)
+		jump: addressOfNextInstructionToGenerate + (9*INSTRUCTION_SIZE)) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress + (8*INSTRUCTION_SIZE).
+	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + (9*INSTRUCTION_SIZE)
+]
+
+{ #category : #accessing }
+BPAssembly >> addressOfNextInstructionToGenerate [
+	^ addressOfNextInstructionToGenerate
+]
+
+{ #category : #accessing }
+BPAssembly >> addressOfNextInstructionToGenerate: anObject [
+	addressOfNextInstructionToGenerate := anObject
 ]
 
 { #category : #instructions }
@@ -102,8 +112,8 @@ BPAssembly >> initialize [
 		BPRegister name: #CARRY address: USER_MEMORY_ADDRESS + 5.
 		BPRegister name: #ZERO address: USER_MEMORY_ADDRESS + 6 }.
 		
-	lastBPInstructionIndex := (registers detectMax: #address) address + 1.
-	lastBPInstructionIndex writeOn: self memory at: 2.
+	addressOfNextInstructionToGenerate := (registers detectMax: #address) address + 1.
+	addressOfNextInstructionToGenerate writeOn: self memory at: 2.
 ]
 
 { #category : #initialization }
@@ -113,16 +123,6 @@ BPAssembly >> initializeMemory [
 	BPAddCarryFlagPageBuilder writeBankOn: memory.
 	BPAddZeroFlagPageBuilder writeBankOn: memory.
 	^ memory
-]
-
-{ #category : #accessing }
-BPAssembly >> lastBPInstructionIndex [
-	^ lastBPInstructionIndex
-]
-
-{ #category : #accessing }
-BPAssembly >> lastBPInstructionIndex: anObject [
-	lastBPInstructionIndex := anObject
 ]
 
 { #category : #accessing }
@@ -167,8 +167,8 @@ BPAssembly >> move: source to: target [
 	(BPInstruction
 		from: fromAddress
 		to: toAddress
-		jump: lastBPInstructionIndex + INSTRUCTION_SIZE) writeOn: self memory at: lastBPInstructionIndex memoryAddress.
-	lastBPInstructionIndex := lastBPInstructionIndex + INSTRUCTION_SIZE.
+		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
 ]
 
 { #category : #accessing }

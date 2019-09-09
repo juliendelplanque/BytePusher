@@ -79,7 +79,7 @@ BPAssemblyTest >> testInitialize [
 	assembly := BPAssembly new.
 	
 	self assert: assembly registers size equals: 7.
-	self assert: assembly lastBPInstructionIndex equals: (USER_MEMORY_ADDRESS + 7) asBPAddress
+	self assert: assembly addressOfNextInstructionToGenerate equals: (USER_MEMORY_ADDRESS + 7) asBPAddress
 ]
 
 { #category : #test }
@@ -89,7 +89,7 @@ BPAssemblyTest >> testMoveTo [
 	
 	assembly move: #A to: #B.
 	
-	lastInstructionMemoryAddress := assembly lastBPInstructionIndex memoryAddress - INSTRUCTION_SIZE.
+	lastInstructionMemoryAddress := assembly addressOfNextInstructionToGenerate memoryAddress - INSTRUCTION_SIZE.
 	
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress) equals: 0.
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 1) equals:0.
@@ -115,7 +115,7 @@ BPAssemblyTest >> testMoveTo2 [
 	
 	assembly move: 5 to: #B.
 	
-	lastInstructionMemoryAddress := assembly lastBPInstructionIndex memoryAddress - INSTRUCTION_SIZE.
+	lastInstructionMemoryAddress := assembly addressOfNextInstructionToGenerate memoryAddress - INSTRUCTION_SIZE.
 	dataMemoryAddress := lastInstructionMemoryAddress - 1.
 	
 	self assert: (assembly memoryAt: dataMemoryAddress) equals: 5.
