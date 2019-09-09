@@ -151,6 +151,7 @@ BPAssembly >> hasMemoryBeenWritten [
 BPAssembly >> initialize [
 	super initialize.
 	registers := { 
+		BPRegister name: #PC address: PROGRAM_COUNTER_ADDRESS.
 		BPRegister name: #A address: USER_MEMORY_ADDRESS.
 		BPRegister name: #B address: USER_MEMORY_ADDRESS + 1.
 		BPRegister name: #C address: USER_MEMORY_ADDRESS + 2.
@@ -300,6 +301,15 @@ BPAssembly >> registerNamed: aSymbol [
 { #category : #accessing }
 BPAssembly >> registers [
 	^ registers
+]
+
+{ #category : #'private-instructions' }
+BPAssembly >> savePC [
+	"Generates an instruction that saves the current value of PC in PC register.
+	 This is required to handle subroutines.
+	"
+	"Will require an identity page (mem[EN00YZ] = YZ)."
+	self flag: #TODO.
 ]
 
 { #category : #'as yet unclassified' }
