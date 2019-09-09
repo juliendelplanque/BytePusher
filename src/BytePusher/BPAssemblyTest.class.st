@@ -27,8 +27,50 @@ BPAssemblyTest >> testAddTo [
 	
 	9 timesRepeat: [ vm innerStep ].
 	
-	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 11
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 11.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6
+]
+
+{ #category : #test }
+BPAssemblyTest >> testAddTo2 [
+	| assembly vm |
+	assembly := BPAssembly new.
 	
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 5.
+	
+	assembly add: #A to: 6.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	10 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 11.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 0
+]
+
+{ #category : #test }
+BPAssemblyTest >> testAddToThenMoveTo [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 5.
+	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	
+	assembly add: #A to: #B.
+	assembly move: #A to: #B.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	10 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 11.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 11
 ]
 
 { #category : #test }
@@ -37,7 +79,7 @@ BPAssemblyTest >> testInitialize [
 	assembly := BPAssembly new.
 	
 	self assert: assembly registers size equals: 7.
-	self assert: assembly lastBPInstructionIndex equals: (USER_MEMORY_ADDRESS + 6) asBPAddress
+	self assert: assembly lastBPInstructionIndex equals: (USER_MEMORY_ADDRESS + 7) asBPAddress
 ]
 
 { #category : #test }
@@ -47,7 +89,7 @@ BPAssemblyTest >> testMoveTo [
 	
 	assembly move: #A to: #B.
 	
-	lastInstructionMemoryAddress := assembly lastBPInstructionIndex memoryAddress.
+	lastInstructionMemoryAddress := assembly lastBPInstructionIndex memoryAddress - INSTRUCTION_SIZE.
 	
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress) equals: 0.
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 1) equals:0.
@@ -73,8 +115,8 @@ BPAssemblyTest >> testMoveTo2 [
 	
 	assembly move: 5 to: #B.
 	
-	lastInstructionMemoryAddress := assembly lastBPInstructionIndex memoryAddress.
-	dataMemoryAddress := lastInstructionMemoryAddress - INSTRUCTION_SIZE.
+	lastInstructionMemoryAddress := assembly lastBPInstructionIndex memoryAddress - INSTRUCTION_SIZE.
+	dataMemoryAddress := lastInstructionMemoryAddress - 1.
 	
 	self assert: (assembly memoryAt: dataMemoryAddress) equals: 5.
 	

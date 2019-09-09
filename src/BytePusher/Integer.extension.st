@@ -7,7 +7,7 @@ Integer >> asBPAddress [
 
 { #category : #'*BytePusher' }
 Integer >> forAssembly: anAssembly [
-	anAssembly lastBPInstructionIndex: anAssembly lastBPInstructionIndex + 1.
 	anAssembly memoryAt: anAssembly lastBPInstructionIndex memoryAddress put: self.
-	^ anAssembly lastBPInstructionIndex
+	anAssembly lastBPInstructionIndex: anAssembly lastBPInstructionIndex + 1.
+	^ anAssembly lastBPInstructionIndex - 1
 ]

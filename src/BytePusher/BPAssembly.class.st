@@ -25,7 +25,6 @@ BPAssembly >> add: source to: target [
 	| fromAddress toAddress |
 	fromAddress := source forAssembly: self.
 	toAddress := target forAssembly: self.
-	lastBPInstructionIndex := lastBPInstructionIndex + INSTRUCTION_SIZE.
 	"First, copy data at fromAddress to location of the add, carry and zero instructions."
 	(BPInstruction
 		from: fromAddress
@@ -79,7 +78,7 @@ BPAssembly >> add: source to: target [
 		from: BPAddZeroFlagPageBuilder startAddress
 		to: (self registerNamed: #ZERO)
 		jump: lastBPInstructionIndex + (9*INSTRUCTION_SIZE)) writeOn: self memory at: lastBPInstructionIndex memoryAddress + (8*INSTRUCTION_SIZE).
-	lastBPInstructionIndex := lastBPInstructionIndex + (8*INSTRUCTION_SIZE)
+	lastBPInstructionIndex := lastBPInstructionIndex + (9*INSTRUCTION_SIZE)
 ]
 
 { #category : #instructions }
@@ -103,8 +102,8 @@ BPAssembly >> initialize [
 		BPRegister name: #CARRY address: USER_MEMORY_ADDRESS + 5.
 		BPRegister name: #ZERO address: USER_MEMORY_ADDRESS + 6 }.
 		
-	lastBPInstructionIndex := (registers detectMax: #address) address.
-	(lastBPInstructionIndex + INSTRUCTION_SIZE) writeOn: self memory at: 2.
+	lastBPInstructionIndex := (registers detectMax: #address) address + 1.
+	lastBPInstructionIndex writeOn: self memory at: 2.
 ]
 
 { #category : #initialization }
@@ -165,11 +164,11 @@ BPAssembly >> move: source to: target [
 	| fromAddress toAddress |
 	fromAddress := source forAssembly: self.
 	toAddress := target forAssembly: self.
-	lastBPInstructionIndex := lastBPInstructionIndex + INSTRUCTION_SIZE.
 	(BPInstruction
 		from: fromAddress
 		to: toAddress
 		jump: lastBPInstructionIndex + INSTRUCTION_SIZE) writeOn: self memory at: lastBPInstructionIndex memoryAddress.
+	lastBPInstructionIndex := lastBPInstructionIndex + INSTRUCTION_SIZE.
 ]
 
 { #category : #accessing }
