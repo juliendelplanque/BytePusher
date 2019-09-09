@@ -83,6 +83,44 @@ BPAssemblyTest >> testInitialize [
 ]
 
 { #category : #test }
+BPAssemblyTest >> testJump [
+	| assembly vm memoryBeforeStep |
+	assembly := BPAssembly new.
+	assembly jump: (BPAddress memoryAddress: 16rE00000).
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	memoryBeforeStep := assembly memory copy.
+	
+	vm innerStep.
+	
+	self assert: vm programCounter equals: 16rE00000.
+	self assert: assembly memory equals: memoryBeforeStep
+]
+
+{ #category : #test }
+BPAssemblyTest >> testJump2 [
+	| assembly vm memoryBeforeStep |
+	assembly := BPAssembly new.
+	assembly jump: 16rE00000.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	memoryBeforeStep := assembly memory copy.
+	
+	vm innerStep.
+	
+	self assert: vm programCounter equals: 16rE00000.
+	self assert: assembly memory equals: memoryBeforeStep
+]
+
+{ #category : #test }
 BPAssemblyTest >> testMoveTo [
 	| assembly lastInstructionMemoryAddress jumpMemoryAddress |
 	assembly := BPAssembly new.

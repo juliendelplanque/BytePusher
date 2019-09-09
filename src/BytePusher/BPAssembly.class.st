@@ -131,6 +131,20 @@ BPAssembly >> initializeMemory [
 	^ memory
 ]
 
+{ #category : #instructions }
+BPAssembly >> jump: address [
+	"Let the instruction pointer do a unconditional jump to the defined address.
+
+	 JMP address
+	"
+	| jmpAddress |
+	jmpAddress := address asBPAddress.
+	(BPInstruction
+		from: 0
+		to: 0
+		jump: jmpAddress) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+]
+
 { #category : #accessing }
 BPAssembly >> memory [
 	^ memory ifNil: [ self initializeMemory ]
