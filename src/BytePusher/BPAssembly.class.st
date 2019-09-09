@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'registers',
 		'memory',
-		'addressOfNextInstructionToGenerate'
+		'addressOfNextInstructionToGenerate',
+		'firstMemoryAddress'
 	],
 	#pools : [
 		'BPConstants'
@@ -100,6 +101,11 @@ BPAssembly >> db: constant [
 	self shouldBeImplemented
 ]
 
+{ #category : #testing }
+BPAssembly >> hasMemoryBeenWritten [
+	^ addressOfNextInstructionToGenerate ~= firstMemoryAddress
+]
+
 { #category : #initialization }
 BPAssembly >> initialize [
 	super initialize.
@@ -113,7 +119,7 @@ BPAssembly >> initialize [
 		BPRegister name: #ZERO address: USER_MEMORY_ADDRESS + 6 }.
 		
 	addressOfNextInstructionToGenerate := (registers detectMax: #address) address + 1.
-	addressOfNextInstructionToGenerate writeOn: self memory at: 2.
+	self serializeAddressOfNextInstructionToGenerate
 ]
 
 { #category : #initialization }
@@ -179,4 +185,10 @@ BPAssembly >> registerNamed: aSymbol [
 { #category : #accessing }
 BPAssembly >> registers [
 	^ registers
+]
+
+{ #category : #'as yet unclassified' }
+BPAssembly >> serializeAddressOfNextInstructionToGenerate [
+	addressOfNextInstructionToGenerate writeOn: self memory at: 2.
+	firstMemoryAddress := addressOfNextInstructionToGenerate.
 ]
