@@ -15,8 +15,8 @@ BPAssemblyTest >> testAddTo [
 	| assembly vm |
 	assembly := BPAssembly new.
 	
-	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 5.
-	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	(assembly registerNamed: #A) address store: 5 in: assembly memory.
+	(assembly registerNamed: #B) address store: 6 in: assembly memory.
 	
 	assembly add: #A to: #B.
 	
@@ -27,8 +27,8 @@ BPAssemblyTest >> testAddTo [
 	
 	9 timesRepeat: [ vm innerStep ].
 	
-	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 11.
-	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6
+	self assert: ((assembly registerNamed: #A) address access: assembly memory) equals: 11.
+	self assert: ((assembly registerNamed: #B) address access: assembly memory) equals: 6
 ]
 
 { #category : #test }

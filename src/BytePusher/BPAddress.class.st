@@ -33,6 +33,11 @@ BPAddress >> < aBPAddress [
 	^ self memoryAddress < aBPAddress memoryAddress
 ]
 
+{ #category : #arithmetic }
+BPAddress >> << anInteger [
+	^ BPAddress memoryAddress: self memoryAddress << anInteger
+]
+
 { #category : #comparing }
 BPAddress >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
@@ -42,6 +47,11 @@ BPAddress >> = anObject [
 	self class = anObject class
 		ifFalse: [ ^ false ].
 	^ memoryAddress = anObject memoryAddress
+]
+
+{ #category : #arithmetic }
+BPAddress >> >> anInteger [
+	^ BPAddress memoryAddress: self memoryAddress >> anInteger
 ]
 
 { #category : #accessing }
@@ -85,6 +95,14 @@ BPAddress >> printOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: (self memoryAddress printPaddedWith: $0 to: 7 base: 16).
 	aStream nextPut: $)
+]
+
+{ #category : #accessing }
+BPAddress >> store: aByte in: aByteArray [
+	"Store aByte in aByteArray.
+	 Indexing starts at 0 when using me, so I access index self + 1 in aByteArray.
+	"
+	^ aByteArray at: self memoryAddress + 1 put: aByte
 ]
 
 { #category : #writing }

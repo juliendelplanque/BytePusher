@@ -199,7 +199,7 @@ BPAssembly >> jumpIfNotEqual: address [
 	| jmpAddress addressForNotEqual addressForEqual |
 	jmpAddress := address forAssembly: self.
 	
-	addressForNotEqual := (addressOfNextInstructionToGenerate memoryAddress
+	addressForNotEqual := (addressOfNextInstructionToGenerate
 									+ INSTRUCTION_SIZE
 									+ 16r100
 									>> 8
@@ -209,7 +209,7 @@ BPAssembly >> jumpIfNotEqual: address [
 	(BPInstruction
 		from: (self registerNamed: #ZERO)
 		to: addressOfNextInstructionToGenerate + 8
-		jump: (addressForNotEqual memoryAddress >> 8 << 8) asBPAddress) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+		jump: addressForNotEqual >> 8 << 8) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
 	
 	addressOfNextInstructionToGenerate := addressForNotEqual.
 	(BPInstruction
