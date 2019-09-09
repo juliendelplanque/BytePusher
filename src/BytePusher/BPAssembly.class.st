@@ -281,6 +281,17 @@ BPAssembly >> move: source to: target [
 	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
 ]
 
+{ #category : #instructions }
+BPAssembly >> nop [
+	"No-op instruction, does nothing.
+	"
+	(BPInstruction
+		from: 0
+		to: 0
+		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
+]
+
 { #category : #accessing }
 BPAssembly >> registerNamed: aSymbol [
 	^ self registers detect: [ :register | register name = aSymbol ]
