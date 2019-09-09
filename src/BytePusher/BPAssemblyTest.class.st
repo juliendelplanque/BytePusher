@@ -207,6 +207,31 @@ BPAssemblyTest >> testJump2 [
 ]
 
 { #category : #test }
+BPAssemblyTest >> testJumpIfNotEqual [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly
+		label: #firstMove;
+		move: 5 to: #A; "2 instructions"
+		move: 6 to: #B; "2 instructions"
+		cmp: #A with: #B; "3 instructions"
+		jumpIfNotEqual: #firstMove.  "2 instructions"
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	4 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 5.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 3.
+	self assert: vm programCounter equals: (assembly labelNamed: #firstMove) address memoryAddress
+]
+
+{ #category : #test }
 BPAssemblyTest >> testMoveTo [
 	| assembly lastInstructionMemoryAddress jumpMemoryAddress |
 	assembly := BPAssembly new.
@@ -259,4 +284,41 @@ BPAssemblyTest >> testMoveTo2 [
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 8) equals: (jumpMemoryAddress & 16r0000FF).
 	
 	
+]
+
+{ #category : #test }
+BPAssemblyTest >> testMoveTo3 [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly move: 5 to: #A.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	2 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 5.
+]
+
+{ #category : #test }
+BPAssemblyTest >> testMoveTo4 [
+	| assembly vm |
+	assembly := BPAssembly new.
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 5.
+	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	
+	assembly move: #B to: #A.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	1 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6.
 ]

@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'registers',
 		'memory',
+		'labels',
 		'addressOfNextInstructionToGenerate',
 		'firstMemoryAddress'
 	],
@@ -82,6 +83,17 @@ BPAssembly >> add: source to: target [
 	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + (9*INSTRUCTION_SIZE)
 ]
 
+{ #category : #adding }
+BPAssembly >> addLabel: aBPLabel [
+	(registers noneSatisfy: [ :r | r name = aBPLabel label ])
+		ifFalse: [ self error: 'A register is already named ' , aBPLabel label ].
+		
+	(labels noneSatisfy: [ :l | l label = aBPLabel label ])
+		ifFalse: [ self error: 'A label is already named ' , aBPLabel label ].
+		
+	labels add: aBPLabel
+]
+
 { #category : #accessing }
 BPAssembly >> addressOfNextInstructionToGenerate [
 	^ addressOfNextInstructionToGenerate
@@ -148,7 +160,9 @@ BPAssembly >> initialize [
 		BPRegister name: #ZERO address: USER_MEMORY_ADDRESS + 6 }.
 		
 	addressOfNextInstructionToGenerate := (registers detectMax: #address) address + 1.
-	self serializeAddressOfNextInstructionToGenerate
+	self serializeAddressOfNextInstructionToGenerate.
+	
+	labels := OrderedCollection new.
 ]
 
 { #category : #initialization }
@@ -174,6 +188,50 @@ BPAssembly >> jump: address [
 		to: 0
 		jump: jmpAddress) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
 	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
+]
+
+{ #category : #instructions }
+BPAssembly >> jumpIfNotEqual: address [
+	"Let the instruction pointer do a jump to the defined address if ZERO flag is FALSE.
+
+	 JNE address
+	"
+	| jmpAddress addressForNotEqual addressForEqual |
+	jmpAddress := address forAssembly: self.
+	
+	addressForNotEqual := (addressOfNextInstructionToGenerate memoryAddress
+									+ INSTRUCTION_SIZE
+									+ 16r100
+									>> 8
+									<< 8) asBPAddress.
+	addressForEqual := addressForNotEqual + 3.
+	(BPInstruction
+		from: (self registerNamed: #ZERO)
+		to: addressOfNextInstructionToGenerate + 8
+		jump: (addressForNotEqual memoryAddress >> 8 << 8) asBPAddress) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+	
+	addressOfNextInstructionToGenerate := addressForNotEqual.
+	(BPInstruction
+		from: 0
+		to: 0
+		jump: jmpAddress) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+		
+	addressOfNextInstructionToGenerate := addressForEqual.
+	(BPInstruction
+		from: 0
+		to: 0
+		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self memory at: addressOfNextInstructionToGenerate memoryAddress.
+	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE
+]
+
+{ #category : #labelling }
+BPAssembly >> label: aSymbol [
+	self addLabel: (BPLabel label: aSymbol address: addressOfNextInstructionToGenerate)
+]
+
+{ #category : #accessing }
+BPAssembly >> labelNamed: aSymbol [
+	^ labels detect: [ :label | label label = aSymbol ]
 ]
 
 { #category : #accessing }
