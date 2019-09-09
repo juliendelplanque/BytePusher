@@ -11,12 +11,33 @@ Class {
 }
 
 { #category : #test }
+BPAssemblyTest >> testAddTo [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 5.
+	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	
+	assembly add: #A to: #B.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	9 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 11
+	
+]
+
+{ #category : #test }
 BPAssemblyTest >> testInitialize [
 	| assembly |
 	assembly := BPAssembly new.
 	
-	self assert: assembly registers size equals: 6.
-	self assert: assembly lastBPInstructionIndex equals: (USER_MEMORY_ADDRESS + 5) asBPAddress
+	self assert: assembly registers size equals: 7.
+	self assert: assembly lastBPInstructionIndex equals: (USER_MEMORY_ADDRESS + 6) asBPAddress
 ]
 
 { #category : #test }

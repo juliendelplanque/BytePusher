@@ -1,21 +1,21 @@
 Class {
-	#name : #BPAddBankBuilder,
+	#name : #BPAddPageBuilder,
 	#superclass : #BPOpcodeBankBuilder,
-	#category : #'BytePusher-Core'
+	#category : #'BytePusher-Assembly'
 }
 
 { #category : #writing }
-BPAddBankBuilder >> endAddress [
+BPAddPageBuilder class >> endAddress [
 	^ 16rE10000 - 1
 ]
 
 { #category : #writing }
-BPAddBankBuilder >> startAddress [
+BPAddPageBuilder class >> startAddress [
 	^ 16rE00000
 ]
 
 { #category : #writing }
-BPAddBankBuilder >> writeBankOn: aByteArray [
+BPAddPageBuilder >> writeBankOn: aByteArray [
 	self startAddress to: self endAddress do: [ :address | 
 		| x y |
 		x := (address & 16rFF00) >> 8.

@@ -58,6 +58,11 @@ BPVirtualMachine >> keyboardStateAddress [
 	^ KEYBOARD_STATE_ADDRESS
 ]
 
+{ #category : #running }
+BPVirtualMachine >> loadProgramCounter [
+	programCounter :=  self extract: 3 bytesStartingAt: PROGRAM_COUNTER_ADDRESS.
+]
+
 { #category : #'rom - loading' }
 BPVirtualMachine >> loadROMFromFile: aFileReference [
 	self resetMemory.
@@ -137,7 +142,8 @@ BPVirtualMachine >> step [
 		memoryAt: KEYBOARD_STATE_ADDRESS put: (keyPressed >> 8) & 16rFF;
 		memoryAt: KEYBOARD_STATE_ADDRESS + 1 put: keyPressed & 16rFF.
 		
-	programCounter :=  self extract: 3 bytesStartingAt: PROGRAM_COUNTER_ADDRESS.
+	self loadProgramCounter.
+	
 	INSTRUCTIONS_PER_STEP 
 		timesRepeat: [ self innerStep ].
 	
