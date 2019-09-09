@@ -52,8 +52,8 @@ BPInstruction >> toAddress: anObject [
 ]
 
 { #category : #writing }
-BPInstruction >> writeOn: aByteArray at: address [
-	self fromAddress writeOn: aByteArray at: address.
-	self toAddress writeOn: aByteArray at: address + ADDRESS_SIZE.
-	self jumpAddress writeOn: aByteArray at: address + (ADDRESS_SIZE * 2)
+BPInstruction >> writeOn: aBPAssembly at: address [
+	self fromAddress writeOn: aBPAssembly memory at: address.
+	self toAddress writeOn: aBPAssembly memory at: address + ADDRESS_SIZE.
+	self jumpAddress writeOn: aBPAssembly memory at: address + (ADDRESS_SIZE * 2)
 ]
