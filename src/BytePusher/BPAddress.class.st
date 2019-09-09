@@ -44,6 +44,14 @@ BPAddress >> = anObject [
 	^ memoryAddress = anObject memoryAddress
 ]
 
+{ #category : #accessing }
+BPAddress >> access: aByteArray [
+	"Access the value stored at myself in aByteArray.
+	 Indexing starts at 0 when using me, so I access index self + 1 in aByteArray.
+	"
+	^ aByteArray at: self memoryAddress + 1
+]
+
 { #category : #converting }
 BPAddress >> asBPAddress [
 	^ self
