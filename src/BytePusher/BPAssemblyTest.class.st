@@ -235,7 +235,7 @@ BPAssemblyTest >> testInitialize [
 	
 	self assert: assembly registers size equals: 8.
 	self assert: assembly reservedMemoryZones size equals: 4.
-	self assert: assembly addressOfNextInstructionToGenerate equals: 16r10023 asBPAddress
+	self assert: assembly addressOfNextInstructionToGenerate equals: 16r10022 asBPAddress
 ]
 
 { #category : #test }
@@ -311,11 +311,11 @@ BPAssemblyTest >> testMoveTo [
 	
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress) equals: 0.
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 1) equals:0.
-	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 2) equals: 16r09.
+	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 2) equals: 16r08.
 	
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 3) equals: 0.
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 4) equals: 0.
-	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 5) equals: 16rA.
+	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 5) equals: 16r9.
 	
 	jumpMemoryAddress := lastInstructionMemoryAddress + INSTRUCTION_SIZE.
 	
@@ -344,7 +344,7 @@ BPAssemblyTest >> testMoveTo2 [
 	
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 3) equals: 0.
 	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 4) equals: 0.
-	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 5) equals: 16rA.
+	self assert: (assembly memoryAt: lastInstructionMemoryAddress + 5) equals: 16r9.
 	
 	jumpMemoryAddress := lastInstructionMemoryAddress + INSTRUCTION_SIZE.
 	

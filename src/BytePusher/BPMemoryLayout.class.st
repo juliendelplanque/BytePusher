@@ -66,6 +66,16 @@ BPMemoryLayout >> ensureLayoutObjectDoesNotCreateConflict: aLayoutObject [
 	
 ]
 
+{ #category : #accessing }
+BPMemoryLayout >> firstGenerationAddress [
+	|lastAddress|
+	lastAddress := -1.
+	^ (self layoutObjects detect: [ :layoutObject |
+		(layoutObject startAddress memoryAddress ~= (lastAddress + 1))
+			ifFalse: [ lastAddress := layoutObject endAddress memoryAddress. false ]
+			ifTrue: [ true ] ]) endAddress + 1
+]
+
 { #category : #'gt-inspector-extension' }
 BPMemoryLayout >> gtInspectorItemsIn: composite [
 	<gtInspectorPresentationOrder: 0> 
