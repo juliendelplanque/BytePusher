@@ -160,6 +160,33 @@ BPAssemblyTest >> testCmpWith4 [
 ]
 
 { #category : #test }
+BPAssemblyTest >> testFibonacci [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly
+		move: 1 to: #A;
+		move: 1 to: #B;
+		move: 1 to: #C;
+		label: #fibo;
+			move: #A to: #D;
+			add: #A to: #B;
+			move: #D to: #B;
+			add: #C to: 1;
+			cmp: #C with: 5;
+			jumpIfNotEqual: #fibo.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #C) address memoryAddress) equals: 5.
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 8
+]
+
+{ #category : #test }
 BPAssemblyTest >> testInitialize [
 	| assembly |
 	assembly := BPAssembly new.

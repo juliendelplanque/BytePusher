@@ -16,7 +16,7 @@ Class {
 
 { #category : #instructions }
 BPAssembly >> add: source to: target [
-	"Adds two numbers together or subtract one number form another.
+	"Adds two numbers together and store result in source register.
 	 This operations will modify the carry and zero flag. 
 	 SP can be used as operand with ADD.
 
