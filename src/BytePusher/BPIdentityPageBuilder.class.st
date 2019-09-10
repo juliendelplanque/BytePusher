@@ -6,17 +6,24 @@ Class {
 
 { #category : #accessing }
 BPIdentityPageBuilder class >> endAddress [
-	^ 16rE50000 - 1
+	^ 16rE50000 asBPAddress - 1
+]
+
+{ #category : #accessing }
+BPIdentityPageBuilder class >> reservedMemoryZone [
+	^ super reservedMemoryZone
+		name: #IDENTITY_PAGE;
+		yourself
 ]
 
 { #category : #accessing }
 BPIdentityPageBuilder class >> startAddress [
-	^ 16rE40000
+	^ 16rE40000 asBPAddress
 ]
 
 { #category : #writing }
 BPIdentityPageBuilder >> writeBankOn: aByteArray [
-	self startAddress to: self endAddress do: [ :address | 
+	self addressesRange do: [ :address | 
 		|x|
 		x := address & 16rFF.
 		aByteArray

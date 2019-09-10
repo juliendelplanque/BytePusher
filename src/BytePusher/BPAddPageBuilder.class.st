@@ -6,17 +6,24 @@ Class {
 
 { #category : #writing }
 BPAddPageBuilder class >> endAddress [
-	^ 16rE10000 - 1
+	^ 16rE10000 asBPAddress - 1
+]
+
+{ #category : #accessing }
+BPAddPageBuilder class >> reservedMemoryZone [
+	^ super reservedMemoryZone
+		name: #ADD_PAGE;
+		yourself
 ]
 
 { #category : #writing }
 BPAddPageBuilder class >> startAddress [
-	^ 16rE00000
+	^ 16rE00000 asBPAddress
 ]
 
 { #category : #writing }
 BPAddPageBuilder >> writeBankOn: aByteArray [
-	self startAddress to: self endAddress do: [ :address | 
+	self addressesRange do: [ :address | 
 		| x y |
 		x := (address & 16rFF00) >> 8.
 		y := address & 16rFF.

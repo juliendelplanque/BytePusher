@@ -6,17 +6,24 @@ Class {
 
 { #category : #accessing }
 BPAddCarryFlagPageBuilder class >> endAddress [
-	^ 16rE20000 - 1
+	^ 16rE20000 asBPAddress - 1
+]
+
+{ #category : #accessing }
+BPAddCarryFlagPageBuilder class >> reservedMemoryZone [
+	^ super reservedMemoryZone
+		name: #ADD_CARY_FLAG_PAGE;
+		yourself
 ]
 
 { #category : #accessing }
 BPAddCarryFlagPageBuilder class >> startAddress [
-	^ 16rE10000
+	^ 16rE10000 asBPAddress
 ]
 
 { #category : #writing }
 BPAddCarryFlagPageBuilder >> writeBankOn: aByteArray [
-	self startAddress to: self endAddress do: [ :address | 
+	self addressesRange do: [ :address | 
 		| x y |
 		x := (address & 16rFF00) >> 8.
 		y := address & 16rFF.

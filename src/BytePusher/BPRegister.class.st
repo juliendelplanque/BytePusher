@@ -1,8 +1,7 @@
 Class {
 	#name : #BPRegister,
-	#superclass : #Object,
+	#superclass : #BPLayoutObject,
 	#instVars : [
-		'name',
 		'address'
 	],
 	#category : #'BytePusher-Assembly'
@@ -32,11 +31,12 @@ BPRegister >> asBPAddress [
 ]
 
 { #category : #accessing }
-BPRegister >> name [
-	^ name
+BPRegister >> endAddress [
+	"Registers old 1 Byte of data."
+	^ self address
 ]
 
 { #category : #accessing }
-BPRegister >> name: anObject [
-	name := anObject
+BPRegister >> startAddress [
+	^ self address
 ]

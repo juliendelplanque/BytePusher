@@ -6,17 +6,24 @@ Class {
 
 { #category : #accessing }
 BPCmpPageBuilder class >> endAddress [
-	^ 16rE40000 - 1
+	^ 16rE40000 asBPAddress - 1
+]
+
+{ #category : #accessing }
+BPCmpPageBuilder class >> reservedMemoryZone [
+	^ super reservedMemoryZone
+		name: #CMP_PAGE;
+		yourself
 ]
 
 { #category : #accessing }
 BPCmpPageBuilder class >> startAddress [
-	^ 16rE30000
+	^ 16rE30000 asBPAddress
 ]
 
 { #category : #writing }
 BPCmpPageBuilder >> writeBankOn: aByteArray [
-	self startAddress to: self endAddress do: [ :address | 
+	self addressesRange do: [ :address | 
 		| x y |
 		x := (address & 16rFF00) >> 8.
 		y := address & 16rFF.
