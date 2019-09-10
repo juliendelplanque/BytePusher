@@ -112,12 +112,19 @@ BPMemoryLayout >> layoutObjects: anObject [
 
 { #category : #accessing }
 BPMemoryLayout >> registerNamed: aSymbol [
-	^ self shouldBeImplemented
+	^ self layoutObjects detect: [ :layoutObject |
+		layoutObject isRegister and: [ layoutObject name = aSymbol ] ]
+]
+
+{ #category : #accessing }
+BPMemoryLayout >> registers [
+	^ self layoutObjects select: #isRegister
 ]
 
 { #category : #accessing }
 BPMemoryLayout >> reservedMemoryZoneNamed: aSymbol [
-	^ self shouldBeImplemented
+	^ self layoutObjects detect: [ :layoutObject |
+		layoutObject isReservedMemoryZone and: [ layoutObject name = aSymbol ] ]
 ]
 
 { #category : #accessing }

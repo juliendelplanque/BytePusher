@@ -38,6 +38,11 @@ BPReservedMemoryZone >> endAddress: anObject [
 	endAddress := anObject
 ]
 
+{ #category : #testing }
+BPReservedMemoryZone >> isReservedMemoryZone [
+	^ true
+]
+
 { #category : #accessing }
 BPReservedMemoryZone >> startAddress [
 	^ startAddress

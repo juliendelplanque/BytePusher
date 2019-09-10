@@ -2,8 +2,7 @@ Class {
 	#name : #BPAssembly,
 	#superclass : #Object,
 	#instVars : [
-		'registers',
-		'reservedMemoryZones',
+		'memoryLayout',
 		'memory',
 		'labels',
 		'addressOfNextInstructionToGenerate',
@@ -87,7 +86,7 @@ BPAssembly >> add: source to: target [
 
 { #category : #adding }
 BPAssembly >> addLabel: aBPLabel [
-	(registers noneSatisfy: [ :r | r name = aBPLabel label ])
+	(self registers noneSatisfy: [ :r | r name = aBPLabel label ])
 		ifFalse: [ self error: 'A register is already named ' , aBPLabel label ].
 		
 	(labels noneSatisfy: [ :l | l label = aBPLabel label ])
@@ -166,23 +165,9 @@ BPAssembly >> incrementReferencesToFutureMemory: anInteger [
 { #category : #initialization }
 BPAssembly >> initialize [
 	super initialize.
-	registers := { 
-		BPRegister name: #PC address: PROGRAM_COUNTER_ADDRESS.
-		BPRegister name: #A address: USER_MEMORY_ADDRESS.
-		BPRegister name: #B address: USER_MEMORY_ADDRESS + 1.
-		BPRegister name: #C address: USER_MEMORY_ADDRESS + 2.
-		BPRegister name: #D address: USER_MEMORY_ADDRESS + 3.
-		BPRegister name: #SP address: USER_MEMORY_ADDRESS + 4.
-		BPRegister name: #CARRY address: USER_MEMORY_ADDRESS + 5.
-		BPRegister name: #ZERO address: USER_MEMORY_ADDRESS + 6 }.
-	reservedMemoryZones := { 
-		BPReservedMemoryZone name: #JUMP_IF_ZERO startAddress: USER_MEMORY_ADDRESS + 7 size: INSTRUCTION_SIZE.
-		BPReservedMemoryZone name: #JUMP_IF_NONZERO startAddress: USER_MEMORY_ADDRESS + 7 + INSTRUCTION_SIZE size: INSTRUCTION_SIZE.
-		BPReservedMemoryZone name: #DISPLAY_FRAME startAddress: 16rFE0000 size: PIXELS_COUNT.
-		BPReservedMemoryZone name: #AUDIO_SAMPLE startAddress: USER_MEMORY_ADDRESS + 7 + (2 * INSTRUCTION_SIZE) + PIXELS_COUNT size: AUDIO_SAMPLE_SIZE.
-	}.
+	memoryLayout := BPMemoryLayout standard.
 		
-	addressOfNextInstructionToGenerate := ((registers , (reservedMemoryZones reject: [ :x | x name = #DISPLAY_FRAME ])) detectMax: #address) address + 1.
+	addressOfNextInstructionToGenerate := memoryLayout firstGenerationAddress.
 	self serializeAddressOfNextInstructionToGenerate.
 	
 	PIXEL_POINTER_ADDRESS asBPAddress store: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: self memory.
@@ -293,6 +278,11 @@ BPAssembly >> memoryAt: anInteger put: aByte [
 	^ self memory at: anInteger + 1 put: aByte
 ]
 
+{ #category : #accessing }
+BPAssembly >> memoryLayout [
+	^ memoryLayout
+]
+
 { #category : #instructions }
 BPAssembly >> move: source to: target [
 	"Copies a value from src to dest.
@@ -332,22 +322,17 @@ BPAssembly >> nop [
 
 { #category : #accessing }
 BPAssembly >> registerNamed: aSymbol [
-	^ self registers detect: [ :register | register name = aSymbol ]
+	^ self memoryLayout registerNamed: aSymbol
 ]
 
 { #category : #accessing }
 BPAssembly >> registers [
-	^ registers
+	^ self memoryLayout registers
 ]
 
 { #category : #accessing }
 BPAssembly >> reservedMemoryZoneNamed: aSymbol [
-	^ self reservedMemoryZones detect: [ :zone | zone name = aSymbol ]
-]
-
-{ #category : #accessing }
-BPAssembly >> reservedMemoryZones [
-	^ reservedMemoryZones
+	^ self memoryLayout reservedMemoryZoneNamed: aSymbol
 ]
 
 { #category : #initialization }

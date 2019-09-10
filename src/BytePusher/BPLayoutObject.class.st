@@ -17,6 +17,16 @@ BPLayoutObject >> endAddress [
 	^ self subclassResponsibility
 ]
 
+{ #category : #testing }
+BPLayoutObject >> isRegister [
+	^ false
+]
+
+{ #category : #testing }
+BPLayoutObject >> isReservedMemoryZone [
+	^ false
+]
+
 { #category : #accessing }
 BPLayoutObject >> name [
 	^ name

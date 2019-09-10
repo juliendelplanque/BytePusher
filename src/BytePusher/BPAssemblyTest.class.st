@@ -233,9 +233,8 @@ BPAssemblyTest >> testInitialize [
 	| assembly |
 	assembly := BPAssembly new.
 	
-	self assert: assembly registers size equals: 8.
-	self assert: assembly reservedMemoryZones size equals: 4.
-	self assert: assembly addressOfNextInstructionToGenerate equals: 16r10022 asBPAddress
+	self assert: assembly registers size equals: 7.
+	self assert: assembly addressOfNextInstructionToGenerate equals: 16r10121 asBPAddress
 ]
 
 { #category : #test }

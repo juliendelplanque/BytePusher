@@ -36,6 +36,11 @@ BPRegister >> endAddress [
 	^ self address
 ]
 
+{ #category : #testing }
+BPRegister >> isRegister [
+	^ true
+]
+
 { #category : #accessing }
 BPRegister >> startAddress [
 	^ self address
