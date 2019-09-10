@@ -3,6 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'registers',
+		'reservedMemoryZones',
 		'memory',
 		'labels',
 		'addressOfNextInstructionToGenerate',
@@ -125,11 +126,11 @@ BPAssembly >> cmp: x with: y [
 	yAddress := y forAssembly: self.
 	(BPInstruction
 		from: xAddress
-		to: addressOfNextInstructionToGenerate + 19
+		to: addressOfNextInstructionToGenerate + (2 * INSTRUCTION_SIZE) + 1
 		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
 	(BPInstruction
 		from: yAddress
-		to: addressOfNextInstructionToGenerate + 20
+		to: addressOfNextInstructionToGenerate + (2 * INSTRUCTION_SIZE) + 2
 		jump: addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) writeOn: self at: (addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) memoryAddress.
 	(BPInstruction
 		from: BPCmpPageBuilder startAddress
@@ -174,9 +175,19 @@ BPAssembly >> initialize [
 		BPRegister name: #SP address: USER_MEMORY_ADDRESS + 4.
 		BPRegister name: #CARRY address: USER_MEMORY_ADDRESS + 5.
 		BPRegister name: #ZERO address: USER_MEMORY_ADDRESS + 6 }.
+	reservedMemoryZones := { 
+		BPReservedMemory name: #JUMP_IF_ZERO startAddress: USER_MEMORY_ADDRESS + 7 size: INSTRUCTION_SIZE.
+		BPReservedMemory name: #JUMP_IF_NONZERO startAddress: USER_MEMORY_ADDRESS + 7 + INSTRUCTION_SIZE size: INSTRUCTION_SIZE.
+		BPReservedMemory name: #DISPLAY_FRAME startAddress: 16rFE0000 size: PIXELS_COUNT.
+		BPReservedMemory name: #AUDIO_SAMPLE startAddress: USER_MEMORY_ADDRESS + 7 + (2 * INSTRUCTION_SIZE) + PIXELS_COUNT size: AUDIO_SAMPLE_SIZE.
+	}.
 		
-	addressOfNextInstructionToGenerate := (registers detectMax: #address) address + 1.
+	addressOfNextInstructionToGenerate := ((registers , (reservedMemoryZones reject: [ :x | x name = #DISPLAY_FRAME ])) detectMax: #address) address + 1.
 	self serializeAddressOfNextInstructionToGenerate.
+	
+	PIXEL_POINTER_ADDRESS asBPAddress store: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: self memory.
+	AUDIO_POINTER_ADDRESS asBPAddress store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: self memory.
+	AUDIO_POINTER_ADDRESS asBPAddress + 1 store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address lowerByte in: self memory.
 	
 	labels := OrderedCollection new.
 	self resetReferencesToFutureMemory.
@@ -190,6 +201,7 @@ BPAssembly >> initializeMemory [
 	BPAddCarryFlagPageBuilder writeBankOn: memory.
 	BPAddZeroFlagPageBuilder writeBankOn: memory.
 	BPCmpPageBuilder writeBankOn: memory.
+	BPIdentityPageBuilder writeBankOn: memory.
 	^ memory
 ]
 
@@ -200,7 +212,7 @@ BPAssembly >> jump: address [
 	 JMP address
 	"
 	| jmpAddress |
-	jmpAddress := address asBPAddress.
+	jmpAddress := address forAssembly: self.
 	(BPInstruction
 		from: 0
 		to: 0
@@ -252,6 +264,11 @@ BPAssembly >> label: aSymbol [
 { #category : #accessing }
 BPAssembly >> labelNamed: aSymbol [
 	^ labels detect: [ :label | label label = aSymbol ]
+]
+
+{ #category : #accessing }
+BPAssembly >> labels [
+	^ labels
 ]
 
 { #category : #accessing }
@@ -323,12 +340,22 @@ BPAssembly >> registers [
 	^ registers
 ]
 
+{ #category : #accessing }
+BPAssembly >> reservedMemoryZoneNamed: aSymbol [
+	^ self reservedMemoryZones detect: [ :zone | zone name = aSymbol ]
+]
+
+{ #category : #accessing }
+BPAssembly >> reservedMemoryZones [
+	^ reservedMemoryZones
+]
+
 { #category : #initialization }
 BPAssembly >> resetReferencesToFutureMemory [
 	referencesToFutureMemory := OrderedCollection new
 ]
 
-{ #category : #'private-instructions' }
+{ #category : #instructions }
 BPAssembly >> savePC [
 	"Generates an instruction that saves the current value of PC in PC register.
 	 This is required to handle subroutines.
@@ -340,4 +367,29 @@ BPAssembly >> savePC [
 { #category : #'as yet unclassified' }
 BPAssembly >> serializeAddressOfNextInstructionToGenerate [
 	addressOfNextInstructionToGenerate writeOn: self memory at: PROGRAM_COUNTER_ADDRESS
+]
+
+{ #category : #instructions }
+BPAssembly >> writePixel: pixel [
+	"Writes #pixelValue on the pixel at the address pointed by 16bits address formed by A and B registers.
+	 A register holds middle byte for address.
+	 B register holds lower byte for address.
+	"
+	| valueAddress |
+	valueAddress := pixel forAssembly: self.
+	(BPInstruction
+		from: (self registerNamed: #A)
+		to: addressOfNextInstructionToGenerate + (INSTRUCTION_SIZE * 2) + ADDRESS_SIZE + 1
+		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
+	(BPInstruction
+		from: (self registerNamed: #B)
+		to: addressOfNextInstructionToGenerate + (INSTRUCTION_SIZE * 2) + ADDRESS_SIZE + 2
+		jump: addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) writeOn: self at: (addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) memoryAddress.
+	(BPInstruction
+		from: valueAddress
+		to: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address
+		jump: addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE)) writeOn: self at: (addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) memoryAddress.
+	
+	self incrementAddressOfNextInstructionToGenerate: (3*INSTRUCTION_SIZE).
+	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE.
 ]

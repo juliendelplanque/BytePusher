@@ -11,6 +11,27 @@ Class {
 }
 
 { #category : #test }
+BPAssemblyTest >> test2AddCompare [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly
+		move: 1 to: #A;
+		add: #A to: 1;
+		add: #A to: 1;
+		cmp: #A with: 5.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 3.
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 0
+]
+
+{ #category : #test }
 BPAssemblyTest >> testAddTo [
 	| assembly vm |
 	assembly := BPAssembly new.
@@ -160,6 +181,27 @@ BPAssemblyTest >> testCmpWith4 [
 ]
 
 { #category : #test }
+BPAssemblyTest >> testCounter [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly
+		move: 1 to: #A;
+		label: #count;
+			add: #A to: 1;
+			cmp: #A with: 5;
+			jumpIfNotEqual: #count.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 5
+]
+
+{ #category : #test }
 BPAssemblyTest >> testFibonacci [
 	| assembly vm |
 	assembly := BPAssembly new.
@@ -192,7 +234,8 @@ BPAssemblyTest >> testInitialize [
 	assembly := BPAssembly new.
 	
 	self assert: assembly registers size equals: 8.
-	self assert: assembly addressOfNextInstructionToGenerate equals: (USER_MEMORY_ADDRESS + 7) asBPAddress
+	self assert: assembly reservedMemoryZones size equals: 4.
+	self assert: assembly addressOfNextInstructionToGenerate equals: 16r10023 asBPAddress
 ]
 
 { #category : #test }
@@ -218,7 +261,7 @@ BPAssemblyTest >> testJump [
 BPAssemblyTest >> testJump2 [
 	| assembly vm memoryBeforeStep |
 	assembly := BPAssembly new.
-	assembly jump: 16rE00000.
+	assembly jump: 16rE00000 asBPAddress.
 	
 	vm := BPVirtualMachine new
 				memory: assembly memory;

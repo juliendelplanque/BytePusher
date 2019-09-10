@@ -90,6 +90,16 @@ BPAddress >> hash [
 ]
 
 { #category : #accessing }
+BPAddress >> higherByte [
+	^ (self memoryAddress & 16rFF0000) >> 16
+]
+
+{ #category : #accessing }
+BPAddress >> lowerByte [
+	^ self memoryAddress & 16r0000FF
+]
+
+{ #category : #accessing }
 BPAddress >> memoryAddress [
 	^ memoryAddress
 ]
@@ -97,6 +107,11 @@ BPAddress >> memoryAddress [
 { #category : #accessing }
 BPAddress >> memoryAddress: anObject [
 	memoryAddress := anObject
+]
+
+{ #category : #accessing }
+BPAddress >> middleByte [
+	^ (self memoryAddress & 16r00FF00) >> 8
 ]
 
 { #category : #printing }
@@ -118,7 +133,7 @@ BPAddress >> store: aByte in: aByteArray [
 { #category : #writing }
 BPAddress >> writeOn: aByteArray at: address [
 	aByteArray
-		at: address + 1 put: (self memoryAddress & 16rFF0000) >> 16;
-		at: address + 2 put: (self memoryAddress & 16rFF00) >> 8;
-		at: address + 3 put: (self memoryAddress & 16rFF).
+		at: address + 1 put: self higherByte;
+		at: address + 2 put: self middleByte;
+		at: address + 3 put: self lowerByte.
 ]
