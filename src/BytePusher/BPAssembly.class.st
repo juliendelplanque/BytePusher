@@ -6,7 +6,7 @@ Class {
 		'memory',
 		'labels',
 		'addressOfNextInstructionToGenerate',
-		'firstMemoryAddress'
+		'referencesToFutureMemory'
 	],
 	#pools : [
 		'BPConstants'
@@ -80,7 +80,8 @@ BPAssembly >> add: source to: target [
 		from: BPAddZeroFlagPageBuilder startAddress
 		to: (self registerNamed: #ZERO)
 		jump: addressOfNextInstructionToGenerate + (9*INSTRUCTION_SIZE)) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress + (8*INSTRUCTION_SIZE).
-	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + (9*INSTRUCTION_SIZE)
+	self incrementAddressOfNextInstructionToGenerate: (9*INSTRUCTION_SIZE).
+	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE
 ]
 
 { #category : #adding }
@@ -92,6 +93,11 @@ BPAssembly >> addLabel: aBPLabel [
 		ifFalse: [ self error: 'A label is already named ' , aBPLabel label ].
 		
 	labels add: aBPLabel
+]
+
+{ #category : #initialization }
+BPAssembly >> addReferenceToFutureMemory: anAddress [
+	referencesToFutureMemory add: anAddress
 ]
 
 { #category : #accessing }
@@ -129,8 +135,8 @@ BPAssembly >> cmp: x with: y [
 		from: BPCmpPageBuilder startAddress
 		to: (self registerNamed: #ZERO)
 		jump: addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE)) writeOn: self at: (addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) memoryAddress.
-	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE)
-	
+	self incrementAddressOfNextInstructionToGenerate: (3*INSTRUCTION_SIZE).
+	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE
 ]
 
 { #category : #instructions }
@@ -142,9 +148,18 @@ BPAssembly >> db: constant [
 	self shouldBeImplemented
 ]
 
-{ #category : #testing }
-BPAssembly >> hasMemoryBeenWritten [
-	^ addressOfNextInstructionToGenerate ~= firstMemoryAddress
+{ #category : #'as yet unclassified' }
+BPAssembly >> incrementAddressOfNextInstructionToGenerate: anInteger [
+	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + anInteger.
+	referencesToFutureMemory := referencesToFutureMemory reject: [ :addr |
+		(addr accessInteger: self memory) asBPAddress < addressOfNextInstructionToGenerate ].
+]
+
+{ #category : #'as yet unclassified' }
+BPAssembly >> incrementReferencesToFutureMemory: anInteger [
+	referencesToFutureMemory := referencesToFutureMemory do: [ :addr |
+		((addr accessInteger: self memory) asBPAddress + anInteger)
+			writeOn: self memory at: addr memoryAddress ]
 ]
 
 { #category : #initialization }
@@ -164,6 +179,8 @@ BPAssembly >> initialize [
 	self serializeAddressOfNextInstructionToGenerate.
 	
 	labels := OrderedCollection new.
+	self resetReferencesToFutureMemory.
+	self addReferenceToFutureMemory: PROGRAM_COUNTER_ADDRESS asBPAddress
 ]
 
 { #category : #initialization }
@@ -188,7 +205,7 @@ BPAssembly >> jump: address [
 		from: 0
 		to: 0
 		jump: jmpAddress) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
-	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
+	self incrementAddressOfNextInstructionToGenerate: INSTRUCTION_SIZE.
 ]
 
 { #category : #instructions }
@@ -223,7 +240,8 @@ BPAssembly >> jumpIfNotEqual: address [
 		from: 0
 		to: 0
 		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
-	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE
+	self incrementAddressOfNextInstructionToGenerate: INSTRUCTION_SIZE.
+	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE
 ]
 
 { #category : #labelling }
@@ -279,7 +297,8 @@ BPAssembly >> move: source to: target [
 		from: fromAddress
 		to: toAddress
 		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
-	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
+	self incrementAddressOfNextInstructionToGenerate: INSTRUCTION_SIZE.
+	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE
 ]
 
 { #category : #instructions }
@@ -290,7 +309,8 @@ BPAssembly >> nop [
 		from: 0
 		to: 0
 		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
-	addressOfNextInstructionToGenerate := addressOfNextInstructionToGenerate + INSTRUCTION_SIZE.
+	self incrementAddressOfNextInstructionToGenerate: INSTRUCTION_SIZE.
+	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE
 ]
 
 { #category : #accessing }
@@ -301,6 +321,11 @@ BPAssembly >> registerNamed: aSymbol [
 { #category : #accessing }
 BPAssembly >> registers [
 	^ registers
+]
+
+{ #category : #initialization }
+BPAssembly >> resetReferencesToFutureMemory [
+	referencesToFutureMemory := OrderedCollection new
 ]
 
 { #category : #'private-instructions' }
@@ -314,6 +339,5 @@ BPAssembly >> savePC [
 
 { #category : #'as yet unclassified' }
 BPAssembly >> serializeAddressOfNextInstructionToGenerate [
-	addressOfNextInstructionToGenerate writeOn: self memory at: 2.
-	firstMemoryAddress := addressOfNextInstructionToGenerate.
+	addressOfNextInstructionToGenerate writeOn: self memory at: PROGRAM_COUNTER_ADDRESS
 ]

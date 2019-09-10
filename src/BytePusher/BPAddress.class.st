@@ -62,6 +62,16 @@ BPAddress >> access: aByteArray [
 	^ aByteArray at: self memoryAddress + 1
 ]
 
+{ #category : #accessing }
+BPAddress >> accessInteger: aByteArray [
+	"Access the 24-bits integer stored at myself in aByteArray.
+	 Indexing starts at 0 when using me, so I access index self + 1 in aByteArray.
+	"
+	^ ((self access: aByteArray) << 16)
+		| (((self + 1) access: aByteArray) << 8)
+			| ((self + 2) access: aByteArray)
+]
+
 { #category : #converting }
 BPAddress >> asBPAddress [
 	^ self
