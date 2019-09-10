@@ -47,3 +47,8 @@ BPReservedMemoryZone >> startAddress [
 BPReservedMemoryZone >> startAddress: anObject [
 	startAddress := anObject
 ]
+
+{ #category : #accessing }
+BPReservedMemoryZone >> typeName [
+	^ 'Reserved Memory Zone'
+]

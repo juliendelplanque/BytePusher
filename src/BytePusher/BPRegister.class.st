@@ -40,3 +40,8 @@ BPRegister >> endAddress [
 BPRegister >> startAddress [
 	^ self address
 ]
+
+{ #category : #accessing }
+BPRegister >> typeName [
+	^ 'Register'
+]

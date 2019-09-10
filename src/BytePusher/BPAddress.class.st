@@ -90,6 +90,12 @@ BPAddress >> hash [
 ]
 
 { #category : #accessing }
+BPAddress >> hex [
+	"Returns the hexadecimal string representing the address."
+	^ self memoryAddress printPaddedWith: $0 to: 7 base: 16
+]
+
+{ #category : #accessing }
 BPAddress >> higherByte [
 	^ (self memoryAddress & 16rFF0000) >> 16
 ]

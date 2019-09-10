@@ -13,6 +13,7 @@ Class {
 { #category : #factory }
 BPMemoryLayout class >> standard [
 	^ self new
+		name: 'Standard';
 		addAll: {
 		BPReservedMemoryZone name: #KEYBOARD_STATE startAddress: KEYBOARD_STATE_ADDRESS size: 2.
 		BPReservedMemoryZone name: #PROGRAM_COUNTER startAddress: PROGRAM_COUNTER_ADDRESS size: ADDRESS_SIZE.
@@ -65,10 +66,28 @@ BPMemoryLayout >> ensureLayoutObjectDoesNotCreateConflict: aLayoutObject [
 	
 ]
 
+{ #category : #'gt-inspector-extension' }
+BPMemoryLayout >> gtInspectorItemsIn: composite [
+	<gtInspectorPresentationOrder: 0> 
+	^ (composite fastTable)
+		title: 'Layout';
+		display: [ self layoutObjects ];
+		column: 'Name' 
+			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each name ];
+		column: 'Type'
+			evaluated: [ :each | each typeName ];
+		column: 'Start address' 
+			evaluated: [:each | each startAddress hex ];
+		column: 'End address' 
+			evaluated: [:each | each endAddress hex ];
+		beSingle;
+		yourself
+]
+
 { #category : #initialization }
 BPMemoryLayout >> initialize [
 	super initialize.
-	self layoutObjects: OrderedCollection new.
+	self layoutObjects: (SortedCollection sortBlock: [ :x :y | x startAddress < y startAddress ]).
 ]
 
 { #category : #accessing }
@@ -95,4 +114,9 @@ BPMemoryLayout >> reservedMemoryZoneNamed: aSymbol [
 BPMemoryLayout >> startAddress [
 	"Beginning of BytePusher memory, address is 0."
 	^ 0
+]
+
+{ #category : #accessing }
+BPMemoryLayout >> typeName [
+	^ 'Memory'
 ]

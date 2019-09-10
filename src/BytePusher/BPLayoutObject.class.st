@@ -39,3 +39,8 @@ BPLayoutObject >> printOn: aStream [
 BPLayoutObject >> startAddress [
 	^ self subclassResponsibility
 ]
+
+{ #category : #accessing }
+BPLayoutObject >> typeName [
+	^ self subclassResponsibility
+]
