@@ -59,7 +59,7 @@ BPAssembly >> add: source to: target [
 	 overwritten at runtime whatever what is written on it).
 	"
 	(BPInstruction
-		from: BPAddPageBuilder startAddress
+		from: (self reservedMemoryZoneNamed: #ADD_PAGE)
 		to: fromAddress
 		jump: addressOfNextInstructionToGenerate + (7*INSTRUCTION_SIZE)) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress + (6*INSTRUCTION_SIZE).
 	"Fourth, create the actual carry flag instruction (beware the 16 least
@@ -68,7 +68,7 @@ BPAssembly >> add: source to: target [
 	 overwritten at runtime whatever what is written on it).
 	"
 	(BPInstruction
-		from: BPAddCarryFlagPageBuilder startAddress
+		from: (self reservedMemoryZoneNamed: #ADD_CARY_FLAG_PAGE)
 		to: (self registerNamed: #CARRY)
 		jump: addressOfNextInstructionToGenerate + (8*INSTRUCTION_SIZE)) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress + (7*INSTRUCTION_SIZE).
 	"Third, create the actual zero flag instruction (beware the 16 least
@@ -77,7 +77,7 @@ BPAssembly >> add: source to: target [
 	 overwritten at runtime whatever what is written on it).
 	"
 	(BPInstruction
-		from: BPAddZeroFlagPageBuilder startAddress
+		from: (self reservedMemoryZoneNamed: #ADD_ZERO_FLAG_PAGE)
 		to: (self registerNamed: #ZERO)
 		jump: addressOfNextInstructionToGenerate + (9*INSTRUCTION_SIZE)) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress + (8*INSTRUCTION_SIZE).
 	self incrementAddressOfNextInstructionToGenerate: (9*INSTRUCTION_SIZE).
@@ -132,7 +132,7 @@ BPAssembly >> cmp: x with: y [
 		to: addressOfNextInstructionToGenerate + (2 * INSTRUCTION_SIZE) + 2
 		jump: addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) writeOn: self at: (addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) memoryAddress.
 	(BPInstruction
-		from: BPCmpPageBuilder startAddress
+		from: (self reservedMemoryZoneNamed: #CMP_PAGE)
 		to: (self registerNamed: #ZERO)
 		jump: addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE)) writeOn: self at: (addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) memoryAddress.
 	self incrementAddressOfNextInstructionToGenerate: (3*INSTRUCTION_SIZE).

@@ -28,6 +28,11 @@ BPReservedMemoryZone >> address [
 	^ self startAddress
 ]
 
+{ #category : #converting }
+BPReservedMemoryZone >> asBPAddress [
+	^ self address
+]
+
 { #category : #accessing }
 BPReservedMemoryZone >> endAddress [
 	^ endAddress
