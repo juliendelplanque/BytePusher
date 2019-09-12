@@ -171,8 +171,8 @@ BPAssembly >> initialize [
 	self serializeAddressOfNextInstructionToGenerate.
 	
 	PIXEL_POINTER_ADDRESS asBPAddress store: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: self memory.
-	AUDIO_POINTER_ADDRESS asBPAddress store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: self memory.
-	AUDIO_POINTER_ADDRESS asBPAddress + 1 store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address lowerByte in: self memory.
+	AUDIO_POINTER_ADDRESS asBPAddress store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address higherByte in: self memory.
+	AUDIO_POINTER_ADDRESS asBPAddress + 1 store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: self memory.
 	
 	labels := OrderedCollection new.
 	self resetReferencesToFutureMemory.
@@ -370,6 +370,7 @@ BPAssembly >> serializePC: aLabel [
 		to: programCounterAddress + 2
 		jump: addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE))
 			writeOn: self at: (addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) memoryAddress.
+	
 	self incrementAddressOfNextInstructionToGenerate: (3*INSTRUCTION_SIZE).
 	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE
 ]

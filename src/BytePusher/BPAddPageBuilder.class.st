@@ -4,11 +4,6 @@ Class {
 	#category : #'BytePusher-Assembly'
 }
 
-{ #category : #writing }
-BPAddPageBuilder class >> endAddress [
-	^ 16rE10000 asBPAddress - 1
-]
-
 { #category : #accessing }
 BPAddPageBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
@@ -18,7 +13,7 @@ BPAddPageBuilder class >> reservedMemoryZone [
 
 { #category : #writing }
 BPAddPageBuilder class >> startAddress [
-	^ 16rE00000 asBPAddress
+	^ 16r10000 asBPAddress
 ]
 
 { #category : #writing }

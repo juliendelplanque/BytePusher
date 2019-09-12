@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-BPAddZeroFlagPageBuilder class >> endAddress [
-	^ 16rE30000 asBPAddress - 1
-]
-
-{ #category : #accessing }
 BPAddZeroFlagPageBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
 		name: #ADD_ZERO_FLAG_PAGE;
@@ -21,7 +16,7 @@ BPAddZeroFlagPageBuilder class >> reservedMemoryZone [
 
 { #category : #accessing }
 BPAddZeroFlagPageBuilder class >> startAddress [
-	^ 16rE20000 asBPAddress
+	^ 16r20000 asBPAddress
 ]
 
 { #category : #writing }

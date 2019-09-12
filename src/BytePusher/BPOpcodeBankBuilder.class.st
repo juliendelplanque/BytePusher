@@ -4,9 +4,9 @@ Class {
 	#category : #'BytePusher-Assembly'
 }
 
-{ #category : #accessing }
+{ #category : #writing }
 BPOpcodeBankBuilder class >> endAddress [
-	^ self subclassResponsibility
+	^ self startAddress + 16rFFFF
 ]
 
 { #category : #accessing }

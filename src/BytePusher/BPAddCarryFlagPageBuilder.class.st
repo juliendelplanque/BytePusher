@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-BPAddCarryFlagPageBuilder class >> endAddress [
-	^ 16rE20000 asBPAddress - 1
-]
-
-{ #category : #accessing }
 BPAddCarryFlagPageBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
 		name: #ADD_CARY_FLAG_PAGE;
@@ -18,7 +13,7 @@ BPAddCarryFlagPageBuilder class >> reservedMemoryZone [
 
 { #category : #accessing }
 BPAddCarryFlagPageBuilder class >> startAddress [
-	^ 16rE10000 asBPAddress
+	^ 16r50000 asBPAddress
 ]
 
 { #category : #writing }

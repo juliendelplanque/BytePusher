@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-BPIdentityPageBuilder class >> endAddress [
-	^ 16rE50000 asBPAddress - 1
-]
-
-{ #category : #accessing }
 BPIdentityPageBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
 		name: #IDENTITY_PAGE;
@@ -18,7 +13,7 @@ BPIdentityPageBuilder class >> reservedMemoryZone [
 
 { #category : #accessing }
 BPIdentityPageBuilder class >> startAddress [
-	^ 16rE40000 asBPAddress
+	^ 16r40000 asBPAddress
 ]
 
 { #category : #writing }
