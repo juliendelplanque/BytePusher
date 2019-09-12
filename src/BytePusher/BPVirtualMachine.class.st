@@ -40,7 +40,9 @@ BPVirtualMachine >> innerStep [
 	
 	programCounter := self
 		extract: ADDRESS_SIZE
-		bytesStartingAt: programCounter + 6
+		bytesStartingAt: programCounter + 6.
+		
+	
 ]
 
 { #category : #accessing }
@@ -94,6 +96,7 @@ BPVirtualMachine >> memoryAt: anInteger [
 { #category : #'memory manipulation' }
 BPVirtualMachine >> memoryAt: anInteger put: aByte [
 	"Set the memory with index starting at 0 and finishing at self memory size - 1."
+	1 haltIf: [ anInteger = 16rE and: [ aByte = 3 ] ].
 	^ self memory at: anInteger + 1 put: aByte
 ]
 

@@ -1,6 +1,9 @@
 Class {
 	#name : #BPAddZeroFlagPageBuilder,
 	#superclass : #BPOpcodeBankBuilder,
+	#pools : [
+		'BPConstants'
+	],
 	#category : #'BytePusher-Assembly'
 }
 
@@ -29,5 +32,5 @@ BPAddZeroFlagPageBuilder >> writeBankOn: aByteArray [
 		y := address & 16rFF.
 		aByteArray
 			at: address + 1 "In byte pusher, addressing starts at 0, in Pharo it starts at 1."
-			put: (((x + y) % 16rFF = 0) ifTrue: [ 0 ] ifFalse: [ 9 ])	 ]
+			put: (((x + y) % 16rFF = 0) ifTrue: [ FALSE_VALUE ] ifFalse: [ TRUE_VALUE ])	 ]
 ]

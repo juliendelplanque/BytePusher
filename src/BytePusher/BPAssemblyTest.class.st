@@ -133,7 +133,7 @@ BPAssemblyTest >> testCmpWith2 [
 	
 	3 timesRepeat: [ vm innerStep ].
 	
-	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 3.
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: TRUE_VALUE.
 	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
 	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6
 ]
@@ -175,7 +175,7 @@ BPAssemblyTest >> testCmpWith4 [
 	
 	4 timesRepeat: [ vm innerStep ].
 	
-	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 3.
+	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: TRUE_VALUE.
 	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
 	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 0
 ]
@@ -317,7 +317,7 @@ BPAssemblyTest >> testJumpIfNotEqual2 [
 				loadProgramCounter;
 				yourself.
 	
-	100 timesRepeat: [ vm innerStep ].
+	200 timesRepeat: [ vm innerStep ].
 	
 	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
 	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6.

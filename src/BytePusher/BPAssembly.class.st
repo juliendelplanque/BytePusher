@@ -220,7 +220,7 @@ BPAssembly >> jumpIfNotEqual: address [
 									>> 8
 									<< 8) asBPAddress.
 	addressForEqual := addressForNotEqual + INSTRUCTION_SIZE.
-	
+	"1 halt."
 	(BPInstruction
 		from: (self registerNamed: #ZERO)
 		to: addressOfNextInstructionToGenerate + 8
