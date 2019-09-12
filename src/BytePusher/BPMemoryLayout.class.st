@@ -15,7 +15,8 @@ BPMemoryLayout class >> standard [
 	^ self new
 		name: 'Standard';
 		addAll: {
-		BPReservedMemoryZone name: #KEYBOARD_STATE startAddress: KEYBOARD_STATE_ADDRESS size: 2.
+		BPRegister name: #KEYBOARD_HIGH address: KEYBOARD_STATE_ADDRESS.
+		BPRegister name: #KEYBOARD_LOW address: KEYBOARD_STATE_ADDRESS + 1.
 		BPReservedMemoryZone name: #PROGRAM_COUNTER startAddress: PROGRAM_COUNTER_ADDRESS size: ADDRESS_SIZE.
 		BPReservedMemoryZone name: #DISPLAY_FRAME_POINTER startAddress: PIXEL_POINTER_ADDRESS size: 1.
 		BPReservedMemoryZone name: #AUDIO_SAMPLE_POINTER startAddress: AUDIO_POINTER_ADDRESS size: 2.

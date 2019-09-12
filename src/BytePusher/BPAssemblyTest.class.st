@@ -233,7 +233,7 @@ BPAssemblyTest >> testInitialize [
 	| assembly |
 	assembly := BPAssembly new.
 	
-	self assert: assembly registers size equals: 7.
+	self assert: assembly registers size equals: 9.
 	self assert: assembly addressOfNextInstructionToGenerate equals: 16r0020000 asBPAddress
 ]
 
