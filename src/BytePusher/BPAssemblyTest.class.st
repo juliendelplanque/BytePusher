@@ -300,6 +300,56 @@ BPAssemblyTest >> testJumpIfNotEqual [
 ]
 
 { #category : #test }
+BPAssemblyTest >> testJumpIfNotEqual2 [
+	| assembly vm |
+	assembly := BPAssembly new.
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 4.
+	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	assembly
+		label: #firstMove;
+		add: #A to: 1;
+		cmp: #A with: #B; "3 instructions"
+		jumpIfNotEqual: #firstMove; "2 instructions"
+		move: 3 to: #C. 
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #C) address memoryAddress) equals: 3.
+]
+
+{ #category : #test }
+BPAssemblyTest >> testJumpIfNotEqual3 [
+	| assembly vm |
+	assembly := BPAssembly new.
+	assembly memoryAt: (assembly registerNamed: #A) address memoryAddress put: 4.
+	assembly memoryAt: (assembly registerNamed: #B) address memoryAddress put: 6.
+	assembly
+		label: #firstMove;
+		add: #A to: 1;
+		cmp: #A with: #B; "3 instructions"
+		jumpIfNotEqual: #firstMove; "2 instructions"
+		move: #B to: #C. 
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+	
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6.
+	self assert: (assembly memoryAt: (assembly registerNamed: #C) address memoryAddress) equals: 6.
+]
+
+{ #category : #test }
 BPAssemblyTest >> testMoveTo [
 	| assembly lastInstructionMemoryAddress jumpMemoryAddress |
 	assembly := BPAssembly new.
@@ -433,4 +483,25 @@ BPAssemblyTest >> testMoveTo6 [
 	
 	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 5.
 	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 6.
+]
+
+{ #category : #test }
+BPAssemblyTest >> testSerializePC [
+	| assembly vm |
+	assembly := BPAssembly new.
+	
+	assembly
+		move: 5 to: #A;
+		label: #foo;
+		move: 6 to: #A;
+		serializePC: #foo.
+	
+	vm := BPVirtualMachine new
+				memory: assembly memory;
+				loadProgramCounter;
+				yourself.
+				
+	vm step.
+	
+	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembly labelNamed:#foo) address
 ]

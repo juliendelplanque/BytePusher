@@ -226,13 +226,13 @@ BPAssembly >> jumpIfNotEqual: address [
 		to: addressOfNextInstructionToGenerate + 8
 		jump: addressForNotEqual >> 8 << 8) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
 	
-	addressOfNextInstructionToGenerate := addressForNotEqual.
+	self incrementAddressOfNextInstructionToGenerate: addressForNotEqual memoryAddress - addressOfNextInstructionToGenerate memoryAddress.
 	(BPInstruction
 		from: 0
 		to: 0
 		jump: jmpAddress) writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
 		
-	addressOfNextInstructionToGenerate := addressForEqual.
+	self incrementAddressOfNextInstructionToGenerate: addressForEqual memoryAddress - addressOfNextInstructionToGenerate memoryAddress.
 	(BPInstruction
 		from: 0
 		to: 0
@@ -340,18 +340,38 @@ BPAssembly >> resetReferencesToFutureMemory [
 	referencesToFutureMemory := OrderedCollection new
 ]
 
-{ #category : #instructions }
-BPAssembly >> savePC [
-	"Generates an instruction that saves the current value of PC in PC register.
-	 This is required to handle subroutines.
-	"
-	"Will require an identity page (mem[EN00YZ] = YZ)."
-	self flag: #TODO.
-]
-
 { #category : #'as yet unclassified' }
 BPAssembly >> serializeAddressOfNextInstructionToGenerate [
 	addressOfNextInstructionToGenerate writeOn: self memory at: PROGRAM_COUNTER_ADDRESS
+]
+
+{ #category : #instructions }
+BPAssembly >> serializePC: aLabel [
+	"Generates an instruction that saves the address of aLabel in PC reserved memory zone.
+	 This is required to handle subroutines.
+	"
+	| labelAddress identityPageAddress programCounterAddress |
+	labelAddress := (self labelNamed: aLabel) address.
+	identityPageAddress := (self reservedMemoryZoneNamed: #IDENTITY_PAGE) startAddress.
+	programCounterAddress := (self reservedMemoryZoneNamed: #PROGRAM_COUNTER) startAddress.
+	
+	(BPInstruction
+		from: identityPageAddress + labelAddress higherByte
+		to: programCounterAddress
+		jump: addressOfNextInstructionToGenerate + INSTRUCTION_SIZE)
+			writeOn: self at: addressOfNextInstructionToGenerate memoryAddress.
+	(BPInstruction
+		from: identityPageAddress + labelAddress middleByte
+		to: programCounterAddress + 1
+		jump: addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE))
+			writeOn: self at: (addressOfNextInstructionToGenerate + INSTRUCTION_SIZE) memoryAddress.
+	(BPInstruction
+		from: identityPageAddress + labelAddress lowerByte
+		to: programCounterAddress + 2
+		jump: addressOfNextInstructionToGenerate + (3*INSTRUCTION_SIZE))
+			writeOn: self at: (addressOfNextInstructionToGenerate + (2*INSTRUCTION_SIZE)) memoryAddress.
+	self incrementAddressOfNextInstructionToGenerate: (3*INSTRUCTION_SIZE).
+	self addReferenceToFutureMemory: addressOfNextInstructionToGenerate - ADDRESS_SIZE
 ]
 
 { #category : #instructions }

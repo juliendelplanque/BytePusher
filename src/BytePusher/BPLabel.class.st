@@ -40,3 +40,13 @@ BPLabel >> label [
 BPLabel >> label: anObject [
 	label := anObject
 ]
+
+{ #category : #printing }
+BPLabel >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPut: $(.
+	self label printOn: aStream.
+	aStream nextPutAll: ' : '.
+	self address printOn: aStream.
+	aStream nextPut: $)
+]
