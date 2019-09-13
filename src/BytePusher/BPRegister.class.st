@@ -15,6 +15,12 @@ BPRegister class >> name: name address: address [
 		yourself
 ]
 
+{ #category : #visiting }
+BPRegister >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPRegister: self
+]
+
 { #category : #accessing }
 BPRegister >> address [
 	^ address

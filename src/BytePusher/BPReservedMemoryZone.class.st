@@ -22,6 +22,12 @@ BPReservedMemoryZone class >> name: aString startAddress: startAddress size: siz
 	^ self name: aString startAddress: startAddress endAddress: startAddress + size - 1
 ]
 
+{ #category : #visiting }
+BPReservedMemoryZone >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPReservedMemoryZone: self
+]
+
 { #category : #accessing }
 BPReservedMemoryZone >> address [
 	"To be polymorphic with BPRegister."

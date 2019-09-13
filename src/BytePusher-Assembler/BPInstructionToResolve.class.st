@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'from',
 		'to',
-		'jump'
+		'jump',
+		'address'
 	],
 	#category : #'BytePusher-Assembler'
 }
@@ -18,6 +19,32 @@ BPInstructionToResolve class >> from: from to: to jump: jump [
 		yourself
 ]
 
+{ #category : #visiting }
+BPInstructionToResolve >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPInstructionToResolve: self
+]
+
+{ #category : #accessing }
+BPInstructionToResolve >> address [
+	^ address
+]
+
+{ #category : #accessing }
+BPInstructionToResolve >> address: anObject [
+	address := anObject
+]
+
+{ #category : #converting }
+BPInstructionToResolve >> asReference [
+	^ BPReferenceToInstruction instruction: self
+]
+
+{ #category : #adding }
+BPInstructionToResolve >> beAddedTo: anAssembler [
+	anAssembler addInstruction: self
+]
+
 { #category : #accessing }
 BPInstructionToResolve >> from [
 	^ from
@@ -26,6 +53,11 @@ BPInstructionToResolve >> from [
 { #category : #accessing }
 BPInstructionToResolve >> from: anObject [
 	from := anObject
+]
+
+{ #category : #testing }
+BPInstructionToResolve >> isInstructionToResolve [
+	^ true
 ]
 
 { #category : #accessing }

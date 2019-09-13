@@ -54,6 +54,12 @@ BPAddress >> >> anInteger [
 	^ BPAddress memoryAddress: self memoryAddress >> anInteger
 ]
 
+{ #category : #visiting }
+BPAddress >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPAddress: self
+]
+
 { #category : #accessing }
 BPAddress >> access: aByteArray [
 	"Access the value stored at myself in aByteArray.
@@ -134,6 +140,24 @@ BPAddress >> store: aByte in: aByteArray [
 	 Indexing starts at 0 when using me, so I access index self + 1 in aByteArray.
 	"
 	^ aByteArray at: self memoryAddress + 1 put: aByte
+]
+
+{ #category : #accessing }
+BPAddress >> storeAddress: anAddress in: aByteArray [
+	"Store anAddress in aByteArray as 3 consecutive bytes starting at myself.
+	"
+	self storeInteger: anAddress memoryAddress in: aByteArray.
+		
+		
+]
+
+{ #category : #accessing }
+BPAddress >> storeInteger: anInteger in: aByteArray [
+	"Store anInteger in aByteArray in the 3 consecutive bytes starting at myself.
+	"
+	self store: anInteger >> 16 & 16rFF in: aByteArray.
+	self + 1 store: anInteger >> 8 & 16rFF in: aByteArray.
+	self + 2 store: anInteger & 16rFF in: aByteArray
 ]
 
 { #category : #writing }

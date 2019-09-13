@@ -16,6 +16,12 @@ BPAssembler class >> defaultMemoryLayout [
 	^ BPMemoryLayout standard
 ]
 
+{ #category : #visiting }
+BPAssembler >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPAssembler: self
+]
+
 { #category : #instructions }
 BPAssembler >> add: source to: target [
 	"Adds two numbers together and store result in source register.
@@ -26,12 +32,90 @@ BPAssembler >> add: source to: target [
 	ADD reg, address
 	ADD reg, constant
 	"
-	self shouldBeImplemented
+	| sourceForAssembler targetForAssembler instruction1 instruction2 instruction3 instruction4 instruction5 instruction6 instruction7 instruction8 instruction9 |
+	sourceForAssembler := source forAssembler: self.
+	targetForAssembler := target forAssembler: self.
+	"First, copy data at fromAddress to location of the add, carry and zero instructions."
+	instruction1 := BPInstructionToResolve new
+		from: sourceForAssembler;
+		beAddedTo: self.
+	instruction2 := BPInstructionToResolve new
+		from: sourceForAssembler;
+		beAddedTo: self.
+	instruction3 := BPInstructionToResolve new
+		from: sourceForAssembler;
+		beAddedTo: self.
+	"Second, copy data at toAddress to location of the add, carry and zero instructions."
+	instruction4 := BPInstructionToResolve new
+		from: targetForAssembler;
+		beAddedTo: self.
+	instruction5 := BPInstructionToResolve new
+		from: targetForAssembler;
+		beAddedTo: self.
+	instruction6 := BPInstructionToResolve new
+		from: targetForAssembler;
+		beAddedTo: self.
+	"Third, create the actual add instruction (beware the 16 least
+	 significant bit of the #from address
+	 will be set by the 2 previous instructions, so they it will be
+	 overwritten at runtime whatever what is written on it).
+	"
+	instruction7 := BPInstructionToResolve new
+		from: (self reservedMemoryZoneNamed: #ADD_PAGE);
+		to: sourceForAssembler;
+		beAddedTo: self.
+	"Fourth, create the actual carry flag instruction (beware the 16 least
+	 significant bit of the #from address
+	 will be set by the 2 previous instructions, so they it will be
+	 overwritten at runtime whatever what is written on it).
+	"
+	instruction8 := BPInstructionToResolve new
+		from: (self reservedMemoryZoneNamed: #ADD_CARY_FLAG_PAGE);
+		to: (self registerNamed: #CARRY);
+		beAddedTo: self.
+	"Third, create the actual zero flag instruction (beware the 16 least
+	 significant bit of the #from address
+	 will be set by the 2 previous instructions, so they it will be
+	 overwritten at runtime whatever what is written on it).
+	"
+	instruction9 := BPInstructionToResolve new
+		from: (self reservedMemoryZoneNamed: #ADD_ZERO_FLAG_PAGE);
+		to: (self registerNamed: #ZERO);
+		jump: BPNextInstructionReference new;
+		beAddedTo: self.
+	instruction1
+		to: (instruction7 asReference byteIndex: 1);
+		jump: instruction2 asReference.
+	instruction2
+		to: (instruction8 asReference byteIndex: 1);
+		jump: instruction3 asReference.
+	instruction3
+		to: (instruction9 asReference byteIndex: 1);
+		jump: instruction4 asReference.
+	instruction4
+		to: (instruction7 asReference byteIndex: 2);
+		jump: instruction5 asReference.
+	instruction5
+		to: (instruction8 asReference byteIndex: 2);
+		jump: instruction6 asReference.
+	instruction6
+		to: (instruction9 asReference byteIndex: 2);
+		jump: instruction7 asReference.
+	instruction7
+		jump: instruction8 asReference.
+	instruction8
+		jump: instruction9 asReference.
 ]
 
 { #category : #adding }
 BPAssembler >> addInstruction: anInstructionToResolve [
 	self instructions add: anInstructionToResolve
+]
+
+{ #category : #assembling }
+BPAssembler >> assemble [
+	self setAddresses.
+	^ self resolve
 ]
 
 { #category : #instructions }
@@ -44,7 +128,26 @@ BPAssembler >> cmp: x with: y [
 	CMP reg, address
 	CMP reg, constant
 	"
-	self shouldBeImplemented
+
+	| inst1 inst2 inst3 |
+	inst1 := BPInstructionToResolve new
+		from: (x forAssembler: self);
+		beAddedTo: self.
+	inst2 := BPInstructionToResolve new
+		from: (y forAssembler: self);
+		beAddedTo: self.
+	inst3 := BPInstructionToResolve new
+		from: (self reservedMemoryZoneNamed: #CMP_PAGE) address;
+		to: (self registerNamed: #ZERO) address;
+		jump: BPNextInstructionReference new;
+		beAddedTo: self.
+		
+	inst1
+		to: (inst3 asReference byteIndex: 1);
+		jump: inst2 asReference.
+	inst2
+		to: (inst3 asReference byteIndex: 2);
+		jump: inst3 asReference
 ]
 
 { #category : #instructions }
@@ -84,7 +187,8 @@ BPAssembler >> jump: address [
 
 	 JMP address
 	"
-	BPInstructionToResolve from: 0 asBPAddress to: 0 asBPAddress jump: address
+	(BPInstructionToResolve from: 0 asBPAddress to: 0 asBPAddress jump: (address forAssembler: self))
+		beAddedTo: self
 ]
 
 { #category : #instructions }
@@ -125,10 +229,11 @@ BPAssembler >> move: source to: target [
 	MOV address, reg
 	MOV address, constant
 	"
-	BPInstructionToResolve
-		from: source
-		to: target
-		jump: BPNextInstructionReference new
+	BPInstructionToResolve new
+		from: (source forAssembler: self);
+		to: (target forAssembler: self);
+		jump: BPNextInstructionReference new;
+		beAddedTo: self
 ]
 
 { #category : #instructions }
@@ -138,12 +243,32 @@ BPAssembler >> nop [
 	self shouldBeImplemented
 ]
 
+{ #category : #accessing }
+BPAssembler >> registerNamed: aSymbol [
+	^ self memoryLayout registerNamed: aSymbol
+]
+
+{ #category : #accessing }
+BPAssembler >> reservedMemoryZoneNamed: aSymbol [
+	^ self memoryLayout reservedMemoryZoneNamed: aSymbol
+]
+
+{ #category : #assembling }
+BPAssembler >> resolve [
+	^ BPReferencesResolver visit: self
+]
+
 { #category : #instructions }
 BPAssembler >> serializePC: aLabel [
 	"Generates an instruction that saves the address of aLabel in PC reserved memory zone.
 	 This is required to handle subroutines.
 	"
 	self shouldBeImplemented
+]
+
+{ #category : #assembling }
+BPAssembler >> setAddresses [
+	BPAddressesSetter visit: self
 ]
 
 { #category : #instructions }
