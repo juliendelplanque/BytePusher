@@ -9,7 +9,7 @@ Class {
 
 { #category : #test }
 BPAssemblerTest >> test2AddCompare [
-	| assembly vm |
+	| assembly vm memory |
 	assembly := BPAssembler new.
 	
 	assembly
@@ -18,14 +18,15 @@ BPAssemblerTest >> test2AddCompare [
 		add: #A to: 1;
 		cmp: #A with: 5.
 	
+	memory := assembly assemble serialize.
 	vm := BPVirtualMachine new
-				memory: assembly memory;
+				memory: memory;
 				loadProgramCounter;
 				yourself.
 	100 timesRepeat: [ vm innerStep ].
 	
-	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 3.
-	self assert: (assembly memoryAt: (assembly registerNamed: #ZERO) address memoryAddress) equals: 0
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 3.
+	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: 0.
 ]
 
 { #category : #test }
