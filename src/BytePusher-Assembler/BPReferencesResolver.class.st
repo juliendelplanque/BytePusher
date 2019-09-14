@@ -46,6 +46,7 @@ BPReferencesResolver >> visitBPInstructionToResolve: aBPInstructionToResolve [
 
 { #category : #visiting }
 BPReferencesResolver >> visitBPNextInstructionReference: aBPNextInstructionReference [
+	self flag: #TODO. "Manage offset"
 	^ [
 		((assembler instructions copyFrom: currentInstructionIndex + 1 to: assembler instructions size)
 			detect: #isInstructionToResolve) address

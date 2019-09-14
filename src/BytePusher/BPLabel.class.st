@@ -9,6 +9,13 @@ Class {
 }
 
 { #category : #'instance creation' }
+BPLabel class >> label: label [
+	^ self new
+		label: label;
+		yourself
+]
+
+{ #category : #'instance creation' }
 BPLabel class >> label: label address: address [
 	^ self new
 		label: label;

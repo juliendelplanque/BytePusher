@@ -83,6 +83,13 @@ BPAddress >> asBPAddress [
 	^ self
 ]
 
+{ #category : #converting }
+BPAddress >> asDataReference [
+	^ BPAddressDataReference new
+		address: self;
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 BPAddress >> forAssembler: aBPAssembler [ 
 	^ self

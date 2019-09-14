@@ -27,8 +27,9 @@ BPMemoryLayout class >> standard [
 		BPRegister name: #SP address: USER_MEMORY_ADDRESS + 4.
 		BPRegister name: #CARRY address: USER_MEMORY_ADDRESS + 5.
 		BPRegister name: #ZERO address: USER_MEMORY_ADDRESS + 6.
-		BPReservedMemoryZone name: #JUMP_IF_ZERO startAddress: USER_MEMORY_ADDRESS + 7 size: INSTRUCTION_SIZE.
-		BPReservedMemoryZone name: #JUMP_IF_NONZERO startAddress: USER_MEMORY_ADDRESS + 7 + INSTRUCTION_SIZE size: INSTRUCTION_SIZE.
+		BPReservedMemoryZone name: #RESERVED_BLANK startAddress: USER_MEMORY_ADDRESS + 7 size: 1.
+		BPReservedMemoryZone name: #JUMP_IF_ZERO startAddress: USER_MEMORY_ADDRESS + 8 size: INSTRUCTION_SIZE.
+		BPReservedMemoryZone name: #JUMP_IF_NONZERO startAddress: USER_MEMORY_ADDRESS + 8 + INSTRUCTION_SIZE size: INSTRUCTION_SIZE.
 		BPReservedMemoryZone name: #DISPLAY_FRAME startAddress: 16r60000 size: PIXELS_COUNT.
 		BPReservedMemoryZone name: #AUDIO_SAMPLE startAddress: 16r70000 size: AUDIO_SAMPLE_SIZE.
 		BPAddPageBuilder reservedMemoryZone.

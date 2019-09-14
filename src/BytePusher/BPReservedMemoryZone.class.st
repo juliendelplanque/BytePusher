@@ -22,6 +22,16 @@ BPReservedMemoryZone class >> name: aString startAddress: startAddress size: siz
 	^ self name: aString startAddress: startAddress endAddress: startAddress + size - 1
 ]
 
+{ #category : #arithmetic }
+BPReservedMemoryZone >> + anInteger [
+	^ BPOffsetReference on: self offset: anInteger
+]
+
+{ #category : #arithmetic }
+BPReservedMemoryZone >> - anInteger [
+	^ BPOffsetReference on: self offset: anInteger negated
+]
+
 { #category : #visiting }
 BPReservedMemoryZone >> acceptVisitor: aBPAssemblerVisitor [
 	<generated>

@@ -29,6 +29,13 @@ BPNextInstructionReference >> acceptVisitor: aBPAssemblerVisitor [
 	^ aBPAssemblerVisitor visitBPNextInstructionReference: self
 ]
 
+{ #category : #converting }
+BPNextInstructionReference >> asDataReference [
+	^ BPAddressDataReference new
+		address: self;
+		yourself
+]
+
 { #category : #accessing }
 BPNextInstructionReference >> byteIndex [
 	^ byteIndex
