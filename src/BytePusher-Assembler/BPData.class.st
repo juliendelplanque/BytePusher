@@ -28,6 +28,7 @@ BPData >> address [
 
 { #category : #accessing }
 BPData >> address: anObject [
+	1 haltIf: [ anObject isNil ].
 	address := anObject
 ]
 

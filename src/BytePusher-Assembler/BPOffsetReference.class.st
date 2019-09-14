@@ -16,6 +16,12 @@ BPOffsetReference class >> on: anObjectWithAddress offset: anInteger [
 		yourself
 ]
 
+{ #category : #visiting }
+BPOffsetReference >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPOffsetReference: self
+]
+
 { #category : #accessing }
 BPOffsetReference >> objectWithAddress [
 	^ objectWithAddress

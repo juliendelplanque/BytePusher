@@ -4,7 +4,10 @@ Extension { #name : #Symbol }
 Symbol >> forAssembler: anAssembly [
 	^ [ anAssembly registerNamed: self ]
 		on: NotFound
-		do: [ self error: 'Should create label declaration.' ]
+		do: [ |label|
+			label := BPLabel label: self.
+			anAssembly addInstruction: label.
+			label ]
 ]
 
 { #category : #'*BytePusher' }

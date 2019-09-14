@@ -1,10 +1,6 @@
 Class {
 	#name : #BPReferencesResolver,
 	#superclass : #BPAssemblerVisitor,
-	#instVars : [
-		'currentInstructionIndex',
-		'assembler'
-	],
 	#category : #'BytePusher-Assembler'
 }
 
@@ -14,14 +10,19 @@ BPReferencesResolver >> visitBPAddress: aBPAddress [
 ]
 
 { #category : #visiting }
+BPReferencesResolver >> visitBPAddressDataReference: aBPAddressDataReference [ 
+	self shouldBeImplemented.
+]
+
+{ #category : #visiting }
 BPReferencesResolver >> visitBPAssembler: aBPAssembler [
 	| assembled |
-	assembler := aBPAssembler.
 	assembled := BPAssembledCode new.
 	assembled memoryLayout: aBPAssembler memoryLayout.
-	aBPAssembler instructions doWithIndex: [ :instructionToResolve :index |
-		currentInstructionIndex := index.
-		assembled addInstruction: (self visit: instructionToResolve) ].
+	aBPAssembler instructions do: [ :instructionToResolve |
+		((self visit: instructionToResolve) in: [ :o | 
+			self flag: #TODO. "fix to avoid nil..."
+			o ifNotNil: [ assembled addInstruction: o ] ]) ].
 	^ assembled
 ]
 
@@ -45,14 +46,19 @@ BPReferencesResolver >> visitBPInstructionToResolve: aBPInstructionToResolve [
 ]
 
 { #category : #visiting }
+BPReferencesResolver >> visitBPLabel: aBPLabel [
+	self flag: #TODO. "fix to avoid nil..."
+	^ nil
+]
+
+{ #category : #visiting }
 BPReferencesResolver >> visitBPNextInstructionReference: aBPNextInstructionReference [
-	self flag: #TODO. "Manage offset"
-	^ [
-		((assembler instructions copyFrom: currentInstructionIndex + 1 to: assembler instructions size)
-			detect: #isInstructionToResolve) address
-	] on: NotFound do: [ 
-		self flag: #TODO. "Manage correctly the last instruction jump."
-		0 asBPAddress ]
+	self error: 'There should be no more BPNextInstructionReference to resolve at this step.'
+]
+
+{ #category : #visiting }
+BPReferencesResolver >> visitBPOffsetReference: aBPOffsetReference [
+	^ (self visit: aBPOffsetReference objectWithAddress) + aBPOffsetReference offset
 ]
 
 { #category : #visiting }

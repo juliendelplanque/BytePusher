@@ -64,3 +64,8 @@ BPAddressesSetter >> visitBPInstructionToResolve: aBPInstructionToResolve [
 	aBPInstructionToResolve address: self currentAddress.
 	self incrementCurrentAddress: INSTRUCTION_SIZE
 ]
+
+{ #category : #visiting }
+BPAddressesSetter >> visitBPLabel: aBPLabel [
+	aBPLabel address: self currentAddress.
+]

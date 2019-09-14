@@ -50,7 +50,7 @@ BPNextInstructionReference >> byteIndex: anObject [
 BPNextInstructionReference >> initialize [
 	super initialize.
 	self
-		offset: 1;
+		offset: 0;
 		byteIndex: 0
 ]
 

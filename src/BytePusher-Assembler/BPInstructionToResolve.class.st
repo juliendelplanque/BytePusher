@@ -67,6 +67,7 @@ BPInstructionToResolve >> jump [
 
 { #category : #accessing }
 BPInstructionToResolve >> jump: anObject [
+	1 haltIf: [ anObject class = BPProcessAddressDataReference ].
 	jump := anObject
 ]
 

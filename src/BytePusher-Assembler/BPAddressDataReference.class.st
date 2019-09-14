@@ -16,6 +16,12 @@ BPAddressDataReference class >> address: address byteIndex: byteIndex [
 		yourself
 ]
 
+{ #category : #visiting }
+BPAddressDataReference >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPAddressDataReference: self
+]
+
 { #category : #accessing }
 BPAddressDataReference >> address [
 	^ address
@@ -34,4 +40,10 @@ BPAddressDataReference >> byteIndex [
 { #category : #accessing }
 BPAddressDataReference >> byteIndex: anObject [
 	byteIndex := anObject
+]
+
+{ #category : #initialization }
+BPAddressDataReference >> initialize [
+	super initialize.
+	self byteIndex: 0
 ]

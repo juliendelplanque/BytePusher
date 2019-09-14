@@ -22,6 +22,12 @@ BPAssemblerVisitor >> visitBPAddress: aBPAddress [
 ]
 
 { #category : #visiting }
+BPAssemblerVisitor >> visitBPAddressDataReference: aBPAddressDataReference [
+	<generated>
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
 BPAssemblerVisitor >> visitBPAssembler: aBPAssembler [
 	<generated>
 	^ self subclassResponsibility
@@ -46,7 +52,19 @@ BPAssemblerVisitor >> visitBPInstructionToResolve: aBPInstructionToResolve [
 ]
 
 { #category : #visiting }
+BPAssemblerVisitor >> visitBPLabel: aBPLabel [
+	<generated>
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
 BPAssemblerVisitor >> visitBPNextInstructionReference: aBPNextInstructionReference [
+	<generated>
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
+BPAssemblerVisitor >> visitBPOffsetReference: aBPOffsetReference [
 	<generated>
 	^ self subclassResponsibility
 ]

@@ -23,6 +23,12 @@ BPLabel class >> label: label address: address [
 		yourself
 ]
 
+{ #category : #visiting }
+BPLabel >> acceptVisitor: aBPAssemblerVisitor [
+	<generated>
+	^ aBPAssemblerVisitor visitBPLabel: self
+]
+
 { #category : #accessing }
 BPLabel >> address [
 	^ address
@@ -36,6 +42,18 @@ BPLabel >> address: anObject [
 { #category : #converting }
 BPLabel >> asBPAddress [
 	^ self address
+]
+
+{ #category : #converting }
+BPLabel >> asDataReference [
+	^ BPAddressDataReference new
+		address: self;
+		yourself
+]
+
+{ #category : #testing }
+BPLabel >> isInstructionToResolve [
+	^ false
 ]
 
 { #category : #accessing }

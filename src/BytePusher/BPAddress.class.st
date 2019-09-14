@@ -90,6 +90,16 @@ BPAddress >> asDataReference [
 		yourself
 ]
 
+{ #category : #accessing }
+BPAddress >> byteAt: anInteger [
+	anInteger = 0
+		ifTrue: [ ^ self higherByte ].
+	anInteger = 1
+		ifTrue: [ ^ self middleByte ].
+	anInteger = 2
+		ifTrue: [ ^ self lowerByte ]
+]
+
 { #category : #'as yet unclassified' }
 BPAddress >> forAssembler: aBPAssembler [ 
 	^ self
@@ -142,7 +152,7 @@ BPAddress >> middleByte [
 BPAddress >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
-	aStream nextPutAll: (self memoryAddress printPaddedWith: $0 to: 7 base: 16).
+	aStream nextPutAll: (self memoryAddress printPaddedWith: $0 to: 6 base: 16).
 	aStream nextPut: $)
 ]
 
