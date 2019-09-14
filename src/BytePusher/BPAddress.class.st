@@ -83,6 +83,11 @@ BPAddress >> asBPAddress [
 	^ self
 ]
 
+{ #category : #'as yet unclassified' }
+BPAddress >> forAssembler: aBPAssembler [ 
+	^ self
+]
+
 { #category : #'assembly-dispatch' }
 BPAddress >> forAssembly: anAssembly [
 	^ self
