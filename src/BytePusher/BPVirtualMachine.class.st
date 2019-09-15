@@ -34,9 +34,6 @@ BPVirtualMachine >> initialize [
 
 { #category : #running }
 BPVirtualMachine >> innerStep [
-	1 haltIf: [ programCounter =  16r02006b ].
-	"(self
-	extract: 9 bytesStartingAt: 16r02006b) hex "
 	self
 		memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter + 3)
 		put: (self memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter)).

@@ -58,6 +58,12 @@ BPAssemblerVisitor >> visitBPLabel: aBPLabel [
 ]
 
 { #category : #visiting }
+BPAssemblerVisitor >> visitBPLabelReference: aBPLabelReference [
+	<generated>
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
 BPAssemblerVisitor >> visitBPNextInstructionReference: aBPNextInstructionReference [
 	<generated>
 	^ self subclassResponsibility

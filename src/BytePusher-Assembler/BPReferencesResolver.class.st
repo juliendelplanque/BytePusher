@@ -10,11 +10,6 @@ BPReferencesResolver >> visitBPAddress: aBPAddress [
 ]
 
 { #category : #visiting }
-BPReferencesResolver >> visitBPAddressDataReference: aBPAddressDataReference [ 
-	self shouldBeImplemented.
-]
-
-{ #category : #visiting }
 BPReferencesResolver >> visitBPAssembler: aBPAssembler [
 	| assembled |
 	assembled := BPAssembledCode new.

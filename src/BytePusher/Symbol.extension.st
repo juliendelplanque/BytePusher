@@ -1,13 +1,10 @@
 Extension { #name : #Symbol }
 
 { #category : #'*BytePusher' }
-Symbol >> forAssembler: anAssembly [
-	^ [ anAssembly registerNamed: self ]
+Symbol >> forAssembler: anAssembler [
+	^ [ anAssembler registerNamed: self ]
 		on: NotFound
-		do: [ |label|
-			label := BPLabel label: self.
-			anAssembly addInstruction: label.
-			label ]
+		do: [ BPLabelReference label: self]
 ]
 
 { #category : #'*BytePusher' }

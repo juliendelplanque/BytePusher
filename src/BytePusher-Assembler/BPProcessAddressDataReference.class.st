@@ -21,7 +21,7 @@ BPProcessAddressDataReference >> visitBPAddressDataReference: aBPAddressDataRefe
 		ifTrue: [ address := address address ].
 	address class = BPReferenceToInstruction
 		ifTrue: [ address := address instruction address ].
-		
+	
 	data := BPData byte: (address byteAt: aBPAddressDataReference byteIndex).
 	assembler instructions add: data before: (assembler instructions at: currentInstructionIndex).
 	data address: (assembler instructions at: currentInstructionIndex + 1) address.
