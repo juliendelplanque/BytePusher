@@ -26,7 +26,7 @@ BPAssemblerTest >> test2AddCompare [
 	100 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 3.
-	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: 0.
+	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: FALSE_VALUE.
 ]
 
 { #category : #test }
