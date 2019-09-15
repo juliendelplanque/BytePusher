@@ -38,6 +38,13 @@ BPReservedMemoryZone >> acceptVisitor: aBPAssemblerVisitor [
 	^ aBPAssemblerVisitor visitBPReservedMemoryZone: self
 ]
 
+{ #category : #reading }
+BPReservedMemoryZone >> access: aCollection [ 
+	^ ByteArray streamContents: [ :stream |
+		self address memoryAddress to: self endAddress memoryAddress do: [ :index |
+			stream nextPut: (aCollection at: index) ] ]
+]
+
 { #category : #accessing }
 BPReservedMemoryZone >> address [
 	"To be polymorphic with BPRegister."

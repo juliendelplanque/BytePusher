@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'instructions',
-		'memoryLayout'
+		'memoryLayout',
+		'labels'
 	],
 	#pools : [
 		'BPConstants'
@@ -14,6 +15,11 @@ Class {
 { #category : #adding }
 BPAssembledCode >> addInstruction: anInstruction [
 	self instructions add: anInstruction
+]
+
+{ #category : #labels }
+BPAssembledCode >> addLabel: aBPLabel [ 
+	labels add: aBPLabel
 ]
 
 { #category : #accessing }
@@ -36,6 +42,7 @@ BPAssembledCode >> gtInspectorItemsIn: composite [
 BPAssembledCode >> initialize [
 	super initialize.
 	self instructions: OrderedCollection new.
+	labels := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -46,6 +53,16 @@ BPAssembledCode >> instructions [
 { #category : #accessing }
 BPAssembledCode >> instructions: anObject [
 	instructions := anObject
+]
+
+{ #category : #accessing }
+BPAssembledCode >> labelNamed: aString [ 
+	^ labels detect: [ :label | label label = aString ]
+]
+
+{ #category : #accessing }
+BPAssembledCode >> labels [
+	^ labels
 ]
 
 { #category : #accessing }

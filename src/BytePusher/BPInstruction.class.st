@@ -42,6 +42,11 @@ BPInstruction >> address: anObject [
 	address := anObject
 ]
 
+{ #category : #assembling }
+BPInstruction >> beAssembledIn: aBPAssembledCode [ 
+	aBPAssembledCode addInstruction: self
+]
+
 { #category : #accessing }
 BPInstruction >> fromAddress [
 	^ fromAddress

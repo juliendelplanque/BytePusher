@@ -36,6 +36,11 @@ BPData >> asReference [
 	^ BPDataReference data: self
 ]
 
+{ #category : #assembling }
+BPData >> beAssembledIn: aBPAssembledCode [ 
+	aBPAssembledCode addInstruction: self
+]
+
 { #category : #accessing }
 BPData >> byte [
 	^ byte

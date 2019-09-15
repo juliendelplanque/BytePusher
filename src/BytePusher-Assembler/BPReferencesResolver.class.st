@@ -20,9 +20,8 @@ BPReferencesResolver >> visitBPAssembler: aBPAssembler [
 	assembled := BPAssembledCode new.
 	assembled memoryLayout: aBPAssembler memoryLayout.
 	aBPAssembler instructions do: [ :instructionToResolve |
-		((self visit: instructionToResolve) in: [ :o | 
-			self flag: #TODO. "fix to avoid nil..."
-			o ifNotNil: [ assembled addInstruction: o ] ]) ].
+		(self visit: instructionToResolve)
+			beAssembledIn: assembled ].
 	^ assembled
 ]
 
@@ -47,8 +46,7 @@ BPReferencesResolver >> visitBPInstructionToResolve: aBPInstructionToResolve [
 
 { #category : #visiting }
 BPReferencesResolver >> visitBPLabel: aBPLabel [
-	self flag: #TODO. "fix to avoid nil..."
-	^ nil
+	^ aBPLabel
 ]
 
 { #category : #visiting }

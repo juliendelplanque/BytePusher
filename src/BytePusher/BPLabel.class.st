@@ -51,6 +51,11 @@ BPLabel >> asDataReference [
 		yourself
 ]
 
+{ #category : #assembling }
+BPLabel >> beAssembledIn: aBPAssembledCode [ 
+	aBPAssembledCode addLabel: self
+]
+
 { #category : #testing }
 BPLabel >> isInstructionToResolve [
 	^ false
