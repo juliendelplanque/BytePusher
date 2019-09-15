@@ -5,7 +5,8 @@ Class {
 		'from',
 		'to',
 		'jump',
-		'address'
+		'address',
+		'tag'
 	],
 	#category : #'BytePusher-Assembler'
 }
@@ -69,6 +70,16 @@ BPInstructionToResolve >> jump [
 BPInstructionToResolve >> jump: anObject [
 	1 haltIf: [ anObject class = BPProcessAddressDataReference ].
 	jump := anObject
+]
+
+{ #category : #accessing }
+BPInstructionToResolve >> tag [
+	^ tag
+]
+
+{ #category : #accessing }
+BPInstructionToResolve >> tag: anObject [
+	tag := anObject
 ]
 
 { #category : #accessing }

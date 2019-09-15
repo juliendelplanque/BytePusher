@@ -32,11 +32,13 @@ BPReferencesResolver >> visitBPDataReference: aBPDataReference [
 
 { #category : #visiting }
 BPReferencesResolver >> visitBPInstructionToResolve: aBPInstructionToResolve [
-	^ BPInstruction
-		address: aBPInstructionToResolve address
-		from: (self visit: aBPInstructionToResolve from)
-		to: (self visit: aBPInstructionToResolve to)
-		jump: (self visit: aBPInstructionToResolve jump)
+	^ BPInstruction new
+		address: aBPInstructionToResolve address;
+		fromAddress: (self visit: aBPInstructionToResolve from);
+		toAddress: (self visit: aBPInstructionToResolve to);
+		jumpAddress: (self visit: aBPInstructionToResolve jump);
+		tag: aBPInstructionToResolve tag;
+		yourself
 ]
 
 { #category : #visiting }

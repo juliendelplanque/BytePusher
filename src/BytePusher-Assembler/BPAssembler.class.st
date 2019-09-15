@@ -85,26 +85,35 @@ BPAssembler >> add: source to: target [
 		beAddedTo: self.
 	instruction1
 		to: (instruction7 asReference byteIndex: 1);
-		jump: instruction2 asReference.
+		jump: instruction2 asReference;
+		tag: #add:to:.
 	instruction2
 		to: (instruction8 asReference byteIndex: 1);
-		jump: instruction3 asReference.
+		jump: instruction3 asReference;
+		tag: #add:to:.
 	instruction3
 		to: (instruction9 asReference byteIndex: 1);
-		jump: instruction4 asReference.
+		jump: instruction4 asReference;
+		tag: #add:to:.
 	instruction4
 		to: (instruction7 asReference byteIndex: 2);
-		jump: instruction5 asReference.
+		jump: instruction5 asReference;
+		tag: #add:to:.
 	instruction5
 		to: (instruction8 asReference byteIndex: 2);
-		jump: instruction6 asReference.
+		jump: instruction6 asReference;
+		tag: #add:to:.
 	instruction6
 		to: (instruction9 asReference byteIndex: 2);
-		jump: instruction7 asReference.
+		jump: instruction7 asReference;
+		tag: #add:to:.
 	instruction7
-		jump: instruction8 asReference.
+		jump: instruction8 asReference;
+		tag: #add:to:.
 	instruction8
-		jump: instruction9 asReference.
+		jump: instruction9 asReference;
+		tag: #add:to:.
+	instruction9 tag: #add:to:
 ]
 
 { #category : #adding }
@@ -146,10 +155,13 @@ BPAssembler >> cmp: x with: y [
 		
 	inst1
 		to: (inst3 asReference byteIndex: 1);
-		jump: inst2 asReference.
+		jump: inst2 asReference;
+		tag: #cmp:with:.
 	inst2
 		to: (inst3 asReference byteIndex: 2);
-		jump: inst3 asReference
+		jump: inst3 asReference;
+		tag: #cmp:with:.
+	inst3 tag: #cmp:with:
 ]
 
 { #category : #instructions }
@@ -190,6 +202,7 @@ BPAssembler >> jump: address [
 	 JMP address
 	"
 	(BPInstructionToResolve from: 0 asBPAddress to: 0 asBPAddress jump: (address forAssembler: self))
+		tag: #jump:;
 		beAddedTo: self
 ]
 
@@ -247,17 +260,25 @@ BPAssembler >> jumpIfNotEqual: address [
 		jump: (self reservedMemoryZoneNamed: #JUMP_IF_ZERO);
 		beAddedTo: self.
 	instruction1
-		jump: instruction2 asReference.
+		jump: instruction2 asReference;
+		tag: #jumpIfNotEqual:.
 	instruction2
-		jump: instruction3 asReference.
+		jump: instruction3 asReference;
+		tag: #jumpIfNotEqual:.
 	instruction3
-		jump: instruction4 asReference.
+		jump: instruction4 asReference;
+		tag: #jumpIfNotEqual:.
 	instruction4
-		jump: instruction5 asReference.
+		jump: instruction5 asReference;
+		tag: #jumpIfNotEqual:.
 	instruction5
-		jump: instruction6 asReference.
+		jump: instruction6 asReference;
+		tag: #jumpIfNotEqual:.
 	instruction6
-		jump: instruction7 asReference.
+		jump: instruction7 asReference;
+		tag: #jumpIfNotEqual:.
+	instruction7
+		tag: #jumpIfNotEqual:
 ]
 
 { #category : #labelling }
@@ -293,6 +314,7 @@ BPAssembler >> move: source to: target [
 		from: (source forAssembler: self);
 		to: (target forAssembler: self);
 		jump: BPNextInstructionReference new;
+		tag: #move:to:;
 		beAddedTo: self
 ]
 

@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'byte',
-		'address'
+		'address',
+		'tag'
 	],
 	#category : #'BytePusher-Assembler'
 }
@@ -67,6 +68,16 @@ BPData >> printOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: (self byte printPaddedWith: $0 to: 2 base: 16).
 	aStream nextPut: $)
+]
+
+{ #category : #accessing }
+BPData >> tag [
+	^ tag
+]
+
+{ #category : #accessing }
+BPData >> tag: anObject [
+	tag := anObject
 ]
 
 { #category : #writing }

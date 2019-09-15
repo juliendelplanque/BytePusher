@@ -5,7 +5,8 @@ Class {
 		'address',
 		'fromAddress',
 		'toAddress',
-		'jumpAddress'
+		'jumpAddress',
+		'tag'
 	],
 	#pools : [
 		'BPConstants'
@@ -82,6 +83,16 @@ BPInstruction >> printOn: aStream [
 	aStream nextPut: $,.
 	aStream nextPutAll: self jumpAddress hex.
 	aStream nextPut: $)
+]
+
+{ #category : #accessing }
+BPInstruction >> tag [
+	^ tag
+]
+
+{ #category : #accessing }
+BPInstruction >> tag: anObject [
+	tag := anObject
 ]
 
 { #category : #accessing }
