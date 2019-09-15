@@ -67,5 +67,5 @@ BPAddressesSetter >> visitBPInstructionToResolve: aBPInstructionToResolve [
 
 { #category : #visiting }
 BPAddressesSetter >> visitBPLabel: aBPLabel [
-	aBPLabel address: self currentAddress.
+	"Do nothing here, will be processed in next step."
 ]

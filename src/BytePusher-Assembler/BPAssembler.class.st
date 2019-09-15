@@ -125,6 +125,7 @@ BPAssembler >> addInstruction: anInstructionToResolve [
 BPAssembler >> assemble [
 	self setAddresses.
 	self resolveNextInstructionReferences.
+	self setLabelAddresses.
 	self processAddressDataReference.
 	^ self resolve
 ]
@@ -361,6 +362,11 @@ BPAssembler >> serializePC: aLabel [
 { #category : #assembling }
 BPAssembler >> setAddresses [
 	BPAddressesSetter visit: self
+]
+
+{ #category : #assembling }
+BPAssembler >> setLabelAddresses [
+	BPLabelAddressesSetter visit: self
 ]
 
 { #category : #instructions }

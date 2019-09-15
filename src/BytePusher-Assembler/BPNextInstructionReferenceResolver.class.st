@@ -53,7 +53,7 @@ BPNextInstructionReferenceResolver >> visitBPLabel: aBPLabel [
 ]
 
 { #category : #visiting }
-BPNextInstructionReferenceResolver >> visitBPLabelReference: aBPLabelReference [ 
+BPNextInstructionReferenceResolver >> visitBPLabelReference: aBPLabelReference [
 	^ assembler instructions detect: [ :instruction | instruction class = BPLabel and: [ instruction label = aBPLabelReference label ] ]
 ]
 

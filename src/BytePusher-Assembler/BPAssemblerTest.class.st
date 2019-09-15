@@ -315,13 +315,13 @@ BPAssemblerTest >> testJumpIfNotEqual2 [
 	assembly := BPAssembler new.
 
 	assembly
-		move: 4 to: #A;"1 instructions"
-		move: 6 to: #B;"1 instructions"
+		move: 4 to: #A; "1 instructions"
+		move: 6 to: #B; "1 instructions"
 		label: #firstMove;
-		add: #A to: 1;
+		add: #A to: 1; "9 instructions"
 		cmp: #A with: #B; "3 instructions"
 		jumpIfNotEqual: #firstMove; "8 instructions"
-		move: 3 to: #C. 
+		move: 3 to: #C. "1 instructions"
 	
 	memory := assembly assemble serialize.
 	vm := BPVirtualMachine new
@@ -329,7 +329,7 @@ BPAssemblerTest >> testJumpIfNotEqual2 [
 				loadProgramCounter;
 				yourself.
 	
-	23 timesRepeat: [ vm innerStep ].
+	45 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
