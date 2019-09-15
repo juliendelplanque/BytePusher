@@ -28,7 +28,6 @@ BPData >> address [
 
 { #category : #accessing }
 BPData >> address: anObject [
-	1 haltIf: [ anObject isNil ].
 	address := anObject
 ]
 
@@ -55,6 +54,14 @@ BPData >> isInstruction [
 { #category : #testing }
 BPData >> isInstructionToResolve [
 	^ false
+]
+
+{ #category : #printing }
+BPData >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPut: $(.
+	aStream nextPutAll: (self byte printPaddedWith: $0 to: 2 base: 16).
+	aStream nextPut: $)
 ]
 
 { #category : #writing }

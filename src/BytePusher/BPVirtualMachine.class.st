@@ -97,7 +97,6 @@ BPVirtualMachine >> memoryAt: anInteger [
 { #category : #'memory manipulation' }
 BPVirtualMachine >> memoryAt: anInteger put: aByte [
 	"Set the memory with index starting at 0 and finishing at self memory size - 1."
-	"1 haltIf: [ anInteger between: 16r02 and: 16r04 ]."
 	^ self memory at: anInteger + 1 put: aByte
 ]
 

@@ -67,6 +67,18 @@ BPInstruction >> jumpAddress: anObject [
 	jumpAddress := anObject
 ]
 
+{ #category : #printing }
+BPInstruction >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPut: $(.
+	aStream nextPutAll: self fromAddress hex.
+	aStream nextPut: $,.
+	aStream nextPutAll: self toAddress hex.
+	aStream nextPut: $,.
+	aStream nextPutAll: self jumpAddress hex.
+	aStream nextPut: $)
+]
+
 { #category : #accessing }
 BPInstruction >> toAddress [
 	^ toAddress

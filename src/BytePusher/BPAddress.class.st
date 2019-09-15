@@ -120,7 +120,7 @@ BPAddress >> hash [
 { #category : #accessing }
 BPAddress >> hex [
 	"Returns the hexadecimal string representing the address."
-	^ self memoryAddress printPaddedWith: $0 to: 7 base: 16
+	^ self memoryAddress printPaddedWith: $0 to: 6 base: 16
 ]
 
 { #category : #accessing }
@@ -152,7 +152,7 @@ BPAddress >> middleByte [
 BPAddress >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
-	aStream nextPutAll: (self memoryAddress printPaddedWith: $0 to: 6 base: 16).
+	aStream nextPutAll: self hex.
 	aStream nextPut: $)
 ]
 
