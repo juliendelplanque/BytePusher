@@ -5,7 +5,7 @@ Class {
 		'assembler',
 		'currentInstructionIndex'
 	],
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Visitors'
 }
 
 { #category : #visiting }

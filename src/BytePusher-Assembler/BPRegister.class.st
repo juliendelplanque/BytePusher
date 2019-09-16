@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'address'
 	],
-	#category : #'BytePusher-Assembly'
+	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #'instance creation' }

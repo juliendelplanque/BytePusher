@@ -1,10 +1,10 @@
 Class {
 	#name : #BPLabelReference,
-	#superclass : #Object,
+	#superclass : #BPReferenceToResolve,
 	#instVars : [
 		'label'
 	],
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Model'
 }
 
 { #category : #'instance creation' }

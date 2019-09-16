@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'memoryAddress'
 	],
-	#category : #'BytePusher-Assembly'
+	#category : #'BytePusher-Assembler-Model'
 }
 
 { #category : #'instance creation' }

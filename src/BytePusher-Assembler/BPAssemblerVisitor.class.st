@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'memoryLayout'
 	],
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Visitors'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #BPAddCarryFlagPageBuilder,
 	#superclass : #BPOpcodeBankBuilder,
-	#category : #'BytePusher-Assembly'
+	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #accessing }

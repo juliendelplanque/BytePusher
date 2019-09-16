@@ -6,7 +6,7 @@ Class {
 		'imageMorph',
 		'colorArray'
 	],
-	#category : #'BytePusher-Core'
+	#category : #'BytePusher-MorphDriver'
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 	#pools : [
 		'BPConstants'
 	],
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Assembler'
 }
 
 { #category : #accessing }

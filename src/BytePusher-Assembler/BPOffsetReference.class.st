@@ -5,7 +5,7 @@ Class {
 		'objectWithAddress',
 		'offset'
 	],
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Model'
 }
 
 { #category : #'as yet unclassified' }

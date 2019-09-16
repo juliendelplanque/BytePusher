@@ -5,7 +5,7 @@ Class {
 		'startAddress',
 		'endAddress'
 	],
-	#category : #'BytePusher-Assembly'
+	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #'instance creation' }

@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'BPConstants'
 	],
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Visitors'
 }
 
 { #category : #accessing }

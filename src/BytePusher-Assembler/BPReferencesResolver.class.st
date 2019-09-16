@@ -1,7 +1,7 @@
 Class {
 	#name : #BPReferencesResolver,
 	#superclass : #BPAssemblerVisitor,
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Visitors'
 }
 
 { #category : #visiting }

@@ -5,7 +5,7 @@ Class {
 		'instruction',
 		'byteIndex'
 	],
-	#category : #'BytePusher-Assembler'
+	#category : #'BytePusher-Assembler-Model'
 }
 
 { #category : #'instance creation' }

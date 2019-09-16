@@ -5,7 +5,7 @@ Class {
 		'label',
 		'address'
 	],
-	#category : #'BytePusher-Assembly'
+	#category : #'BytePusher-Assembler-Model'
 }
 
 { #category : #'instance creation' }

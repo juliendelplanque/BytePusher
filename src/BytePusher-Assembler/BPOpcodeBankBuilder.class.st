@@ -1,7 +1,7 @@
 Class {
 	#name : #BPOpcodeBankBuilder,
 	#superclass : #Object,
-	#category : #'BytePusher-Assembly'
+	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #writing }
