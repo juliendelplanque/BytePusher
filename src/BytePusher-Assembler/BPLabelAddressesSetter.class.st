@@ -15,11 +15,6 @@ BPLabelAddressesSetter >> visitBPAssembler: aBPAssembler [
 ]
 
 { #category : #visiting }
-BPLabelAddressesSetter >> visitBPData: aBPData [
-	^ aBPData
-]
-
-{ #category : #visiting }
 BPLabelAddressesSetter >> visitBPInstructionToResolve: aBPInstructionToResolve [
 	^ aBPInstructionToResolve
 ]

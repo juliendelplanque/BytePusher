@@ -2,8 +2,9 @@ Extension { #name : #Integer }
 
 { #category : #'*BytePusher-Assembler' }
 Integer >> forAssembler: anAssembler [
-	| data |
+	"| data |
 	data := BPData byte: self.
-	anAssembler addInstruction: data.
-	^ data asReference
+	^ data asReference"
+	self assert: (self between: 0 and: 255).
+	^ (anAssembler memoryLayout reservedMemoryZoneNamed: #IDENTITY_PAGE) + self
 ]

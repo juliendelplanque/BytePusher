@@ -96,6 +96,10 @@ BPAssembledCode >> serializeOn: aByteArray [
 	BPAddZeroFlagPageBuilder writeBankOn: aByteArray.
 	BPCmpPageBuilder writeBankOn: aByteArray.
 	BPIdentityPageBuilder writeBankOn: aByteArray.
+	"Creat the infinite NOP loop."
+	((self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * INSTRUCTION_SIZE))
+		storeAddress: (self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress in: aByteArray.
+	
 	self instructions do: [ :instruction |
 		instruction writeOn: aByteArray ]
 ]

@@ -13,17 +13,17 @@ BPAssemblerTest >> test2AddCompare [
 	assembly := BPAssembler new.
 	
 	assembly
-		move: 1 to: #A;
-		add: #A to: 1;
-		add: #A to: 1;
-		cmp: #A with: 5.
+		move: 1 to: #A; "1 instruction"
+		add: #A to: 1; "9 instructions"
+		add: #A to: 1; "9 instructions"
+		cmp: #A with: 5. "3 instructions"
 	
 	memory := assembly assemble serialize.
 	vm := BPVirtualMachine new
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	100 timesRepeat: [ vm innerStep ].
+	22 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 3.
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: FALSE_VALUE.
@@ -35,9 +35,9 @@ BPAssemblerTest >> testAddTo [
 	assembly := BPAssembler new.
 	
 	assembly
-		move: 5 to: #A;
-		move: 6 to: #B;
-		add: #A to: #B.
+		move: 5 to: #A; "1 instruction"
+		move: 6 to: #B; "1 instruction"
+		add: #A to: #B. "9 instructions"
 	
 	memory := assembly assemble serialize.
 	vm := BPVirtualMachine new
@@ -45,7 +45,7 @@ BPAssemblerTest >> testAddTo [
 				loadProgramCounter;
 				yourself.
 	
-	13 timesRepeat: [ vm innerStep ].
+	11 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -57,8 +57,8 @@ BPAssemblerTest >> testAddTo2 [
 	assembly := BPAssembler new.
 	
 	assembly
-		move: 5 to: #A;
-		add: #A to: 6.
+		move: 5 to: #A; "1 instruction"
+		add: #A to: 6. "9 instructions"
 	
 	memory := assembly assemble serialize.
 	vm := BPVirtualMachine new
@@ -66,7 +66,7 @@ BPAssemblerTest >> testAddTo2 [
 				loadProgramCounter;
 				yourself.
 	
-	13 timesRepeat: [ vm innerStep ].
+	10 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
@@ -156,7 +156,7 @@ BPAssemblerTest >> testCmpWith3 [
 				loadProgramCounter;
 				yourself.
 	
-	6 timesRepeat: [ vm innerStep ].
+	4 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: FALSE_VALUE.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
@@ -228,7 +228,7 @@ BPAssemblerTest >> testFibonacci [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	100 timesRepeat: [ vm innerStep ].
+	200 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 8.
 	self assert: ((assembly registerNamed: #C) address access: memory) equals: 5
@@ -502,7 +502,7 @@ BPAssemblerTest >> testMoveTo5 [
 
 { #category : #test }
 BPAssemblerTest >> testSerializePC [
-	| assembly vm |
+	| assembly vm memory assembled |
 	assembly := BPAssembler new.
 	
 	assembly
@@ -511,20 +511,22 @@ BPAssemblerTest >> testSerializePC [
 		move: 6 to: #A;
 		serializePC: #foo.
 	
+	assembled := assembly assemble.
+	memory := assembled serialize.
 	vm := BPVirtualMachine new
-				memory: assembly memory;
+				memory: memory;
 				loadProgramCounter;
 				yourself.
 				
 	vm step.
 	
-	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembly labelNamed:#foo) address.
-	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6
+	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed:#foo) address.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6
 ]
 
 { #category : #test }
 BPAssemblerTest >> testSerializePC2 [
-	| assembly vm |
+	| assembly vm assembled memory |
 	assembly := BPAssembler new.
 	
 	assembly
@@ -533,20 +535,22 @@ BPAssemblerTest >> testSerializePC2 [
 		serializePC: #foo;
 		move: 6 to: #A.
 	
+	assembled := assembly assemble.
+	memory := assembled serialize.
 	vm := BPVirtualMachine new
-				memory: assembly memory;
+				memory: memory;
 				loadProgramCounter;
 				yourself.
 				
 	vm step.
 	
-	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembly labelNamed: #foo) address.
-	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 6
+	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed: #foo) address.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6
 ]
 
 { #category : #test }
 BPAssemblerTest >> testSerializePC3 [
-	| assembly vm |
+	| assembly vm assembled memory |
 	assembly := BPAssembler new.
 	
 	assembly
@@ -560,17 +564,20 @@ BPAssemblerTest >> testSerializePC3 [
 		move: 16r00 to: #B;
 	serializePC: #start.
 	
+	assembled := assembly assemble.
+	memory := assembled serialize.
 	vm := BPVirtualMachine new
-				memory: assembly memory;
+				memory: memory;
+				loadProgramCounter;
 				yourself.
 				
 	vm step.
-	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 1.
-	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 0.
-	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembly labelNamed: #start) address.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 1.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
+	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed: #start) address.
 	
 	vm step.
-	self assert: (assembly memoryAt: (assembly registerNamed: #A) address memoryAddress) equals: 2.
-	self assert: (assembly memoryAt: (assembly registerNamed: #B) address memoryAddress) equals: 0.
-	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembly labelNamed: #start) address.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 2.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
+	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed: #start) address.
 ]

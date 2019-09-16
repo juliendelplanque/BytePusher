@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #visiting }
+BPReferencesResolver >> visit: anObject [
+	anObject isInteger
+		ifTrue: [ ^ anObject ].
+	^ super visit: anObject
+]
+
+{ #category : #visiting }
 BPReferencesResolver >> visitBPAddress: aBPAddress [
 	^ aBPAddress
 ]
@@ -18,16 +25,6 @@ BPReferencesResolver >> visitBPAssembler: aBPAssembler [
 		(self visit: instructionToResolve)
 			beAssembledIn: assembled ].
 	^ assembled
-]
-
-{ #category : #visiting }
-BPReferencesResolver >> visitBPData: aBPData [
-	^ aBPData
-]
-
-{ #category : #visiting }
-BPReferencesResolver >> visitBPDataReference: aBPDataReference [
-	^ aBPDataReference data address
 ]
 
 { #category : #visiting }
@@ -53,7 +50,7 @@ BPReferencesResolver >> visitBPNextInstructionReference: aBPNextInstructionRefer
 
 { #category : #visiting }
 BPReferencesResolver >> visitBPOffsetReference: aBPOffsetReference [
-	^ (self visit: aBPOffsetReference objectWithAddress) + aBPOffsetReference offset
+	^ (self visit: aBPOffsetReference objectWithAddress) + (self visit: aBPOffsetReference offset)
 ]
 
 { #category : #visiting }

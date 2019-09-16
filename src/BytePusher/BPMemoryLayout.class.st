@@ -30,6 +30,7 @@ BPMemoryLayout class >> standard [
 		BPReservedMemoryZone name: #RESERVED_BLANK startAddress: USER_MEMORY_ADDRESS + 7 size: 1.
 		BPReservedMemoryZone name: #JUMP_IF_ZERO startAddress: USER_MEMORY_ADDRESS + 8 size: INSTRUCTION_SIZE.
 		BPReservedMemoryZone name: #JUMP_IF_NONZERO startAddress: USER_MEMORY_ADDRESS + 8 + INSTRUCTION_SIZE size: INSTRUCTION_SIZE.
+		BPReservedMemoryZone name: #INFINITE_NOP startAddress: USER_MEMORY_ADDRESS + 8 + (2 * INSTRUCTION_SIZE) size: INSTRUCTION_SIZE.
 		BPReservedMemoryZone name: #DISPLAY_FRAME startAddress: 16r60000 size: PIXELS_COUNT.
 		BPReservedMemoryZone name: #AUDIO_SAMPLE startAddress: 16r70000 size: AUDIO_SAMPLE_SIZE.
 		BPAddPageBuilder reservedMemoryZone.
@@ -54,7 +55,7 @@ BPMemoryLayout >> addAll: aCollectionOfLayoutObjects [
 
 { #category : #accessing }
 BPMemoryLayout >> endAddress [
-	^ MEMORY_SIZE - 1
+	^ (MEMORY_SIZE - 1) asBPAddress
 ]
 
 { #category : #private }
@@ -132,7 +133,7 @@ BPMemoryLayout >> reservedMemoryZoneNamed: aSymbol [
 { #category : #accessing }
 BPMemoryLayout >> startAddress [
 	"Beginning of BytePusher memory, address is 0."
-	^ 0
+	^ 0 asBPAddress
 ]
 
 { #category : #accessing }

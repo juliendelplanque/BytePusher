@@ -9,25 +9,28 @@ Class {
 }
 
 { #category : #visiting }
+BPProcessAddressDataReference >> visit: anObject [
+	anObject isInteger
+		ifTrue: [ ^ anObject ].
+	^ super visit: anObject
+]
+
+{ #category : #visiting }
 BPProcessAddressDataReference >> visitBPAddress: aBPAddress [ 
 	^ aBPAddress
 ]
 
 { #category : #visiting }
 BPProcessAddressDataReference >> visitBPAddressDataReference: aBPAddressDataReference [ 
-	| address data |
+	| address |
 	address := aBPAddressDataReference address.
 	address class = BPLabel
 		ifTrue: [ address := address address ].
 	address class = BPReferenceToInstruction
 		ifTrue: [ address := address instruction address ].
 	
-	data := BPData byte: (address byteAt: aBPAddressDataReference byteIndex).
-	assembler instructions add: data before: (assembler instructions at: currentInstructionIndex).
-	data address: (assembler instructions at: currentInstructionIndex + 1) address.
-	currentInstructionIndex to: assembler instructions size do: [ :i |
-		(assembler instructions at: i) address: (assembler instructions at: i) address + 1 ].
-	^ data asReference
+	^ (self memoryLayout reservedMemoryZoneNamed: #IDENTITY_PAGE) address
+		+ (address byteAt: aBPAddressDataReference byteIndex)
 ]
 
 { #category : #visiting }
@@ -36,16 +39,6 @@ BPProcessAddressDataReference >> visitBPAssembler: aBPAssembler [
 	aBPAssembler instructions copy doWithIndex: [ :instructionToResolve :index |
 		currentInstructionIndex := index.
 		self visit: instructionToResolve ]
-]
-
-{ #category : #visiting }
-BPProcessAddressDataReference >> visitBPData: aBPData [ 
-	^ aBPData
-]
-
-{ #category : #visiting }
-BPProcessAddressDataReference >> visitBPDataReference: aBPDataReference [ 
-	^ aBPDataReference
 ]
 
 { #category : #visiting }
@@ -64,8 +57,10 @@ BPProcessAddressDataReference >> visitBPLabel: aBPLabel [
 
 { #category : #visiting }
 BPProcessAddressDataReference >> visitBPOffsetReference: aBPOffsetReference [ 
-	"Do nothing here, will be resolved later."
 	^ aBPOffsetReference
+		objectWithAddress: (self visit: aBPOffsetReference objectWithAddress);
+		offset: (self visit: aBPOffsetReference offset);
+		yourself
 ]
 
 { #category : #visiting }

@@ -9,6 +9,13 @@ Class {
 }
 
 { #category : #visiting }
+BPNextInstructionReferenceResolver >> visit: anObject [
+	anObject isInteger
+		ifTrue: [ ^ anObject ].
+	^ super visit: anObject
+]
+
+{ #category : #visiting }
 BPNextInstructionReferenceResolver >> visitBPAddress: aBPAddress [ 
 	^ aBPAddress
 ]
@@ -26,16 +33,6 @@ BPNextInstructionReferenceResolver >> visitBPAssembler: aBPAssembler [
 	aBPAssembler instructions copy doWithIndex: [ :instructionToResolve :index |
 		currentInstructionIndex := index.
 		self visit: instructionToResolve ]
-]
-
-{ #category : #visiting }
-BPNextInstructionReferenceResolver >> visitBPData: aBPData [ 
-	^ aBPData
-]
-
-{ #category : #visiting }
-BPNextInstructionReferenceResolver >> visitBPDataReference: aBPDataReference [ 
-	^ aBPDataReference
 ]
 
 { #category : #visiting }
@@ -69,13 +66,16 @@ BPNextInstructionReferenceResolver >> visitBPNextInstructionReference: aBPNextIn
 				offset = 0
 					ifTrue: [ ^ instruction asReference ]
 					ifFalse: [ offset := offset - 1 ] ] ].
-	self flag: #TODO. "Manage correctly the last instruction jump."
-	^ 0 asBPAddress
+	
+	^ (self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress
 ]
 
 { #category : #visiting }
 BPNextInstructionReferenceResolver >> visitBPOffsetReference: aBPOffsetReference [ 
 	^ aBPOffsetReference
+		objectWithAddress: (self visit: aBPOffsetReference objectWithAddress);
+		offset: (self visit: aBPOffsetReference offset);
+		yourself
 ]
 
 { #category : #visiting }
