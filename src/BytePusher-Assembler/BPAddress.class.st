@@ -100,12 +100,12 @@ BPAddress >> byteAt: anInteger [
 		ifTrue: [ ^ self lowerByte ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'assembler-dispatch' }
 BPAddress >> forAssembler: aBPAssembler [ 
 	^ self
 ]
 
-{ #category : #'assembly-dispatch' }
+{ #category : #'assembler-dispatch' }
 BPAddress >> forAssembly: anAssembly [
 	^ self
 ]

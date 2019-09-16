@@ -27,18 +27,6 @@ BPAssembledCode >> firstInstruction [
 	^ self instructions detect: #isInstruction
 ]
 
-{ #category : #'gt-inspector-extension' }
-BPAssembledCode >> gtInspectorItemsIn: composite [
-	<gtInspectorPresentationOrder: 0> 
-	^ composite fastTable
-		title: 'Instructions';
-		display: [ self instructions ];
-		wantsAutomaticRefresh: true;
-		column: 'Address' evaluated: [ :instruction | instruction address hex ] width: 75;
-		column: 'Instruction' evaluated: [ :instruction | GTObjectPrinter asTruncatedTextFrom: instruction ] width: 225;
-		column: 'Tag' evaluated: [ :instruction | GTObjectPrinter asTruncatedTextFrom: instruction tag ]
-]
-
 { #category : #initialization }
 BPAssembledCode >> initialize [
 	super initialize.
