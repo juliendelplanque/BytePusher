@@ -90,9 +90,9 @@ BPMemoryLayout >> gtInspectorItemsIn: composite [
 		column: 'Type'
 			evaluated: [ :each | each typeName ];
 		column: 'Start address' 
-			evaluated: [:each | each startAddress hex ];
+			evaluated: [:each | each startAddress hex ] width: 80;
 		column: 'End address' 
-			evaluated: [:each | each endAddress hex ];
+			evaluated: [:each | each endAddress hex ] width: 80;
 		beSingle;
 		yourself
 ]
