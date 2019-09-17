@@ -84,6 +84,13 @@ BPAddress >> asBPAddress [
 ]
 
 { #category : #converting }
+BPAddress >> asDataAccess [
+	^ BPAddressDataAccess new
+		address: self;
+		yourself
+]
+
+{ #category : #converting }
 BPAddress >> asDataReference [
 	^ BPAddressDataReference new
 		address: self;

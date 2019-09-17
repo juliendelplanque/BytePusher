@@ -4,7 +4,7 @@ Class {
 	#pools : [
 		'BPConstants'
 	],
-	#category : #'BytePusher-Assembler-Visitors'
+	#category : #'BytePusher-Assembler-Tests-Assembler'
 }
 
 { #category : #test }

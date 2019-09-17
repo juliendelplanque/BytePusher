@@ -360,17 +360,17 @@ BPAssembler >> serializePC: aSymbol [
 	labelAddress := aSymbol forAssembler: self.
 	
 	instruction1 := BPInstructionToResolve new
-		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + labelAddress asDataReference;
+		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + labelAddress asDataAccess;
 		to: (self reservedMemoryZoneNamed: #PROGRAM_COUNTER);
 		beAddedTo: self;
 		yourself.
 	instruction2 := BPInstructionToResolve new
-		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asDataReference byteIndex: 1);
+		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asDataAccess byteIndex: 1);
 		to: (self reservedMemoryZoneNamed: #PROGRAM_COUNTER) + 1;
 		beAddedTo: self;
 		yourself.
 	instruction3 := BPInstructionToResolve new
-		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asDataReference byteIndex: 2);
+		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asDataAccess byteIndex: 2);
 		to: (self reservedMemoryZoneNamed: #PROGRAM_COUNTER) + 2;
 		jump: BPNextInstructionReference new;
 		beAddedTo: self;

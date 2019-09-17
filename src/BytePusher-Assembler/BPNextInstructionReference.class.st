@@ -30,6 +30,13 @@ BPNextInstructionReference >> acceptVisitor: aBPAssemblerVisitor [
 ]
 
 { #category : #converting }
+BPNextInstructionReference >> asDataAccess [
+	^ BPAddressDataAccess new
+		address: self;
+		yourself
+]
+
+{ #category : #converting }
 BPNextInstructionReference >> asDataReference [
 	^ BPAddressDataReference new
 		address: self;

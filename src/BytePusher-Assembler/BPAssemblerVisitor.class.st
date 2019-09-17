@@ -45,6 +45,12 @@ BPAssemblerVisitor >> visitBPAddress: aBPAddress [
 ]
 
 { #category : #visiting }
+BPAssemblerVisitor >> visitBPAddressDataAccess: aBPAddressDataAccess [
+	<generated>
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
 BPAssemblerVisitor >> visitBPAddressDataReference: aBPAddressDataReference [
 	<generated>
 	^ self subclassResponsibility

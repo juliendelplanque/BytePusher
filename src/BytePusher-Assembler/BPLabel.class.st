@@ -45,6 +45,13 @@ BPLabel >> asBPAddress [
 ]
 
 { #category : #converting }
+BPLabel >> asDataAccess [
+	^ BPAddressDataAccess new
+		address: self;
+		yourself
+]
+
+{ #category : #converting }
 BPLabel >> asDataReference [
 	^ BPAddressDataReference new
 		address: self;

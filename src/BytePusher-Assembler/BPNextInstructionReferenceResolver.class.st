@@ -21,6 +21,13 @@ BPNextInstructionReferenceResolver >> visitBPAddress: aBPAddress [
 ]
 
 { #category : #visiting }
+BPNextInstructionReferenceResolver >> visitBPAddressDataAccess: aBPAddressDataAccess [ 
+	^ aBPAddressDataAccess
+		address: (self visit: aBPAddressDataAccess address);
+		yourself
+]
+
+{ #category : #visiting }
 BPNextInstructionReferenceResolver >> visitBPAddressDataReference: aBPAddressDataReference [ 
 	^ aBPAddressDataReference
 		address: (self visit: aBPAddressDataReference address);

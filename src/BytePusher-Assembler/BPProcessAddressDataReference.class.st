@@ -21,6 +21,11 @@ BPProcessAddressDataReference >> visitBPAddress: aBPAddress [
 ]
 
 { #category : #visiting }
+BPProcessAddressDataReference >> visitBPAddressDataAccess: aBPAddressDataAccess [ 
+	^ aBPAddressDataAccess address address byteAt: aBPAddressDataAccess byteIndex
+]
+
+{ #category : #visiting }
 BPProcessAddressDataReference >> visitBPAddressDataReference: aBPAddressDataReference [ 
 	| address |
 	address := aBPAddressDataReference address.

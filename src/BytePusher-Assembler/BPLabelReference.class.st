@@ -21,6 +21,13 @@ BPLabelReference >> acceptVisitor: aBPAssemblerVisitor [
 ]
 
 { #category : #converting }
+BPLabelReference >> asDataAccess [
+	^ BPAddressDataAccess new
+		address: self;
+		yourself
+]
+
+{ #category : #converting }
 BPLabelReference >> asDataReference [
 	^ BPAddressDataReference new
 		address: self;
