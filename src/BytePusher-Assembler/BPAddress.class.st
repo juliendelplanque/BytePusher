@@ -6,6 +6,9 @@ Class {
 	#instVars : [
 		'memoryAddress'
 	],
+	#pools : [
+		'BPConstants'
+	],
 	#category : #'BytePusher-Assembler-Model'
 }
 
@@ -99,12 +102,17 @@ BPAddress >> asDataReference [
 
 { #category : #accessing }
 BPAddress >> byteAt: anInteger [
+	"Access one of the bytes composing myself.
+	 anInteger can only be 0, 1 or 2.
+	"
 	anInteger = 0
 		ifTrue: [ ^ self higherByte ].
 	anInteger = 1
 		ifTrue: [ ^ self middleByte ].
 	anInteger = 2
-		ifTrue: [ ^ self lowerByte ]
+		ifTrue: [ ^ self lowerByte ].
+	
+	self error: 'A BytePusher address is encoded on 3 bytes.'
 ]
 
 { #category : #'assembler-dispatch' }
@@ -146,8 +154,10 @@ BPAddress >> memoryAddress [
 ]
 
 { #category : #accessing }
-BPAddress >> memoryAddress: anObject [
-	memoryAddress := anObject
+BPAddress >> memoryAddress: anInteger [
+	(anInteger between: 0 and: MAX_ADDRESS)
+		ifFalse: [ BPInvalidAddressValue signalForValue: anInteger ].
+	memoryAddress := anInteger
 ]
 
 { #category : #accessing }

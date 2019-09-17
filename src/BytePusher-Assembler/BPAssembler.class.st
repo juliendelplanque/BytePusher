@@ -362,21 +362,27 @@ BPAssembler >> serializePC: aSymbol [
 	instruction1 := BPInstructionToResolve new
 		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + labelAddress asDataAccess;
 		to: (self reservedMemoryZoneNamed: #PROGRAM_COUNTER);
-		beAddedTo: self;
+		tag: #serializePC:;
 		yourself.
 	instruction2 := BPInstructionToResolve new
 		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asDataAccess byteIndex: 1);
 		to: (self reservedMemoryZoneNamed: #PROGRAM_COUNTER) + 1;
-		beAddedTo: self;
+		tag: #serializePC:;
 		yourself.
 	instruction3 := BPInstructionToResolve new
 		from: (self reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asDataAccess byteIndex: 2);
 		to: (self reservedMemoryZoneNamed: #PROGRAM_COUNTER) + 2;
-		jump: BPNextInstructionReference new;
-		beAddedTo: self;
+		tag: #serializePC:;
 		yourself.
-	instruction1 jump: instruction2.
-	instruction2 jump: instruction3
+	instruction1
+		beAddedTo: self;
+		jump: instruction2 asReference.
+	instruction2
+		beAddedTo: self;
+		jump: instruction3 asReference.
+	instruction3
+		beAddedTo: self;
+		jump: BPNextInstructionReference new
 ]
 
 { #category : #assembling }

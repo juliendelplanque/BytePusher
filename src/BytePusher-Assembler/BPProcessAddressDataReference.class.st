@@ -21,7 +21,7 @@ BPProcessAddressDataReference >> visitBPAddress: aBPAddress [
 ]
 
 { #category : #visiting }
-BPProcessAddressDataReference >> visitBPAddressDataAccess: aBPAddressDataAccess [ 
+BPProcessAddressDataReference >> visitBPAddressDataAccess: aBPAddressDataAccess [
 	^ aBPAddressDataAccess address address byteAt: aBPAddressDataAccess byteIndex
 ]
 
@@ -52,7 +52,7 @@ BPProcessAddressDataReference >> visitBPInstructionToResolve: aBPInstructionToRe
 		from: (self visit: aBPInstructionToResolve from);
 		to: (self visit: aBPInstructionToResolve to);
 		jump: (self visit: aBPInstructionToResolve jump);
-		yourself
+		address
 ]
 
 { #category : #visiting }

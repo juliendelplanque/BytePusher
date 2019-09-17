@@ -50,7 +50,7 @@ BPReferencesResolver >> visitBPNextInstructionReference: aBPNextInstructionRefer
 
 { #category : #visiting }
 BPReferencesResolver >> visitBPOffsetReference: aBPOffsetReference [
-	^ (self visit: aBPOffsetReference objectWithAddress) + (self visit: aBPOffsetReference offset)
+	^ (self visit: aBPOffsetReference objectWithAddress) + aBPOffsetReference offset
 ]
 
 { #category : #visiting }

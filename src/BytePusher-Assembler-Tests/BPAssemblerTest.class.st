@@ -558,7 +558,7 @@ BPAssemblerTest >> testSerializePC3 [
 		move: 16r00 to: #B;
 		label: #start;
 			add: #B to: 1;
-			cmp: #B with: 255;
+			cmp: #B with: 100;
 			jumpIfNotEqual: #start;
 		add: #A to: 1;
 		move: 16r00 to: #B;

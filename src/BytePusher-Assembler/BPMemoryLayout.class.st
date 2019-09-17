@@ -55,7 +55,7 @@ BPMemoryLayout >> addAll: aCollectionOfLayoutObjects [
 
 { #category : #accessing }
 BPMemoryLayout >> endAddress [
-	^ (MEMORY_SIZE - 1) asBPAddress
+	^ MAX_ADDRESS asBPAddress
 ]
 
 { #category : #private }
