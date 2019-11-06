@@ -117,16 +117,36 @@ BPAddressTest >> testStoreAddressIn [
 
 { #category : #test }
 BPAddressTest >> testStoreIn [
-
-	self flag: #toImplement.
-	self assert: false
+	| memory |
+	memory := #[0 0 0 0 0].
+	16r0 asBPAddress store: 1 in: memory.
+	self assert: memory equals: #[1 0 0 0 0].
+	
+	16r4 asBPAddress store: 2 in: memory.
+	
+	self assert: memory equals: #[1 0 0 0 2].
+	
+	self
+		should: [ 16r5 asBPAddress store: 2 in: memory ]
+		raise: SubscriptOutOfBounds
+		withExceptionDo: [ :error |
+			self assert: error subscript equals: 16r5.
+			self assert: error lowerBound equals: 0.
+			self assert: error upperBound equals: 4.
+			self assert: error signaler equals: memory ]
 ]
 
 { #category : #test }
 BPAddressTest >> testStoreIntegerIn [
-
-	self flag: #toImplement.
-	self assert: false
+	| memory |
+	memory := #[0 0 0 0 0].
+	16r0 asBPAddress storeInteger: 16rABCDEF in: memory.
+	self assert: memory equals: #[16rAB 16rCD 16rEF 0 0].
+	
+	16r2 asBPAddress storeInteger: 16rABCDEF in: memory.
+	self assert: memory equals: #[16rAB 16rCD 16rAB 16rCD 16rEF].
+	
+	self should: [ 16r4 asBPAddress storeInteger: 16rABCDEF in: memory ] raise: SubscriptOutOfBounds
 ]
 
 { #category : #test }

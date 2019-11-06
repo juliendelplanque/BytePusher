@@ -178,6 +178,8 @@ BPAddress >> store: aByte in: aByteArray [
 	"Store aByte in aByteArray.
 	 Indexing starts at 0 when using me, so I access index self + 1 in aByteArray.
 	"
+	(self memoryAddress between: 0 and: aByteArray size - 1)
+		ifFalse: [ SubscriptOutOfBounds signalFor: self memoryAddress lowerBound: 0 upperBound: aByteArray size - 1 in: aByteArray ].
 	^ aByteArray at: self memoryAddress + 1 put: aByte
 ]
 
