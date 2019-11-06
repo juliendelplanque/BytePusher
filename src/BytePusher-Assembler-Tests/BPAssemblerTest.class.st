@@ -246,7 +246,7 @@ BPAssemblerTest >> testInitialize [
 BPAssemblerTest >> testJump [
 	| assembly vm memoryBeforeStep memory |
 	assembly := BPAssembler new.
-	assembly jump: (BPAddress memoryAddress: 16rE00000).
+	assembly jump: (BPAddress memoryAddress: 16rE0000).
 	
 	memory := assembly assemble serialize.
 	vm := BPVirtualMachine new
@@ -258,7 +258,7 @@ BPAssemblerTest >> testJump [
 	
 	vm innerStep.
 	
-	self assert: vm programCounter equals: 16rE00000.
+	self assert: vm programCounter equals: 16rE0000.
 	self assert: vm memory equals: memoryBeforeStep
 ]
 
@@ -266,7 +266,7 @@ BPAssemblerTest >> testJump [
 BPAssemblerTest >> testJump2 [
 	| assembly vm memoryBeforeStep memory |
 	assembly := BPAssembler new.
-	assembly jump: 16rE00000 asBPAddress.
+	assembly jump: 16rE0000 asBPAddress.
 	
 	memory := assembly assemble serialize.
 	vm := BPVirtualMachine new
@@ -278,7 +278,7 @@ BPAssemblerTest >> testJump2 [
 	
 	vm innerStep.
 	
-	self assert: vm programCounter equals: 16rE00000.
+	self assert: vm programCounter equals: 16rE0000.
 	self assert: vm memory equals: memoryBeforeStep
 ]
 
