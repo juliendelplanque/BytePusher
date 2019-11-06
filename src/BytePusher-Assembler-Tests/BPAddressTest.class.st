@@ -110,9 +110,15 @@ BPAddressTest >> testMiddleByte [
 
 { #category : #test }
 BPAddressTest >> testStoreAddressIn [
-
-	self flag: #toImplement.
-	self assert: false
+	| memory |
+	memory := #[0 0 0 0 0].
+	16r0 asBPAddress storeAddress: 16r00ABCD asBPAddress in: memory.
+	self assert: memory equals: #[16r00 16rAB 16rCD 0 0].
+	
+	16r2 asBPAddress storeAddress: 16r00ABCD asBPAddress in: memory.
+	self assert: memory equals: #[16r00 16rAB 16r00 16rAB 16rCD ].
+	
+	self should: [ 16r4 asBPAddress storeAddress: 16r00ABCD asBPAddress in: memory ] raise: SubscriptOutOfBounds
 ]
 
 { #category : #test }
