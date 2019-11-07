@@ -111,7 +111,7 @@ BPAddressTest >> testMiddleByte [
 { #category : #test }
 BPAddressTest >> testStoreAddressIn [
 	| memory |
-	memory := #[0 0 0 0 0].
+	memory := #[0 0 0 0 0] shallowCopy.
 	16r0 asBPAddress storeAddress: 16r00ABCD asBPAddress in: memory.
 	self assert: memory equals: #[16r00 16rAB 16rCD 0 0].
 	
@@ -124,7 +124,7 @@ BPAddressTest >> testStoreAddressIn [
 { #category : #test }
 BPAddressTest >> testStoreIn [
 	| memory |
-	memory := #[0 0 0 0 0].
+	memory := #[0 0 0 0 0] shallowCopy.
 	16r0 asBPAddress store: 1 in: memory.
 	self assert: memory equals: #[1 0 0 0 0].
 	
@@ -145,7 +145,7 @@ BPAddressTest >> testStoreIn [
 { #category : #test }
 BPAddressTest >> testStoreIntegerIn [
 	| memory |
-	memory := #[0 0 0 0 0].
+	memory := #[0 0 0 0 0] shallowCopy.
 	16r0 asBPAddress storeInteger: 16rABCDEF in: memory.
 	self assert: memory equals: #[16rAB 16rCD 16rEF 0 0].
 	
