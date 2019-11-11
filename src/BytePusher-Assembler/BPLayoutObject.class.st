@@ -26,7 +26,9 @@ BPLayoutObject >> addressesInterval [
 
 { #category : #accessing }
 BPLayoutObject >> endAddress [
-	"Returns the end address (included) of the object in the memory."
+	"Returns the end address (included) of the object in the memory.
+	 The returned address must be a BPAddress instance.
+	"
 	^ self subclassResponsibility
 ]
 
@@ -60,7 +62,9 @@ BPLayoutObject >> printOn: aStream [
 
 { #category : #accessing }
 BPLayoutObject >> startAddress [
-	"Returns the start address (included) of the object in the memory."
+	"Returns the start address (included) of the object in the memory.
+	 The returned address must be a BPAddress instance.
+	"
 	^ self subclassResponsibility
 ]
 

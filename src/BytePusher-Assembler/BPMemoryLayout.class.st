@@ -1,3 +1,16 @@
+"
+I model the whole layout of BytePusher VM memory.
+I am a composite object containing registers and reserved memory zones.
+My purpose is to describe to the assembler how the memory is organized allowing it to know how to generate the bytecode.
+
+My #startAddress and #endAddress are defined by BytePusher specifications.
+
+I provide a nice API to manipulate my registers and reserved memory zones.
+
+I also ensure that the memory layout built by my client is consistent (none of my layout objects overlap in the memory).
+
+For an example of memory layout, check my class-side method #standard.
+"
 Class {
 	#name : #BPMemoryLayout,
 	#superclass : #BPLayoutObject,
@@ -55,6 +68,7 @@ BPMemoryLayout >> addAll: aCollectionOfLayoutObjects [
 
 { #category : #accessing }
 BPMemoryLayout >> endAddress [
+	"The end address is the maximal address specified by BytePusher specifications."
 	^ MAX_ADDRESS asBPAddress
 ]
 
