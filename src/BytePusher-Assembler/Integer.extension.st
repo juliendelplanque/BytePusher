@@ -7,9 +7,7 @@ Integer >> asBPAddress [
 
 { #category : #'*BytePusher-Assembler' }
 Integer >> forAssembler: anAssembler [
-	"| data |
-	data := BPData byte: self.
-	^ data asReference"
-	self assert: (self between: 0 and: 255).
+	(self between: 0 and: 255)
+		ifFalse: [ BPNotAByte signalForValue: self ].
 	^ (anAssembler memoryLayout reservedMemoryZoneNamed: #IDENTITY_PAGE) + self
 ]
