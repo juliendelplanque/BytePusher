@@ -7,6 +7,7 @@ BPAssembledCode >> gtInspectorItemsIn: composite [
 		title: 'Instructions';
 		display: [ self instructions ];
 		wantsAutomaticRefresh: true;
+		column: 'Label' evaluated: [ :instruction | self labelFor: instruction ifFound: #label ifNone: [ '' ] ] width: 100;
 		column: 'Address' evaluated: [ :instruction | instruction address hex ] width: 75;
 		column: 'Source' evaluated: [ :instruction | instruction fromAddress hex ] width: 75;
 		column: 'Target' evaluated: [ :instruction | instruction toAddress hex ] width: 75;

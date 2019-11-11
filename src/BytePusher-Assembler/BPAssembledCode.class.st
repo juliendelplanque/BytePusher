@@ -45,6 +45,14 @@ BPAssembledCode >> instructions: anObject [
 ]
 
 { #category : #accessing }
+BPAssembledCode >> labelFor: anInstruction ifFound: foundBlock ifNone: notFoundBlock [
+	^ self labels
+		detect: [ :label | label address = anInstruction address ]
+		ifFound: foundBlock
+		ifNone: notFoundBlock
+]
+
+{ #category : #accessing }
 BPAssembledCode >> labelNamed: aString [ 
 	^ labels detect: [ :label | label label = aString ]
 ]

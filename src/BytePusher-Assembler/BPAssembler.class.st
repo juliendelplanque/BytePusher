@@ -165,15 +165,6 @@ BPAssembler >> cmp: x with: y [
 	inst3 tag: #cmp:with:
 ]
 
-{ #category : #instructions }
-BPAssembler >> db: constant [
-	"Defines a variable. A variable can either be a single number, character or a string.
-
-	DB constant
-	"
-	self shouldBeImplemented
-]
-
 { #category : #accessing }
 BPAssembler >> defaultMemoryLayout [
 	^ self class defaultMemoryLayout
