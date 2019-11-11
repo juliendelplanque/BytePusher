@@ -1,3 +1,9 @@
+"
+I am a reserved memory zone that simulate a register.
+Such register hold one byte of data.
+
+When a register is defined for a memory layout, the developer can refer to it via its name.
+"
 Class {
 	#name : #BPRegister,
 	#superclass : #BPLayoutObject,

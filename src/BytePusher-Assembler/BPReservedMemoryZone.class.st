@@ -1,3 +1,12 @@
+"
+I model a zone of the memory that has been reserved for a specific purpose.
+
+Example of such zones are:
+- Sound sample
+- Pixels data
+- Opcode bank
+- etc...
+"
 Class {
 	#name : #BPReservedMemoryZone,
 	#superclass : #BPLayoutObject,
