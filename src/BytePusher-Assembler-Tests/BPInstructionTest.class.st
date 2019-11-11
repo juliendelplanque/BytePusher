@@ -13,10 +13,3 @@ BPInstructionTest >> testWriteOn [
 	self flag: #toImplement.
 	self assert: false
 ]
-
-{ #category : #test }
-BPInstructionTest >> testWriteOnAt [
-
-	self flag: #toImplement.
-	self assert: false
-]

@@ -203,6 +203,7 @@ BPAddress >> storeInteger: anInteger in: aByteArray [
 
 { #category : #writing }
 BPAddress >> writeOn: aByteArray at: address [
+	self deprecated: 'Was used in old assembler.'.
 	aByteArray
 		at: address + 1 put: self higherByte;
 		at: address + 2 put: self middleByte;

@@ -154,10 +154,3 @@ BPAddressTest >> testStoreIntegerIn [
 	
 	self should: [ 16r4 asBPAddress storeInteger: 16rABCDEF in: memory ] raise: SubscriptOutOfBounds
 ]
-
-{ #category : #test }
-BPAddressTest >> testWriteOnAt [
-
-	self flag: #toImplement.
-	self assert: false
-]

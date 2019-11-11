@@ -115,6 +115,7 @@ BPInstruction >> writeOn: aByteArray [
 
 { #category : #writing }
 BPInstruction >> writeOn: aBPAssembly at: addressToWriteOn [
+	self deprecated: 'Was used in old assembler.'.
 	self fromAddress writeOn: aBPAssembly memory at: addressToWriteOn.
 	self toAddress writeOn: aBPAssembly memory at: addressToWriteOn + ADDRESS_SIZE.
 	self jumpAddress writeOn: aBPAssembly memory at: addressToWriteOn + (ADDRESS_SIZE * 2)
