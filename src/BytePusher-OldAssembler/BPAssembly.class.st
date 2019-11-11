@@ -11,7 +11,7 @@ Class {
 	#pools : [
 		'BPConstants'
 	],
-	#category : #'BytePusher-Assembly'
+	#category : #'BytePusher-OldAssembler'
 }
 
 { #category : #instructions }

@@ -1,11 +1,6 @@
 Extension { #name : #Integer }
 
-{ #category : #'*BytePusher' }
-Integer >> asBPAddress [
-	^ BPAddress memoryAddress: self
-]
-
-{ #category : #'*BytePusher' }
+{ #category : #'*BytePusher-OldAssembler' }
 Integer >> forAssembly: anAssembly [
 	anAssembly memoryAt: anAssembly addressOfNextInstructionToGenerate memoryAddress put: self.
 	anAssembly labels

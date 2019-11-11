@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'BPConstants'
 	],
-	#category : #'BytePusher-Tests'
+	#category : #'BytePusher-OldAssembler'
 }
 
 { #category : #test }

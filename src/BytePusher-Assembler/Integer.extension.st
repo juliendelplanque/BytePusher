@@ -1,6 +1,11 @@
 Extension { #name : #Integer }
 
 { #category : #'*BytePusher-Assembler' }
+Integer >> asBPAddress [
+	^ BPAddress memoryAddress: self
+]
+
+{ #category : #'*BytePusher-Assembler' }
 Integer >> forAssembler: anAssembler [
 	"| data |
 	data := BPData byte: self.
