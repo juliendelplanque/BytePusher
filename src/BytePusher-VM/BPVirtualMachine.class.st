@@ -9,7 +9,7 @@ Class {
 	#pools : [
 		'BPConstants'
 	],
-	#category : #'BytePusher-Core'
+	#category : #'BytePusher-VM-Core'
 }
 
 { #category : #'memory manipulation' }

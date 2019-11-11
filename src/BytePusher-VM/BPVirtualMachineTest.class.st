@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'vm'
 	],
-	#category : #'BytePusher-Tests'
+	#category : #'BytePusher-VM-Tests'
 }
 
 { #category : #initialization }

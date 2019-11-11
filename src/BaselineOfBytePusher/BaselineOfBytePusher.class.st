@@ -9,8 +9,11 @@ BaselineOfBytePusher >> baseline: spec [
 	<baseline>
 	spec for: #common do: [ 
 		spec
-			package: 'BytePusher';
-			package: 'BytePusher-Assembler';
+			package: 'BytePusher-Kernel';
+			package: 'BytePusher-VM'
+				with: [ spec requires: #('BytePusher-Kernel') ];
+			package: 'BytePusher-Assembler'
+				with: [ spec requires: #('BytePusher-Kernel') ];
 			package: 'BytePusher-Assembler-GTInspectorExtensions'
 				with: [ spec requires: #('BytePusher-Assembler') ];
 			package: 'BytePusher-Assembler-Tests'

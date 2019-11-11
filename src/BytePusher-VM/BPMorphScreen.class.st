@@ -1,7 +1,7 @@
 Class {
 	#name : #BPMorphScreen,
 	#superclass : #Morph,
-	#category : #'BytePusher-MorphDriver'
+	#category : #'BytePusher-VM-MorphDriver'
 }
 
 { #category : #drawing }

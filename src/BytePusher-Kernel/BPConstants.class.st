@@ -17,7 +17,7 @@ Class {
 		'TRUE_VALUE',
 		'USER_MEMORY_ADDRESS'
 	],
-	#category : #'BytePusher-Core'
+	#category : #'BytePusher-Kernel'
 }
 
 { #category : #'class initialization' }
