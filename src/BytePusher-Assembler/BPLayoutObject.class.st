@@ -1,3 +1,15 @@
+"
+I am an abstract object modelling the layout of BytePusher's memory.
+
+My subclasses implement concrete objects relative to memory layout such as a register or a reserved memory zone.
+
+A layout object has a name stored in my #name instance variable.
+
+My concrete subclasses should implement
+- #startAddress - Returning the start address (included) of the object in the memory.
+- #endAddress - Returning the last address (included) of the object in the memory.
+- #typeName - Returning a string containing the name of the type to be displayed to a human.
+"
 Class {
 	#name : #BPLayoutObject,
 	#superclass : #Object,
@@ -14,6 +26,7 @@ BPLayoutObject >> addressesInterval [
 
 { #category : #accessing }
 BPLayoutObject >> endAddress [
+	"Returns the end address (included) of the object in the memory."
 	^ self subclassResponsibility
 ]
 
@@ -47,6 +60,7 @@ BPLayoutObject >> printOn: aStream [
 
 { #category : #accessing }
 BPLayoutObject >> startAddress [
+	"Returns the start address (included) of the object in the memory."
 	^ self subclassResponsibility
 ]
 
