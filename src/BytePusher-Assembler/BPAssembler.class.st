@@ -387,10 +387,31 @@ BPAssembler >> setLabelAddresses [
 ]
 
 { #category : #instructions }
-BPAssembler >> writePixel: pixel [
+BPAssembler >> writePixel: pixelValue [
 	"Writes #pixelValue on the pixel at the address pointed by 16bits address formed by A and B registers.
 	 A register holds middle byte for address.
 	 B register holds lower byte for address.
 	"
-	self shouldBeImplemented
+	| instruction1 instruction2 instruction3 |
+	instruction1 := BPInstructionToResolve new
+		from: (self registerNamed: #A);
+		yourself.
+	instruction2 := BPInstructionToResolve new
+		from: (self registerNamed: #B);
+		yourself.
+	instruction3 := BPInstructionToResolve new
+		from: (pixelValue forAssembler: self);
+		to: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address;
+		yourself.
+	instruction1
+		to: (instruction3 asReference byteIndex: 5);
+		jump: instruction2 asReference;
+		beAddedTo: self.
+	instruction2
+		to: (instruction3 asReference byteIndex: 4);
+		jump: instruction3 asReference;
+		beAddedTo: self.
+	instruction3
+		jump: BPNextInstructionReference new;
+		beAddedTo: self.
 ]

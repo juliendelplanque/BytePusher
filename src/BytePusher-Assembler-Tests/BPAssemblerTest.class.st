@@ -581,3 +581,26 @@ BPAssemblerTest >> testSerializePC3 [
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
 	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed: #start) address.
 ]
+
+{ #category : #test }
+BPAssemblerTest >> testWritePixel [
+	| assembly vm assembled memory |
+	assembly := BPAssembler new.
+	
+	assembly
+		move: 16r05 to: #A;
+		move: 16r00 to: #B;
+		writePixel: 42.
+	
+	assembled := assembly assemble.
+	memory := assembled serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+				
+	vm step.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 16r05.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 16r00.
+	self assert: ((assembly reservedMemoryZoneNamed: #DISPLAY_FRAME) address + 16r0005 access: memory) equals: 42
+]
