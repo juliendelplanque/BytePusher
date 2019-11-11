@@ -79,24 +79,6 @@ BPMemoryLayout >> firstGenerationAddress [
 			ifTrue: [ true ] ]) endAddress + 1
 ]
 
-{ #category : #'gt-inspector-extension' }
-BPMemoryLayout >> gtInspectorItemsIn: composite [
-	<gtInspectorPresentationOrder: 0> 
-	^ (composite fastTable)
-		title: 'Layout';
-		display: [ self layoutObjects ];
-		column: 'Name' 
-			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each name ];
-		column: 'Type'
-			evaluated: [ :each | each typeName ];
-		column: 'Start address' 
-			evaluated: [:each | each startAddress hex ] width: 80;
-		column: 'End address' 
-			evaluated: [:each | each endAddress hex ] width: 80;
-		beSingle;
-		yourself
-]
-
 { #category : #initialization }
 BPMemoryLayout >> initialize [
 	super initialize.
