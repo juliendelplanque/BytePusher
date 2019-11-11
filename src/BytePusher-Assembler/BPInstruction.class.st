@@ -70,7 +70,6 @@ BPInstruction >> jumpAddress [
 
 { #category : #accessing }
 BPInstruction >> jumpAddress: anObject [
-	1 haltIf: [ anObject class = BPInstruction ].
 	jumpAddress := anObject
 ]
 
