@@ -394,12 +394,15 @@ BPAssembler >> writePixel: pixelValue [
 	"
 	| instruction1 instruction2 instruction3 |
 	instruction1 := BPInstructionToResolve new
+		tag: #writePixel:;
 		from: (self registerNamed: #A);
 		yourself.
 	instruction2 := BPInstructionToResolve new
+		tag: #writePixel:;
 		from: (self registerNamed: #B);
 		yourself.
 	instruction3 := BPInstructionToResolve new
+		tag: #writePixel:;
 		from: (pixelValue forAssembler: self);
 		to: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address;
 		yourself.

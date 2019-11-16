@@ -63,6 +63,11 @@ BPAssembledCode >> labels [
 ]
 
 { #category : #accessing }
+BPAssembledCode >> labelsFor: anInstruction [
+	^ self labels select: [ :label | label address = anInstruction address ]
+]
+
+{ #category : #accessing }
 BPAssembledCode >> memoryLayout [
 	^ memoryLayout
 ]
