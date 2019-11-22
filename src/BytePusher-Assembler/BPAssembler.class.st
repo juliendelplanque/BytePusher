@@ -407,11 +407,11 @@ BPAssembler >> writePixel: pixelValue [
 		to: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address;
 		yourself.
 	instruction1
-		to: (instruction3 asReference byteIndex: 5);
+		to: (instruction3 asReference byteIndex: 4);
 		jump: instruction2 asReference;
 		beAddedTo: self.
 	instruction2
-		to: (instruction3 asReference byteIndex: 4);
+		to: (instruction3 asReference byteIndex: 5);
 		jump: instruction3 asReference;
 		beAddedTo: self.
 	instruction3

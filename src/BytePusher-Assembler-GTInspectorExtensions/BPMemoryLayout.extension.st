@@ -1,7 +1,7 @@
 Extension { #name : #BPMemoryLayout }
 
 { #category : #'*BytePusher-Assembler-GTInspectorExtensions' }
-BPMemoryLayout >> gtInspectorItemsIn: composite [
+BPMemoryLayout >> gtInspectorLayoutIn: composite [
 	<gtInspectorPresentationOrder: 0> 
 	^ (composite fastTable)
 		title: 'Layout';
