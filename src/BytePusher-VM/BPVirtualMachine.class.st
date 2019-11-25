@@ -34,6 +34,11 @@ BPVirtualMachine >> initialize [
 
 { #category : #running }
 BPVirtualMachine >> innerStep [
+	"Transcript
+		show: 'A: ';
+		show: ((BPMemoryLayout standard registerNamed: #A) address access: self memory);
+		show: ' B: ';
+		show: ((BPMemoryLayout standard registerNamed: #B) address access: self memory);cr."
 	self
 		memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter + 3)
 		put: (self memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter)).
@@ -62,7 +67,7 @@ BPVirtualMachine >> keyboardStateAddress [
 
 { #category : #running }
 BPVirtualMachine >> loadProgramCounter [
-	programCounter :=  self extract: 3 bytesStartingAt: PROGRAM_COUNTER_ADDRESS.
+	programCounter := self extract: 3 bytesStartingAt: PROGRAM_COUNTER_ADDRESS.
 ]
 
 { #category : #'rom - loading' }

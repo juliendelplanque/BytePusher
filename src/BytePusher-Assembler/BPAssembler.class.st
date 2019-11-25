@@ -387,6 +387,48 @@ BPAssembler >> setLabelAddresses [
 ]
 
 { #category : #instructions }
+BPAssembler >> simpleAdd: source to: target [
+	"Adds two numbers together and store result in source register.
+	 This operations will NOT modify the carry and zero flag. 
+
+	ADD reg, reg
+	ADD reg, address
+	ADD reg, constant
+	"
+	| sourceForAssembler targetForAssembler instruction1 instruction2 instruction3 |
+	sourceForAssembler := source forAssembler: self.
+	targetForAssembler := target forAssembler: self.
+	"First, copy data at fromAddress to location of the add instructions."
+	instruction1 := BPInstructionToResolve new
+		from: sourceForAssembler;
+		beAddedTo: self.
+	"Second, copy data at toAddress to location of the add instructions."
+	instruction2 := BPInstructionToResolve new
+		from: targetForAssembler;
+		beAddedTo: self.
+	"Third, create the actual add instruction (beware the 16 least
+	 significant bit of the #from address
+	 will be set by the 2 previous instructions, so they it will be
+	 overwritten at runtime whatever what is written on it).
+	"
+	instruction3 := BPInstructionToResolve new
+		from: (self reservedMemoryZoneNamed: #ADD_PAGE);
+		to: sourceForAssembler;
+		beAddedTo: self.
+	instruction1
+		to: (instruction3 asReference byteIndex: 1);
+		jump: instruction2 asReference;
+		tag: #simpleAdd:to:.
+	instruction2
+		to: (instruction3 asReference byteIndex: 2);
+		jump: instruction3 asReference;
+		tag: #simpleAdd:to:.
+	instruction3
+		jump: BPNextInstructionReference new;
+		tag: #simpleAdd:to:.
+]
+
+{ #category : #instructions }
 BPAssembler >> writePixel: pixelValue [
 	"Writes #pixelValue on the pixel at the address pointed by 16bits address formed by A and B registers.
 	 A register holds middle byte for address.
