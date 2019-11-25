@@ -696,7 +696,7 @@ BPAssemblerTest >> testWritePixel [
 	vm step.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 16r05.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 16r00.
-	self assert: ((assembly reservedMemoryZoneNamed: #DISPLAY_FRAME) address + 16r0005 access: memory) equals: 42
+	self assert: ((assembly reservedMemoryZoneNamed: #DISPLAY_FRAME) address + 16r0500 access: memory) equals: 42
 ]
 
 { #category : #test }
