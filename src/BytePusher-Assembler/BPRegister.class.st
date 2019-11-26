@@ -62,3 +62,11 @@ BPRegister >> startAddress [
 BPRegister >> typeName [
 	^ 'Register'
 ]
+
+{ #category : #accessing }
+BPRegister >> valueIn: memory [
+	"Returns the value of the register in a given #memory.
+	 That is to say the byte stored in the register.
+	"
+	^ self address access: memory
+]
