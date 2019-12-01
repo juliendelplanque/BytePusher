@@ -34,13 +34,10 @@ BPCmp >> generateFor: anAssembler [
 		
 	inst1
 		to: (inst3 asReference byteIndex: 1);
-		jump: inst2 asReference;
-		tag: #cmp:with:.
+		jump: inst2 asReference.
 	inst2
 		to: (inst3 asReference byteIndex: 2);
-		jump: inst3 asReference;
-		tag: #cmp:with:.
-	inst3 tag: #cmp:with:
+		jump: inst3 asReference.
 ]
 
 { #category : #accessing }

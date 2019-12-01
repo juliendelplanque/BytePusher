@@ -34,7 +34,7 @@ BPReferencesResolver >> visitBPInstructionToResolve: aBPInstructionToResolve [
 		fromAddress: (self visit: aBPInstructionToResolve from);
 		toAddress: (self visit: aBPInstructionToResolve to);
 		jumpAddress: (self visit: aBPInstructionToResolve jump);
-		tag: aBPInstructionToResolve tag;
+		assemblerInstruction: aBPInstructionToResolve assemblerInstruction;
 		yourself
 ]
 

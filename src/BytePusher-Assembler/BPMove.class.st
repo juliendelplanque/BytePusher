@@ -27,7 +27,6 @@ BPMove >> generateFor: anAssembler [
 		from: (self source forAssembler: anAssembler);
 		to: (self target forAssembler: anAssembler);
 		jump: BPNextInstructionReference new;
-		tag: #move:to:;
 		beAddedTo: anAssembler
 ]
 

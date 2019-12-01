@@ -6,7 +6,7 @@ Class {
 		'fromAddress',
 		'toAddress',
 		'jumpAddress',
-		'tag'
+		'assemblerInstruction'
 	],
 	#pools : [
 		'BPConstants'
@@ -41,6 +41,16 @@ BPInstruction >> address [
 { #category : #accessing }
 BPInstruction >> address: anObject [
 	address := anObject
+]
+
+{ #category : #accessing }
+BPInstruction >> assemblerInstruction [
+	^ assemblerInstruction
+]
+
+{ #category : #accessing }
+BPInstruction >> assemblerInstruction: anObject [
+	assemblerInstruction := anObject
 ]
 
 { #category : #assembling }
@@ -87,12 +97,7 @@ BPInstruction >> printOn: aStream [
 
 { #category : #accessing }
 BPInstruction >> tag [
-	^ tag
-]
-
-{ #category : #accessing }
-BPInstruction >> tag: anObject [
-	tag := anObject
+	^ self assemblerInstruction tag
 ]
 
 { #category : #accessing }

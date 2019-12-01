@@ -6,7 +6,7 @@ Class {
 		'to',
 		'jump',
 		'address',
-		'tag'
+		'assemblerInstruction'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -41,6 +41,16 @@ BPInstructionToResolve >> asReference [
 	^ BPReferenceToInstruction instruction: self
 ]
 
+{ #category : #accessing }
+BPInstructionToResolve >> assemblerInstruction [
+	^ assemblerInstruction
+]
+
+{ #category : #accessing }
+BPInstructionToResolve >> assemblerInstruction: anObject [
+	assemblerInstruction := anObject
+]
+
 { #category : #adding }
 BPInstructionToResolve >> beAddedTo: anAssembler [
 	anAssembler addInstruction: self
@@ -69,16 +79,6 @@ BPInstructionToResolve >> jump [
 { #category : #accessing }
 BPInstructionToResolve >> jump: anObject [
 	jump := anObject
-]
-
-{ #category : #accessing }
-BPInstructionToResolve >> tag [
-	^ tag
-]
-
-{ #category : #accessing }
-BPInstructionToResolve >> tag: anObject [
-	tag := anObject
 ]
 
 { #category : #accessing }

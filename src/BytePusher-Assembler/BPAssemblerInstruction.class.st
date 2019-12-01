@@ -16,6 +16,12 @@ BPAssemblerInstruction >> newInstruction [
 	 The aim of this factory is to set specific meta-data on the instruction depending
 	 on the assembler instruction from which it is originated.
 	"
-	self flag: #TODO. "Add meta-data."
 	^ BPInstructionToResolve new
+		assemblerInstruction: self;
+		yourself
+]
+
+{ #category : #accessing }
+BPAssemblerInstruction >> tag [
+	^ self className allButFirst: 'BP' size
 ]

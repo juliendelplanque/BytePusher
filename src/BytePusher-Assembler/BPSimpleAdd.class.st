@@ -40,15 +40,12 @@ BPSimpleAdd >> generateFor: anAssembler [
 		beAddedTo: anAssembler.
 	instruction1
 		to: (instruction3 asReference byteIndex: 1);
-		jump: instruction2 asReference;
-		tag: #simpleAdd:to:.
+		jump: instruction2 asReference.
 	instruction2
 		to: (instruction3 asReference byteIndex: 2);
-		jump: instruction3 asReference;
-		tag: #simpleAdd:to:.
+		jump: instruction3 asReference.
 	instruction3
-		jump: BPNextInstructionReference new;
-		tag: #simpleAdd:to:.
+		jump: BPNextInstructionReference new.
 ]
 
 { #category : #accessing }

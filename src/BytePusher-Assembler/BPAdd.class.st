@@ -72,35 +72,26 @@ BPAdd >> generateFor: anAssembler [
 		beAddedTo: anAssembler.
 	instruction1
 		to: (instruction7 asReference byteIndex: 1);
-		jump: instruction2 asReference;
-		tag: #add:to:.
+		jump: instruction2 asReference.
 	instruction2
 		to: (instruction8 asReference byteIndex: 1);
-		jump: instruction3 asReference;
-		tag: #add:to:.
+		jump: instruction3 asReference.
 	instruction3
 		to: (instruction9 asReference byteIndex: 1);
-		jump: instruction4 asReference;
-		tag: #add:to:.
+		jump: instruction4 asReference.
 	instruction4
 		to: (instruction7 asReference byteIndex: 2);
-		jump: instruction5 asReference;
-		tag: #add:to:.
+		jump: instruction5 asReference.
 	instruction5
 		to: (instruction8 asReference byteIndex: 2);
-		jump: instruction6 asReference;
-		tag: #add:to:.
+		jump: instruction6 asReference.
 	instruction6
 		to: (instruction9 asReference byteIndex: 2);
-		jump: instruction7 asReference;
-		tag: #add:to:.
+		jump: instruction7 asReference.
 	instruction7
-		jump: instruction8 asReference;
-		tag: #add:to:.
+		jump: instruction8 asReference.
 	instruction8
-		jump: instruction9 asReference;
-		tag: #add:to:.
-	instruction9 tag: #add:to:
+		jump: instruction9 asReference.
 ]
 
 { #category : #accessing }

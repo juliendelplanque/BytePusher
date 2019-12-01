@@ -28,6 +28,5 @@ BPJump >> generateFor: anAssembler [
 		from: 0 asBPAddress;
 		to: 0 asBPAddress;
 		jump: (self address forAssembler: anAssembler);
-		tag: #jump:;
 		beAddedTo: anAssembler
 ]

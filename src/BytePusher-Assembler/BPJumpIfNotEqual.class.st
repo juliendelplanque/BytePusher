@@ -75,23 +75,15 @@ BPJumpIfNotEqual >> generateFor: anAssembler [
 		jump: (anAssembler reservedMemoryZoneNamed: #JUMP_IF_ZERO);
 		beAddedTo: anAssembler.
 	instruction1
-		jump: instruction2 asReference;
-		tag: #jumpIfNotEqual:.
+		jump: instruction2 asReference.
 	instruction2
-		jump: instruction3 asReference;
-		tag: #jumpIfNotEqual:.
+		jump: instruction3 asReference.
 	instruction3
-		jump: instruction4 asReference;
-		tag: #jumpIfNotEqual:.
+		jump: instruction4 asReference.
 	instruction4
-		jump: instruction5 asReference;
-		tag: #jumpIfNotEqual:.
+		jump: instruction5 asReference.
 	instruction5
-		jump: instruction6 asReference;
-		tag: #jumpIfNotEqual:.
+		jump: instruction6 asReference.
 	instruction6
-		jump: instruction7 asReference;
-		tag: #jumpIfNotEqual:.
-	instruction7
-		tag: #jumpIfNotEqual:
+		jump: instruction7 asReference.
 ]
