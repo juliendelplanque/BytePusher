@@ -1,3 +1,12 @@
+"
+Compares two values and sets the zero flag to true if they are equal.
+SP can be used as operand with CMP.
+Use this instruction before a conditional jump.
+
+CMP reg, reg
+CMP reg, address
+CMP reg, constant
+"
 Class {
 	#name : #BPCmp,
 	#superclass : #BPAssemblerInstruction,
@@ -10,15 +19,6 @@ Class {
 
 { #category : #generating }
 BPCmp >> generateFor: anAssembler [
-	"Compares two values and sets the zero flag to true if they are equal.
-	 SP can be used as operand with CMP.
-	 Use this instruction before a conditional jump.
-
-	CMP reg, reg
-	CMP reg, address
-	CMP reg, constant
-	"
-
 	| inst1 inst2 inst3 |
 	inst1 := BPInstructionToResolve new
 		from: (self x forAssembler: anAssembler);

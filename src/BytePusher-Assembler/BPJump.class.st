@@ -1,3 +1,8 @@
+"
+Let the instruction pointer do a unconditional jump to the defined address.
+
+JMP address
+"
 Class {
 	#name : #BPJump,
 	#superclass : #BPAssemblerInstruction,
@@ -19,10 +24,6 @@ BPJump >> address: anObject [
 
 { #category : #generating }
 BPJump >> generateFor: anAssembler [
-	"Let the instruction pointer do a unconditional jump to the defined address.
-
-	 JMP address
-	"
 	(BPInstructionToResolve from: 0 asBPAddress to: 0 asBPAddress jump: (self address forAssembler: anAssembler))
 		tag: #jump:;
 		beAddedTo: anAssembler
