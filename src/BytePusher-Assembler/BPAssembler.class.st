@@ -140,29 +140,10 @@ BPAssembler >> cmp: x with: y [
 	CMP reg, address
 	CMP reg, constant
 	"
-
-	| inst1 inst2 inst3 |
-	inst1 := BPInstructionToResolve new
-		from: (x forAssembler: self);
-		beAddedTo: self.
-	inst2 := BPInstructionToResolve new
-		from: (y forAssembler: self);
-		beAddedTo: self.
-	inst3 := BPInstructionToResolve new
-		from: (self reservedMemoryZoneNamed: #CMP_PAGE) address;
-		to: (self registerNamed: #ZERO) address;
-		jump: BPNextInstructionReference new;
-		beAddedTo: self.
-		
-	inst1
-		to: (inst3 asReference byteIndex: 1);
-		jump: inst2 asReference;
-		tag: #cmp:with:.
-	inst2
-		to: (inst3 asReference byteIndex: 2);
-		jump: inst3 asReference;
-		tag: #cmp:with:.
-	inst3 tag: #cmp:with:
+	BPCmp new
+		x: x;
+		y: y;
+		generateFor: self
 ]
 
 { #category : #accessing }
@@ -193,9 +174,9 @@ BPAssembler >> jump: address [
 
 	 JMP address
 	"
-	(BPInstructionToResolve from: 0 asBPAddress to: 0 asBPAddress jump: (address forAssembler: self))
-		tag: #jump:;
-		beAddedTo: self
+	BPJump new
+		address: address;
+		generateFor: self
 ]
 
 { #category : #instructions }
@@ -302,12 +283,10 @@ BPAssembler >> move: source to: target [
 	MOV address, reg
 	MOV address, constant
 	"
-	BPInstructionToResolve new
-		from: (source forAssembler: self);
-		to: (target forAssembler: self);
-		jump: BPNextInstructionReference new;
-		tag: #move:to:;
-		beAddedTo: self
+	BPMove new
+		source: source;
+		target: target;
+		generateFor: self
 ]
 
 { #category : #instructions }
