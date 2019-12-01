@@ -24,7 +24,10 @@ BPJump >> address: anObject [
 
 { #category : #generating }
 BPJump >> generateFor: anAssembler [
-	(BPInstructionToResolve from: 0 asBPAddress to: 0 asBPAddress jump: (self address forAssembler: anAssembler))
+	self newInstruction
+		from: 0 asBPAddress;
+		to: 0 asBPAddress;
+		jump: (self address forAssembler: anAssembler);
 		tag: #jump:;
 		beAddedTo: anAssembler
 ]

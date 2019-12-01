@@ -23,7 +23,7 @@ Class {
 
 { #category : #generating }
 BPMove >> generateFor: anAssembler [
-	BPInstructionToResolve new
+	self newInstruction
 		from: (self source forAssembler: anAssembler);
 		to: (self target forAssembler: anAssembler);
 		jump: BPNextInstructionReference new;

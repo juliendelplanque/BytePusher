@@ -16,15 +16,15 @@ Class {
 { #category : #generating }
 BPWritePixel >> generateFor: anAssembler [
 	| instruction1 instruction2 instruction3 |
-	instruction1 := BPInstructionToResolve new
+	instruction1 := self newInstruction
 		tag: #writePixel:;
 		from: (anAssembler registerNamed: #A);
 		yourself.
-	instruction2 := BPInstructionToResolve new
+	instruction2 := self newInstruction
 		tag: #writePixel:;
 		from: (anAssembler registerNamed: #B);
 		yourself.
-	instruction3 := BPInstructionToResolve new
+	instruction3 := self newInstruction
 		tag: #writePixel:;
 		from: (self pixelValue forAssembler: anAssembler);
 		to: (anAssembler reservedMemoryZoneNamed: #DISPLAY_FRAME) address;

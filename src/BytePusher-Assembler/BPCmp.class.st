@@ -20,13 +20,13 @@ Class {
 { #category : #generating }
 BPCmp >> generateFor: anAssembler [
 	| inst1 inst2 inst3 |
-	inst1 := BPInstructionToResolve new
+	inst1 := self newInstruction
 		from: (self x forAssembler: anAssembler);
 		beAddedTo: anAssembler.
-	inst2 := BPInstructionToResolve new
+	inst2 := self newInstruction
 		from: (self y forAssembler: anAssembler);
 		beAddedTo: anAssembler.
-	inst3 := BPInstructionToResolve new
+	inst3 := self newInstruction
 		from: (anAssembler reservedMemoryZoneNamed: #CMP_PAGE) address;
 		to: (anAssembler registerNamed: #ZERO) address;
 		jump: BPNextInstructionReference new;

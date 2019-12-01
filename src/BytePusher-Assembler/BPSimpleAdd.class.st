@@ -22,11 +22,11 @@ BPSimpleAdd >> generateFor: anAssembler [
 	sourceForAssembler := self source forAssembler: anAssembler.
 	targetForAssembler := self target forAssembler: anAssembler.
 	"First, copy data at fromAddress to location of the add instructions."
-	instruction1 := BPInstructionToResolve new
+	instruction1 := self newInstruction
 		from: sourceForAssembler;
 		beAddedTo: anAssembler.
 	"Second, copy data at toAddress to location of the add instructions."
-	instruction2 := BPInstructionToResolve new
+	instruction2 := self newInstruction
 		from: targetForAssembler;
 		beAddedTo: anAssembler.
 	"Third, create the actual add instruction (beware the 16 least
@@ -34,7 +34,7 @@ BPSimpleAdd >> generateFor: anAssembler [
 	 will be set by the 2 previous instructions, so they it will be
 	 overwritten at runtime whatever what is written on it).
 	"
-	instruction3 := BPInstructionToResolve new
+	instruction3 := self newInstruction
 		from: (anAssembler reservedMemoryZoneNamed: #ADD_PAGE);
 		to: sourceForAssembler;
 		beAddedTo: anAssembler.

@@ -23,23 +23,23 @@ BPAdd >> generateFor: anAssembler [
 	sourceForAssembler := self source forAssembler: anAssembler.
 	targetForAssembler := self target forAssembler: anAssembler.
 	"First, copy data at fromAddress to location of the add, carry and zero instructions."
-	instruction1 := BPInstructionToResolve new
+	instruction1 := self newInstruction
 		from: sourceForAssembler;
 		beAddedTo: anAssembler.
-	instruction2 := BPInstructionToResolve new
+	instruction2 := self newInstruction
 		from: sourceForAssembler;
 		beAddedTo: anAssembler.
-	instruction3 := BPInstructionToResolve new
+	instruction3 := self newInstruction
 		from: sourceForAssembler;
 		beAddedTo: anAssembler.
 	"Second, copy data at toAddress to location of the add, carry and zero instructions."
-	instruction4 := BPInstructionToResolve new
+	instruction4 := self newInstruction
 		from: targetForAssembler;
 		beAddedTo: anAssembler.
-	instruction5 := BPInstructionToResolve new
+	instruction5 := self newInstruction
 		from: targetForAssembler;
 		beAddedTo: anAssembler.
-	instruction6 := BPInstructionToResolve new
+	instruction6 := self newInstruction
 		from: targetForAssembler;
 		beAddedTo: anAssembler.
 	"Third, create the actual add instruction (beware the 16 least
@@ -47,7 +47,7 @@ BPAdd >> generateFor: anAssembler [
 	 will be set by the 2 previous instructions, so they it will be
 	 overwritten at runtime whatever what is written on it).
 	"
-	instruction7 := BPInstructionToResolve new
+	instruction7 := self newInstruction
 		from: (anAssembler reservedMemoryZoneNamed: #ADD_PAGE);
 		to: sourceForAssembler;
 		beAddedTo: anAssembler.
@@ -56,7 +56,7 @@ BPAdd >> generateFor: anAssembler [
 	 will be set by the 2 previous instructions, so they it will be
 	 overwritten at runtime whatever what is written on it).
 	"
-	instruction8 := BPInstructionToResolve new
+	instruction8 := self newInstruction
 		from: (anAssembler reservedMemoryZoneNamed: #ADD_CARY_FLAG_PAGE);
 		to: (anAssembler registerNamed: #CARRY);
 		beAddedTo: anAssembler.
@@ -65,7 +65,7 @@ BPAdd >> generateFor: anAssembler [
 	 will be set by the 2 previous instructions, so they it will be
 	 overwritten at runtime whatever what is written on it).
 	"
-	instruction9 := BPInstructionToResolve new
+	instruction9 := self newInstruction
 		from: (anAssembler reservedMemoryZoneNamed: #ADD_ZERO_FLAG_PAGE);
 		to: (anAssembler registerNamed: #ZERO);
 		jump: BPNextInstructionReference new;
