@@ -70,6 +70,18 @@ BPAssembler >> defaultMemoryLayout [
 	^ self class defaultMemoryLayout
 ]
 
+{ #category : #instructions }
+BPAssembler >> increment: register [
+	"Increment value stored in register.
+	 This operations will modify the carry and zero flag. 
+
+	INC reg
+	"
+	BPIncrement new
+		register: register;
+		generateFor: self
+]
+
 { #category : #initialization }
 BPAssembler >> initialize [
 	super initialize.

@@ -4,9 +4,14 @@ Class {
 	#category : #'BytePusher-Assembler-Memory'
 }
 
-{ #category : #writing }
+{ #category : #accessing }
+BPOpcodeBankBuilder class >> bankSize [
+	^ 16rFFFF
+]
+
+{ #category : #accessing }
 BPOpcodeBankBuilder class >> endAddress [
-	^ self startAddress + 16rFFFF
+	^ self startAddress + self bankSize
 ]
 
 { #category : #accessing }

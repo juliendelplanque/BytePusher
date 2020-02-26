@@ -235,6 +235,26 @@ BPAssemblerTest >> testFibonacci [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testIncrement [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	assembly
+		move: 5 to: #A; "1 instruction"
+		increment: #A. "2 instructions"
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	3 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testInitialize [
 	| assembly |
 	assembly := BPAssembler new.

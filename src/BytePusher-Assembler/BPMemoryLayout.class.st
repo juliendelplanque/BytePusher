@@ -51,7 +51,8 @@ BPMemoryLayout class >> standard [
 		BPAddCarryFlagPageBuilder reservedMemoryZone.
 		BPCmpPageBuilder reservedMemoryZone.
 		BPIdentityPageBuilder reservedMemoryZone.
-		BPBitAndPageBuilder reservedMemoryZone };
+		BPBitAndPageBuilder reservedMemoryZone.
+		BPIncrementPageBuilder reservedMemoryZone };
 	yourself
 ]
 
