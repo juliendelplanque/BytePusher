@@ -1,5 +1,5 @@
 "
-Generates an instruction that saves the address of aLabel in PC reserved memory zone.
+Generates instructions that saves the address of aLabel in PC reserved memory zone.
 "
 Class {
 	#name : #BPSerializePC,

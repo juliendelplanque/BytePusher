@@ -1,3 +1,6 @@
+"
+Generates instructions that increment the value stored at an address.
+"
 Class {
 	#name : #BPIncrement,
 	#superclass : #BPAssemblerInstruction,
