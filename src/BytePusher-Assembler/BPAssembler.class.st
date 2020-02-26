@@ -5,9 +5,6 @@ Class {
 		'memoryLayout',
 		'instructions'
 	],
-	#pools : [
-		'BPConstants'
-	],
 	#category : #'BytePusher-Assembler-Assembler'
 }
 
