@@ -431,6 +431,112 @@ BPAssemblerTest >> testJump2 [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testJumpIfEqual [
+	| assembly vm memory assembled |
+	assembly := BPAssembler new.
+	
+	assembly
+		move: 6 to: #A;"1 instructions"
+		move: 6 to: #B;"1 instructions"
+		label: #firstMove;
+		cmp: #A with: #B; "3 instructions"
+		jumpIfEqual: #firstMove. "8 instructions"
+	
+	assembled := assembly assemble.
+	memory := assembled serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	13 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: TRUE_VALUE.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
+	self assert: vm programCounter equals: (assembled labelNamed: #firstMove) address memoryAddress
+]
+
+{ #category : #test }
+BPAssemblerTest >> testJumpIfEqual2 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+
+	assembly
+		move: 4 to: #A; "1 instructions"
+		move: 5 to: #B; "1 instructions"
+		label: #firstMove;
+		add: #A to: 1; "9 instructions"
+		cmp: #A with: #B; "3 instructions"
+		jumpIfNotEqual: #firstMove; "8 instructions"
+		move: 3 to: #C. "1 instructions"
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	45 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 5.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 5.
+	self assert: ((assembly registerNamed: #C) address access: memory) equals: 3.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testJumpIfEqual3 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	assembly
+		move: 5 to: #A;
+		move: 6 to: #B;
+		label: #firstMove;
+		add: #A to: 1;
+		cmp: #A with: #B; "3 instructions"
+		jumpIfEqual: #firstMove; "2 instructions"
+		move: #B to: #C. 
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 7.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
+	self assert: ((assembly registerNamed: #C) address access: memory) equals: 6
+]
+
+{ #category : #test }
+BPAssemblerTest >> testJumpIfEqual4 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	assembly
+		move: 5 to: #A;
+		move: 6 to: #B;
+		label: #firstMove;
+			add: #A to: 1;
+			cmp: #A with: #B;
+			jumpIfEqual: #firstMove;
+		add: #B to: 1. 
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 7.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 7
+]
+
+{ #category : #test }
 BPAssemblerTest >> testJumpIfNotEqual [
 	| assembly vm memory assembled |
 	assembly := BPAssembler new.

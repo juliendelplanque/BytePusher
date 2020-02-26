@@ -123,6 +123,17 @@ BPAssembler >> jump: address [
 ]
 
 { #category : #instructions }
+BPAssembler >> jumpIfEqual: address [
+	"Let the instruction pointer do a jump to the defined address if ZERO flag is TRUE.
+
+	 JE address
+	"
+	BPJumpIfEqual new
+		address: address;
+		generateFor: self
+]
+
+{ #category : #instructions }
 BPAssembler >> jumpIfNotEqual: address [
 	"Let the instruction pointer do a jump to the defined address if ZERO flag is FALSE.
 
