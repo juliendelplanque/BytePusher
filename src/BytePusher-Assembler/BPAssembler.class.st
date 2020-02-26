@@ -172,7 +172,8 @@ BPAssembler >> move: source to: target [
 BPAssembler >> nop [
 	"No-op instruction, does nothing.
 	"
-	self shouldBeImplemented
+	BPNop new
+		generateFor: self
 ]
 
 { #category : #assembling }

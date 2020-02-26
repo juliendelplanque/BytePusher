@@ -22,8 +22,11 @@ BPReferencesResolver >> visitBPAssembler: aBPAssembler [
 	assembled := BPAssembledCode new.
 	assembled memoryLayout: aBPAssembler memoryLayout.
 	aBPAssembler instructions do: [ :instructionToResolve |
-		(self visit: instructionToResolve)
-			beAssembledIn: assembled ].
+		instructionToResolve class = BPLabel
+			ifTrue: [ instructionToResolve beAssembledIn: assembled ]
+			ifFalse: [ 
+				(self visit: instructionToResolve)
+					beAssembledIn: assembled ] ].
 	^ assembled
 ]
 
@@ -40,7 +43,7 @@ BPReferencesResolver >> visitBPInstructionToResolve: aBPInstructionToResolve [
 
 { #category : #visiting }
 BPReferencesResolver >> visitBPLabel: aBPLabel [
-	^ aBPLabel
+	^ aBPLabel address 
 ]
 
 { #category : #visiting }
