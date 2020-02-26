@@ -1,6 +1,17 @@
 Extension { #name : #BPAssembledCode }
 
 { #category : #'*BytePusher-Assembler-GTInspectorExtensions' }
+BPAssembledCode >> gtInspectorInstructionsGroupedByAssemblerInstructionIn: composite [
+	<gtInspectorPresentationOrder: 1> 
+	^ composite fastTree"Table"
+		title: 'Instructions (grouped)';
+		display: [ (self instructions groupedBy: #assemblerInstruction) associations ];
+		wantsAutomaticRefresh: true;
+		children: [ :x | x class = Association ifTrue: [ x value ] ifFalse: [ #() ] ];
+		yourself
+]
+
+{ #category : #'*BytePusher-Assembler-GTInspectorExtensions' }
 BPAssembledCode >> gtInspectorInstructionsIn: composite [
 	<gtInspectorPresentationOrder: 0> 
 	^ composite fastTable
@@ -17,6 +28,6 @@ BPAssembledCode >> gtInspectorInstructionsIn: composite [
 
 { #category : #'*BytePusher-Assembler-GTInspectorExtensions' }
 BPAssembledCode >> gtInspectorLayoutIn: composite [
-	<gtInspectorPresentationOrder: 1> 
+	<gtInspectorPresentationOrder: 2> 
 	^ self memoryLayout gtInspectorLayoutIn: composite
 ]
