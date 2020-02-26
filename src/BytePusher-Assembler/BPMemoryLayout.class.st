@@ -98,6 +98,15 @@ BPMemoryLayout >> initialize [
 	self layoutObjects: (SortedCollection sortBlock: [ :x :y | x startAddress < y startAddress ]).
 ]
 
+{ #category : #'initialize memory' }
+BPMemoryLayout >> initializeOpcodeBankMemoryZonesOn: aByteArray [
+	self layoutObjects
+		select: [ :layoutObject | 
+			layoutObject isReservedMemoryZone and: [ layoutObject isForOpcodeBank ] ]
+		thenDo: [ :opcodeBankReservedMemoryZone |
+			opcodeBankReservedMemoryZone writeBankOn: aByteArray ]
+]
+
 { #category : #accessing }
 BPMemoryLayout >> layoutObjects [
 	^ layoutObjects

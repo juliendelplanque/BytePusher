@@ -88,17 +88,18 @@ BPAssembledCode >> serialize [
 BPAssembledCode >> serializeOn: aByteArray [
 	| initialProgramCounter |
 	initialProgramCounter := self firstInstruction address.
-	PROGRAM_COUNTER_ADDRESS asBPAddress storeAddress: initialProgramCounter in: aByteArray.
-	PIXEL_POINTER_ADDRESS asBPAddress store: (self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: aByteArray.
-	AUDIO_POINTER_ADDRESS asBPAddress store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address higherByte in: aByteArray.
-	AUDIO_POINTER_ADDRESS asBPAddress + 1 store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: aByteArray.
-	BPAddPageBuilder writeBankOn: aByteArray.
-	BPAddCarryFlagPageBuilder writeBankOn: aByteArray.
-	BPAddZeroFlagPageBuilder writeBankOn: aByteArray.
-	BPCmpPageBuilder writeBankOn: aByteArray.
-	BPIdentityPageBuilder writeBankOn: aByteArray.
-	BPBitAndPageBuilder writeBankOn: aByteArray.
-	"Creat the infinite NOP loop."
+	(self memoryLayout reservedMemoryZoneNamed: #PROGRAM_COUNTER) address
+		storeAddress: initialProgramCounter in: aByteArray.
+	(self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME_POINTER) address
+		store: (self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: aByteArray.
+	(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address
+		store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address higherByte in: aByteArray.
+	(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address + 1
+		store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: aByteArray.
+	"Initialize memory of opcode banks."
+	self memoryLayout
+		initializeOpcodeBankMemoryZonesOn: aByteArray.
+	"Create the infinite NOP loop."
 	((self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * INSTRUCTION_SIZE))
 		storeAddress: (self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress in: aByteArray.
 	

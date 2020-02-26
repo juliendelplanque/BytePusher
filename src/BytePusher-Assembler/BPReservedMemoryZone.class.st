@@ -76,6 +76,11 @@ BPReservedMemoryZone >> endAddress: anObject [
 ]
 
 { #category : #testing }
+BPReservedMemoryZone >> isForOpcodeBank [
+	^ false
+]
+
+{ #category : #testing }
 BPReservedMemoryZone >> isReservedMemoryZone [
 	^ true
 ]

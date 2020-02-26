@@ -11,9 +11,10 @@ BPOpcodeBankBuilder class >> endAddress [
 
 { #category : #accessing }
 BPOpcodeBankBuilder class >> reservedMemoryZone [
-	^ BPReservedMemoryZone new
+	^ BPOpcodeBankReservedMemoryZone new
 		startAddress: self startAddress;
 		endAddress: self endAddress;
+		opcodeBank: self new;
 		yourself
 ]
 
