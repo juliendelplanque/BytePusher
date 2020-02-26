@@ -229,6 +229,69 @@ BPAssemblerTest >> testCounterWithIncrement [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testDecrement [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 5 to: #A; "1 instruction"
+		decrement: #A. "2 instructions"
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	3 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembler registerNamed: #A) address access: memory) equals: 4.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testDecrement2 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 5 to: #A; "1 instruction"
+		move: 1 to: #B; "1 instruction"
+		decrement: #A; "2 instructions"
+		decrement: #B. "2 instructions"
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	6 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembler registerNamed: #A) address access: memory) equals: 4.
+	self assert: ((assembler registerNamed: #B) address access: memory) equals: 0.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testDecrement3 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 0 to: #A; "1 instruction"
+		decrement: #A. "2 instructions"
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	3 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembler registerNamed: #A) address access: memory) equals: 255.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testFibonacci [
 	| assembly vm memory |
 	assembly := BPAssembler new.
@@ -297,6 +360,26 @@ BPAssemblerTest >> testIncrement2 [
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembler registerNamed: #B) address access: memory) equals: 2.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testIncrement3 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 255 to: #A; "1 instruction"
+		increment: #A. "2 instructions"
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	3 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembler registerNamed: #A) address access: memory) equals: 0.
 ]
 
 { #category : #test }

@@ -1,31 +1,31 @@
 Class {
-	#name : #BPIncrementPageBuilder,
+	#name : #BPDecrementPageBuilder,
 	#superclass : #BPOpcodeBankBuilder,
 	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #accessing }
-BPIncrementPageBuilder class >> bankSize [
+BPDecrementPageBuilder class >> bankSize [
 	^ 16rFF
 ]
 
 { #category : #accessing }
-BPIncrementPageBuilder class >> reservedMemoryZone [
+BPDecrementPageBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
-		name: #INCREMENT_PAGE;
+		name: #DECREMENT_PAGE;
 		yourself
 ]
 
 { #category : #accessing }
-BPIncrementPageBuilder class >> startAddress [
-	^ 16r40100 asBPAddress
+BPDecrementPageBuilder class >> startAddress [
+	^ 16r40200 asBPAddress
 ]
 
 { #category : #writing }
-BPIncrementPageBuilder >> writeBankOn: aByteArray [
+BPDecrementPageBuilder >> writeBankOn: aByteArray [
 	self addressesRange do: [ :address | 
 		|x|
-		x := (address & 16rFF) + 1 % 16r100.
+		x := (address & 16rFF) - 1 % 16r100.
 		aByteArray
 			at: address + 1 "In byte pusher, addressing starts at 0, in Pharo it starts at 1."
 			put: x ]

@@ -52,7 +52,8 @@ BPMemoryLayout class >> standard [
 		BPCmpPageBuilder reservedMemoryZone.
 		BPIdentityPageBuilder reservedMemoryZone.
 		BPBitAndPageBuilder reservedMemoryZone.
-		BPIncrementPageBuilder reservedMemoryZone };
+		BPIncrementPageBuilder reservedMemoryZone.
+		BPDecrementPageBuilder reservedMemoryZone. };
 	yourself
 ]
 

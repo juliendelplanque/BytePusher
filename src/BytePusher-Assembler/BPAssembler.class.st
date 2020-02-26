@@ -65,6 +65,18 @@ BPAssembler >> cmp: x with: y [
 		generateFor: self
 ]
 
+{ #category : #instructions }
+BPAssembler >> decrement: register [
+	"Decrement value stored in register.
+	 This operations will modify the carry and zero flag. 
+
+	DEC reg
+	"
+	BPDecrement new
+		register: register;
+		generateFor: self
+]
+
 { #category : #accessing }
 BPAssembler >> defaultMemoryLayout [
 	^ self class defaultMemoryLayout
