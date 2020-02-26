@@ -207,6 +207,28 @@ BPAssemblerTest >> testCounter [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testCounterWithIncrement [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 1 to: #A;
+		label: #count;
+			increment: #A;
+			cmp: #A with: 5;
+			jumpIfNotEqual: #count.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	100 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembler registerNamed: #A) address access: memory) equals: 5
+]
+
+{ #category : #test }
 BPAssemblerTest >> testFibonacci [
 	| assembly vm memory |
 	assembly := BPAssembler new.
@@ -236,14 +258,14 @@ BPAssemblerTest >> testFibonacci [
 
 { #category : #test }
 BPAssemblerTest >> testIncrement [
-	| assembly vm memory |
-	assembly := BPAssembler new.
+	| assembler vm memory |
+	assembler := BPAssembler new.
 	
-	assembly
+	assembler
 		move: 5 to: #A; "1 instruction"
 		increment: #A. "2 instructions"
 	
-	memory := assembly assemble serialize.
+	memory := assembler assemble serialize.
 	vm := BPVirtualMachine new
 				memory: memory;
 				loadProgramCounter;
@@ -251,7 +273,30 @@ BPAssemblerTest >> testIncrement [
 	
 	3 timesRepeat: [ vm innerStep ].
 	
-	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
+	self assert: ((assembler registerNamed: #A) address access: memory) equals: 6.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testIncrement2 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 5 to: #A; "1 instruction"
+		move: 1 to: #B; "1 instruction"
+		increment: #A; "2 instructions"
+		increment: #B. "2 instructions"
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	6 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembler registerNamed: #A) address access: memory) equals: 6.
+	self assert: ((assembler registerNamed: #B) address access: memory) equals: 2.
 ]
 
 { #category : #test }

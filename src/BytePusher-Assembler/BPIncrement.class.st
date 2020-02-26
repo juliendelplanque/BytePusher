@@ -15,7 +15,7 @@ BPIncrement >> generateFor: anAssembler [
 	instruction1
 		from: (self register forAssembler: anAssembler);
 		to: (instruction2 asReference byteIndex: 2);
-		jump: instruction2;
+		jump: instruction2 asReference;
 		beAddedTo: anAssembler.
 	instruction2
 		from: (anAssembler reservedMemoryZoneNamed: #INCREMENT_PAGE);
