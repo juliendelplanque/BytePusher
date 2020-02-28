@@ -187,6 +187,13 @@ BPAssembler >> nop [
 		generateFor: self
 ]
 
+{ #category : #instructions }
+BPAssembler >> popFromDataStack: destination [
+	BPPopFromDataStack new
+		destination: destination;
+		generateFor: self
+]
+
 { #category : #assembling }
 BPAssembler >> processAddressDataReference [
 	BPProcessAddressDataReference visit: self
