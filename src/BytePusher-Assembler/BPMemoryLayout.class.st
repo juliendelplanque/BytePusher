@@ -53,7 +53,8 @@ BPMemoryLayout class >> standard [
 		BPIdentityPageBuilder reservedMemoryZone.
 		BPBitAndPageBuilder reservedMemoryZone.
 		BPIncrementPageBuilder reservedMemoryZone.
-		BPDecrementPageBuilder reservedMemoryZone. };
+		BPDecrementPageBuilder reservedMemoryZone.
+		BPReservedMemoryZone name: #DATA_STACK startAddress: 16r040300 size: 16rFF };
 	yourself
 ]
 

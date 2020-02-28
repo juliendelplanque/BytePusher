@@ -783,6 +783,26 @@ BPAssemblerTest >> testMoveTo5 [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testPushOnDataStack [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	assembly
+		pushOnDataStack: 42. "4 instructions"
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	4 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 1.
+	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory) equals: 42.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testSerializePC [
 	| assembly vm memory assembled |
 	assembly := BPAssembler new.

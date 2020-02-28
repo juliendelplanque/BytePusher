@@ -192,6 +192,13 @@ BPAssembler >> processAddressDataReference [
 	BPProcessAddressDataReference visit: self
 ]
 
+{ #category : #instructions }
+BPAssembler >> pushOnDataStack: toPush [
+	BPPushOnDataStack new
+		toPush: toPush;
+		generateFor: self
+]
+
 { #category : #accessing }
 BPAssembler >> registerNamed: aSymbol [
 	^ self memoryLayout registerNamed: aSymbol
