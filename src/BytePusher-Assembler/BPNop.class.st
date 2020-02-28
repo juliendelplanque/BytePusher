@@ -1,3 +1,7 @@
+"
+The no-operation instruction. Does nothing.
+Implemented by copying the value at an address to itself.
+"
 Class {
 	#name : #BPNop,
 	#superclass : #BPAssemblerInstruction,
