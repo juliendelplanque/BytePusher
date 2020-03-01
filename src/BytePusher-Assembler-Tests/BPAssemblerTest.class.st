@@ -830,6 +830,63 @@ BPAssemblerTest >> testPopFromDataStack [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testPushAddressOfPCOnDataStack [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	assembly
+		pushAddressOfPCOnDataStack. "16 instructions"
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	16 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 3.
+	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory) equals: (assembly memoryLayout firstGenerationAddress higherByte).
+	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 1 access: memory) equals: (assembly memoryLayout firstGenerationAddress middleByte).
+	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 2 access: memory) equals: (assembly memoryLayout firstGenerationAddress lowerByte).
+]
+
+{ #category : #test }
+BPAssemblerTest >> testPushAddressOfPCOnDataStack2 [
+	| assembly vm memory expectedSecondAddressPushed |
+	assembly := BPAssembler new.
+	
+	assembly
+		pushAddressOfPCOnDataStack; "16 instructions"
+		move: 3 to: #A; "1 instruction"
+		move: 4 to: #A; "1 instruction"
+		pushAddressOfPCOnDataStack. "16 instructions"
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	34 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 6.
+	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory) equals: (assembly memoryLayout firstGenerationAddress higherByte).
+	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 1 access: memory) equals: (assembly memoryLayout firstGenerationAddress middleByte).
+	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 2 access: memory) equals: (assembly memoryLayout firstGenerationAddress lowerByte).
+	expectedSecondAddressPushed := assembly memoryLayout firstGenerationAddress + (14*INSTRUCTION_SIZE).
+	self
+		assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 3 access: memory)
+		equals: expectedSecondAddressPushed higherByte.
+	self
+		assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 4 access: memory)
+		equals: expectedSecondAddressPushed middleByte.
+	self
+		assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 5 access: memory)
+		equals: expectedSecondAddressPushed lowerByte.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testPushOnDataStack [
 	| assembly vm memory |
 	assembly := BPAssembler new.

@@ -50,7 +50,7 @@ BPReservedMemoryZone >> acceptVisitor: aBPAssemblerVisitor [
 { #category : #reading }
 BPReservedMemoryZone >> access: aCollection [ 
 	^ ByteArray streamContents: [ :stream |
-		self address memoryAddress to: self endAddress memoryAddress do: [ :index |
+		self address memoryAddress + 1 to: self endAddress memoryAddress + 1 do: [ :index |
 			stream nextPut: (aCollection at: index) ] ]
 ]
 

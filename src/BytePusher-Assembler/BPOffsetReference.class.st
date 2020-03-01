@@ -22,6 +22,11 @@ BPOffsetReference >> acceptVisitor: aBPAssemblerVisitor [
 	^ aBPAssemblerVisitor visitBPOffsetReference: self
 ]
 
+{ #category : #'assembler-dispatch' }
+BPOffsetReference >> forAssembler: aBPAssembler [ 
+	^ self
+]
+
 { #category : #accessing }
 BPOffsetReference >> objectWithAddress [
 	^ objectWithAddress

@@ -200,6 +200,12 @@ BPAssembler >> processAddressDataReference [
 ]
 
 { #category : #instructions }
+BPAssembler >> pushAddressOfPCOnDataStack [
+	BPPushCurrentAddressOnStack new
+		generateFor: self
+]
+
+{ #category : #instructions }
 BPAssembler >> pushOnDataStack: toPush [
 	BPPushOnDataStack new
 		toPush: toPush;
