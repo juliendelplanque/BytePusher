@@ -941,6 +941,32 @@ BPAssemblerTest >> testPushOnDataStack [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testReturn [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	assembly
+		call: #subroutine; "13 instructions"
+		move: 43 to: #B; "1 instruction"
+		
+		label: #subroutine;
+		move: 42 to: #A; "1 instruction"
+		return. "13 instruction"
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	28 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 0.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 42.
+	self assert: ((assembly registerNamed: #B) address access: memory) equals: 43.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testSerializePC [
 	| assembly vm memory assembled |
 	assembly := BPAssembler new.

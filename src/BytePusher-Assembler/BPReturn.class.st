@@ -1,0 +1,21 @@
+Class {
+	#name : #BPReturn,
+	#superclass : #BPAssemblerInstruction,
+	#category : #'BytePusher-Assembler-Assembler'
+}
+
+{ #category : #generating }
+BPReturn >> generateFor: anAssembler [
+	| instruction1 |
+	instruction1 := self newInstruction
+							from: 0 asBPAddress;
+							to: 0 asBPAddress;
+							jump: 0 asBPAddress; "Will be filled by pop from the data stack."
+							yourself.
+							
+	anAssembler popFromDataStack: (instruction1 asReference byteIndex: 8).
+	anAssembler popFromDataStack: (instruction1 asReference byteIndex: 7).
+	anAssembler popFromDataStack: (instruction1 asReference byteIndex: 6).
+	
+	instruction1 beAddedTo: anAssembler
+]

@@ -34,11 +34,7 @@ BPVirtualMachine >> initialize [
 
 { #category : #running }
 BPVirtualMachine >> innerStep [
-	"Transcript
-		show: 'A: ';
-		show: ((BPMemoryLayout standard registerNamed: #A) address access: self memory);
-		show: ' B: ';
-		show: ((BPMemoryLayout standard registerNamed: #B) address access: self memory);cr."
+	"self haltIf: [ programCounter = 16r000127 ]."
 	self
 		memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter + 3)
 		put: (self memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter)).

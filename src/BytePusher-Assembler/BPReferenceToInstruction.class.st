@@ -39,6 +39,11 @@ BPReferenceToInstruction >> byteIndex: anObject [
 	byteIndex := anObject
 ]
 
+{ #category : #'assembler-dispatch' }
+BPReferenceToInstruction >> forAssembler: aBPAssembler [ 
+	^ self
+]
+
 { #category : #initialization }
 BPReferenceToInstruction >> initialize [
 	super initialize.
