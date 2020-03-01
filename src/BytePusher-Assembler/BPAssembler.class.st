@@ -50,6 +50,13 @@ BPAssembler >> assemble [
 ]
 
 { #category : #instructions }
+BPAssembler >> call: address [
+	BPCall new
+		address: address;
+		generateFor: self
+]
+
+{ #category : #instructions }
 BPAssembler >> cmp: x with: y [
 	"Compares two values and sets the zero flag to true if they are equal.
 	 SP can be used as operand with CMP.
@@ -200,8 +207,20 @@ BPAssembler >> processAddressDataReference [
 ]
 
 { #category : #instructions }
+BPAssembler >> pushAddressOfLabel: label [
+	BPPushLabelAddressOnStack new
+		label: label;
+		generateFor: self
+]
+
+{ #category : #instructions }
 BPAssembler >> pushAddressOfPCOnDataStack [
-	BPPushCurrentAddressOnStack new
+	| op |
+	op := BPPushLabelAddressOnStack new
+		generateLabel;
+		yourself.
+	self label: op label.
+	op
 		generateFor: self
 ]
 
@@ -230,6 +249,12 @@ BPAssembler >> resolve [
 { #category : #assembling }
 BPAssembler >> resolveNextInstructionReferences [
 	BPNextInstructionReferenceResolver visit: self
+]
+
+{ #category : #instructions }
+BPAssembler >> return [
+	BPReturn new
+		generateFor: self
 ]
 
 { #category : #instructions }

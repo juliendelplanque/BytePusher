@@ -96,6 +96,40 @@ BPAssemblerTest >> testAddToThenMoveTo [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testCall [
+	| assembly vm memory expectedAddressPushed |
+	assembly := BPAssembler new.
+	
+	assembly
+		call: #subroutine; "16 instructions"
+		move: 43 to: #A; "1 instruction"
+		
+		label: #subroutine;
+		move: 42 to: #A. "1 instruction"
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	16 timesRepeat: [ vm innerStep ].
+	
+	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 3.
+	self assert: ((assembly registerNamed: #A) address access: memory) equals: 42.
+	expectedAddressPushed := assembly memoryLayout firstGenerationAddress + (13*INSTRUCTION_SIZE).
+	self
+		assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory)
+		equals: expectedAddressPushed higherByte.
+	self
+		assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 1 access: memory)
+		equals: expectedAddressPushed middleByte.
+	self
+		assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address + 2 access: memory)
+		equals: expectedAddressPushed lowerByte.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testCmpWith [
 	| assembly vm memory |
 	assembly := BPAssembler new.
