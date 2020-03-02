@@ -245,6 +245,18 @@ BPAssembler >> pushOnReturnStack: toPush [
 		generateFor: self
 ]
 
+{ #category : #instructions }
+BPAssembler >> readPixel [
+	"Reads value of the pixel at the address pointed by 16bits address formed by A and B registers.
+	 A register holds middle byte for address.
+	 B register holds lower byte for address.
+	
+	 Stores the pixel value in register A.
+	"
+	BPReadPixel new
+		generateFor: self
+]
+
 { #category : #accessing }
 BPAssembler >> registerNamed: aSymbol [
 	^ self memoryLayout registerNamed: aSymbol
