@@ -7,6 +7,53 @@ Class {
 	#category : #'BytePusher-Assembler-Tests-Assembler'
 }
 
+{ #category : #helpers }
+BPAssemblerTest >> generateFibonacciCodeIn: assembly withSubroutineInput: x [
+	assembly
+		pushOnDataStack: x; "fibo(x)="
+		call: #fibo;
+		popFromDataStack: #A;
+		jump: #end;
+
+		"fib subroutine, pop the fibonnaci number to compute and push the value of this number."
+		label: #fibo;
+		popFromDataStack: #A; "The fibonnaci number to compute"
+		cmp: #A with: 0;
+		jumpIfEqual: #fib_zero;
+		cmp: #A with: 1;
+		jumpIfEqual: #fib_one;
+		"General case, do recursion."
+		"fib(n-1)"
+		decrement: #A;
+		pushOnDataStack: #A; "Backup actual A register value."
+		pushOnDataStack: #A; "Pass actual A register value as argument to fibo subroutine."
+		call: #fibo;
+		popFromDataStack: #B; "B register holds fib(n-1) result."
+		"fib(n-2)"
+		popFromDataStack: #A; "Retrieve A register value that we saved."
+		pushOnDataStack: #B; "Backup fib(n-1) value."
+		decrement: #A;
+		pushOnDataStack: #A; "Pass actual A register value as argument to fibo subroutine."
+		call: #fibo;
+		popFromDataStack: #A; "A register holds fib(n-2) result."
+		popFromDataStack: #B; "B register holds fib(n-1) result."
+		"A := fib(n-1)+fib(n-2)"
+		simpleAdd: #A to: #B;
+		pushOnDataStack: #A;
+		return;
+		"fib(0)=0"
+		label: #fib_zero;
+			pushOnDataStack: 0;
+			return;
+		"fib(1)=1"
+		label: #fib_one;
+			pushOnDataStack: 1;
+			return;
+		
+		label: #end;
+			nop.
+]
+
 { #category : #test }
 BPAssemblerTest >> test2AddCompare [
 	| assembly vm memory |
@@ -989,6 +1036,158 @@ BPAssemblerTest >> testReadPixel [
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 42.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 16r00.
 	self assert: ((assembly reservedMemoryZoneNamed: #DISPLAY_FRAME) address + 16r0500 access: memory) equals: 42
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci0 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 0.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 0.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci1 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 1.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci2 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 2.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci3 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 3.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 2.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci4 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 4.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 3.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci5 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 5.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 5.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci6 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 6.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 8.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testRecursiveFibonacci7 [
+	| assembly vm memory |
+	assembly := BPAssembler new.
+	
+	self generateFibonacciCodeIn: assembly withSubroutineInput: 7.
+	
+	memory := assembly assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	vm step.
+	
+	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 13.
+	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
+	self assert: (assembly memoryLayout extractReturnStack: memory) isEmpty.
 ]
 
 { #category : #test }
