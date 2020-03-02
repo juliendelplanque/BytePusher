@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+BPAddress class >> lowByte: lowByte middleByte: middleByte highByte: highByte [
+	^ self memoryAddress: lowByte | (middleByte << 8) | (highByte << 16)
+]
+
+{ #category : #'instance creation' }
 BPAddress class >> memoryAddress: memoryAddress [
 	^ self new
 		memoryAddress: memoryAddress;
