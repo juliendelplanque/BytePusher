@@ -201,6 +201,13 @@ BPAssembler >> popFromDataStack: destination [
 		generateFor: self
 ]
 
+{ #category : #instructions }
+BPAssembler >> popFromReturnStack: destination [
+	BPPopFromReturnStack new
+		destination: destination;
+		generateFor: self
+]
+
 { #category : #assembling }
 BPAssembler >> processAddressDataReference [
 	BPProcessAddressDataReference visit: self
@@ -227,6 +234,13 @@ BPAssembler >> pushAddressOfPCOnDataStack [
 { #category : #instructions }
 BPAssembler >> pushOnDataStack: toPush [
 	BPPushOnDataStack new
+		toPush: toPush;
+		generateFor: self
+]
+
+{ #category : #instructions }
+BPAssembler >> pushOnReturnStack: toPush [
+	BPPushOnReturnStack new
 		toPush: toPush;
 		generateFor: self
 ]

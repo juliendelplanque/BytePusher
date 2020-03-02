@@ -11,8 +11,8 @@ Class {
 { #category : #generating }
 BPNop >> generateFor: anAssembler [
 	self newInstruction
-		from: (anAssembler reservedMemoryZoneNamed: #RESERVED_BLANK) address;
-		to: (anAssembler reservedMemoryZoneNamed: #RESERVED_BLANK) address;
+		from: 0 asBPAddress;
+		to: 0 asBPAddress;
 		beAddedTo: anAssembler;
 		jump: BPNextInstructionReference new
 ]

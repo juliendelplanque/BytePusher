@@ -13,9 +13,9 @@ BPReturn >> generateFor: anAssembler [
 							jump: 0 asBPAddress; "Will be filled by pop from the data stack."
 							yourself.
 							
-	anAssembler popFromDataStack: (instruction1 asReference byteIndex: 8).
-	anAssembler popFromDataStack: (instruction1 asReference byteIndex: 7).
-	anAssembler popFromDataStack: (instruction1 asReference byteIndex: 6).
+	anAssembler popFromReturnStack: (instruction1 asReference byteIndex: 8).
+	anAssembler popFromReturnStack: (instruction1 asReference byteIndex: 7).
+	anAssembler popFromReturnStack: (instruction1 asReference byteIndex: 6).
 	
 	instruction1 beAddedTo: anAssembler
 ]
