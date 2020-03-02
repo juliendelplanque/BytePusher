@@ -88,6 +88,23 @@ BPMemoryLayout >> ensureLayoutObjectDoesNotCreateConflict: aLayoutObject [
 	
 ]
 
+{ #category : #extracting }
+BPMemoryLayout >> extractDataStack: memory [
+	^ (((self reservedMemoryZoneNamed: #DATA_STACK) access: memory)
+			copyFrom: 1 to: ((self registerNamed: #SP) valueIn: memory)) reversed as: Stack
+]
+
+{ #category : #extracting }
+BPMemoryLayout >> extractReturnStack: memory [
+	"Returns a high-level object (instance of Stack) representing the return stack.
+	 Instead of storing bytes of the address, instances of BPAddress are created to make
+	 the content of the stack easier to understand.
+	"
+	^ ((((self reservedMemoryZoneNamed: #RETURN_STACK) access: memory)
+			copyFrom: 1 to: ((self registerNamed: #RETURN_SP) valueIn: memory)) reversed groupsOf: 3 atATimeCollect: [ :low :middle :high |
+				BPAddress lowByte: low middleByte: middle highByte: high ]) as: Stack
+]
+
 { #category : #accessing }
 BPMemoryLayout >> firstGenerationAddress [
 	self layoutObjects overlappingPairsDo: [ :layoutObjectBefore :layoutObjectAfter |
