@@ -87,6 +87,8 @@ BPInstruction >> jumpAddress: anObject [
 BPInstruction >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
+	aStream nextPutAll: self address hex.
+	aStream nextPut: $,.
 	aStream nextPutAll: self fromAddress hex.
 	aStream nextPut: $,.
 	aStream nextPutAll: self toAddress hex.
