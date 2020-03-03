@@ -22,7 +22,7 @@ BPCall >> address: anObject [
 BPCall >> generateFor: anAssembler [
 	self generateLabel.
 	anAssembler
-		pushAddressOfLabel: self label;
+		pushAddressOfLabelOnReturnStack: self label;
 		jump: self address;
 		label: self label
 ]

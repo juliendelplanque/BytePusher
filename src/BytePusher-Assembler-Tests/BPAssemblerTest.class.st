@@ -423,6 +423,32 @@ BPAssemblerTest >> testDecrement3 [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testFetchDataAtAddressInto [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	assembler
+		jump: #data_end;
+		label: #my_6_bytes;
+		nop;nop; "Allocate  6 bytes"
+		label: #data_end;
+		pushAddressOfLabelOnDataStack: #my_6_bytes;
+		popFromDataStack: #C;
+		popFromDataStack: #B;
+		popFromDataStack: #A;
+		fetchDataAtAddressInto: #A.
+
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+			memory: memory;
+			loadProgramCounter;
+			yourself.
+			
+	vm step.
+	
+	self assert: ((assembler memoryLayout registerNamed: #A) valueIn: memory) equals: 0
+]
+
+{ #category : #test }
 BPAssemblerTest >> testFibonacci [
 	| assembly vm memory |
 	assembly := BPAssembler new.

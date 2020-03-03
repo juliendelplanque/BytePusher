@@ -1,5 +1,5 @@
 Class {
-	#name : #BPPushLabelAddressOnStack,
+	#name : #BPPushLabelAddressOnReturnStack,
 	#superclass : #BPAssemblerInstruction,
 	#instVars : [
 		'label'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #generating }
-BPPushLabelAddressOnStack >> generateFor: anAssembler [
+BPPushLabelAddressOnReturnStack >> generateFor: anAssembler [
 	| labelObject |
 	labelObject := self label forAssembler: anAssembler.
 	anAssembler pushOnReturnStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asDataAccess byteIndex: 0).
@@ -17,17 +17,17 @@ BPPushLabelAddressOnStack >> generateFor: anAssembler [
 ]
 
 { #category : #private }
-BPPushLabelAddressOnStack >> generateLabel [
+BPPushLabelAddressOnReturnStack >> generateLabel [
 	self label: ('pcSerializationLabel' , UUIDGenerator next asString) asSymbol.
 	^ self label
 ]
 
 { #category : #accessing }
-BPPushLabelAddressOnStack >> label [
+BPPushLabelAddressOnReturnStack >> label [
 	^ label
 ]
 
 { #category : #accessing }
-BPPushLabelAddressOnStack >> label: anObject [
+BPPushLabelAddressOnReturnStack >> label: anObject [
 	label := anObject
 ]

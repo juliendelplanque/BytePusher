@@ -90,6 +90,15 @@ BPAssembler >> defaultMemoryLayout [
 ]
 
 { #category : #instructions }
+BPAssembler >> fetchDataAtAddressInto: destination [
+	"Moves data located at address formed by registers A (high-byte), B (middle byte), C (low byte) to destination.
+	"
+	BPFetchDataAtAddress new
+		destination: destination;
+		generateFor: self
+]
+
+{ #category : #instructions }
 BPAssembler >> increment: register [
 	"Increment value stored in register.
 	 This operations will modify the carry and zero flag. 
@@ -214,8 +223,15 @@ BPAssembler >> processAddressDataReference [
 ]
 
 { #category : #instructions }
-BPAssembler >> pushAddressOfLabel: label [
-	BPPushLabelAddressOnStack new
+BPAssembler >> pushAddressOfLabelOnDataStack: label [
+	BPPushLabelAddressOnDataStack new
+		label: label;
+		generateFor: self
+]
+
+{ #category : #instructions }
+BPAssembler >> pushAddressOfLabelOnReturnStack: label [
+	BPPushLabelAddressOnReturnStack new
 		label: label;
 		generateFor: self
 ]
@@ -223,7 +239,7 @@ BPAssembler >> pushAddressOfLabel: label [
 { #category : #instructions }
 BPAssembler >> pushAddressOfPCOnDataStack [
 	| op |
-	op := BPPushLabelAddressOnStack new
+	op := BPPushLabelAddressOnReturnStack new
 		generateLabel;
 		yourself.
 	self label: op label.
@@ -319,6 +335,16 @@ BPAssembler >> simpleAdd: source to: target [
 		target: target;
 		generateFor: self
 	
+]
+
+{ #category : #instructions }
+BPAssembler >> topFromDataStack: destination [
+	"Copy top of the data stack to destination but do not remove the top element from the stack."
+	BPPopFromDataStack new
+		destination: destination;
+		generateFor: self.
+		
+	self increment: #SP
 ]
 
 { #category : #instructions }
