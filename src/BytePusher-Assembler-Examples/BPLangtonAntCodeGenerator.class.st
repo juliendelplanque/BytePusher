@@ -37,7 +37,7 @@ BPLangtonAntCodeGenerator >> generateFullLangtonAntOn: assembly [
 			jump: #end;
 		
 		label: #iterate;
-		"Retreive values from previous iteration."
+		"Retrieve values from previous iteration."
 		popFromDataStack: #A;
 		popFromDataStack: #B;
 		popFromDataStack: #C;
@@ -64,50 +64,30 @@ BPLangtonAntCodeGenerator >> generateFullLangtonAntOn: assembly [
 		pushOnDataStack: #B; "x"
 		pushOnDataStack: #A; "y"
 		call: #write_pixel_value;
-		"To extract in subroutine:"
 		popFromDataStack: #C;
-		cmp: #C with: 0; "Since it is inverted it means, it was white."
-		jumpIfEqual: #color_white;
-		jump: #color_black; "Else, it was black."
-		
-		label: #color_white;"Turn right"
-			popFromDataStack: #A;
-			popFromDataStack: #B;
-			popFromDataStack: #C;
-			"Backup values."
-			pushOnDataStack: #B;
-			pushOnDataStack: #A;
-			"Pass arguments to #turn_right"
-			pushOnDataStack: #C;
-			call: #turn_right;
-			jump: #continue;
-		label: #color_black;"Turn left"
-			popFromDataStack: #A;
-			popFromDataStack: #B;
-			popFromDataStack: #C;
-			"Backup coordinates."
-			pushOnDataStack: #B;
-			pushOnDataStack: #A;
-			"Pass arguments to #turn_left"
-			pushOnDataStack: #C;
-			call: #turn_left;
-			jump: #continue;
-		"--------------------"
-		label: #continue;
-			popFromDataStack: #C;
-			popFromDataStack: #A;
-			popFromDataStack: #B;
-			"Backup orientation for next iteration."
-			pushOnDataStack: #C;
-			"Pass argument to #next_ant_position."
-			pushOnDataStack: #C;
-			pushOnDataStack: #B;
-			pushOnDataStack: #A;
-			call: #next_ant_position;
-			jump: #end.
+		popFromDataStack: #A;
+		popFromDataStack: #B;
+		popFromDataStack: #D;
+		pushOnDataStack: #B;
+		pushOnDataStack: #A;
+		pushOnDataStack: #D;
+		pushOnDataStack: #C;
+		call: #turn;
+		popFromDataStack: #C;
+		popFromDataStack: #A;
+		popFromDataStack: #B;
+		"Backup orientation for next iteration."
+		pushOnDataStack: #C;
+		"Pass argument to #next_ant_position."
+		pushOnDataStack: #C;
+		pushOnDataStack: #B;
+		pushOnDataStack: #A;
+		call: #next_ant_position;
+		jump: #end.
 			
-	self generateTurnLeftProcedureOn: assembly.
-	self generateTurnRightProcedureOn: assembly.
+	self generateTurnLeftOn: assembly.
+	self generateTurnRightOn: assembly.
+	self generateTurnOn: assembly.
 	self generateReadCurrentPixelValueOn: assembly.
 	self generateNextAntPositionOn: assembly.
 	self generateInversePixelValueOn: assembly.
@@ -185,7 +165,7 @@ BPLangtonAntCodeGenerator >> generateReadCurrentPixelValueOn: assembly [
 ]
 
 { #category : #'code generation' }
-BPLangtonAntCodeGenerator >> generateTurnLeftProcedureOn: assembly [
+BPLangtonAntCodeGenerator >> generateTurnLeftOn: assembly [
 	assembly
 		label: #turn_left;
 		"North = 0"
@@ -205,7 +185,30 @@ BPLangtonAntCodeGenerator >> generateTurnLeftProcedureOn: assembly [
 ]
 
 { #category : #'code generation' }
-BPLangtonAntCodeGenerator >> generateTurnRightProcedureOn: assembly [
+BPLangtonAntCodeGenerator >> generateTurnOn: assembly [
+	"Arguments on the stack expected by the subroutine:
+	
+		Inverted pixel value <- top of the stack
+		previous orientation
+		
+	 As result, pushes the new orientation on the stack.
+	"
+	assembly
+		label: #turn;
+		popFromDataStack: #C; "Pixel value inverted."
+		"Top of the stack is previous orientation"
+		cmp: #C with: 0; "Since it is inverted it means, it was white."
+		jumpIfEqual: #color_white;
+		"Else, it was black."
+			call: #turn_left;
+			return;
+		label: #color_white;"Turn right"
+			call: #turn_right;
+			return
+]
+
+{ #category : #'code generation' }
+BPLangtonAntCodeGenerator >> generateTurnRightOn: assembly [
 	assembly
 		label: #turn_right;
 		"North = 0"

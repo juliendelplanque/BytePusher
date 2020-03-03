@@ -215,7 +215,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn0 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnLeftProcedureOn: assembly.
+	generator generateTurnLeftOn: assembly.
 	
 	assembly
 		label: #end;
@@ -245,7 +245,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn1 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnLeftProcedureOn: assembly.
+	generator generateTurnLeftOn: assembly.
 	
 	assembly
 		label: #end;
@@ -275,7 +275,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn2 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnLeftProcedureOn: assembly.
+	generator generateTurnLeftOn: assembly.
 	
 	assembly
 		label: #end;
@@ -305,7 +305,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn3 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnLeftProcedureOn: assembly.
+	generator generateTurnLeftOn: assembly.
 	
 	assembly
 		label: #end;
@@ -335,7 +335,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn0 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnRightProcedureOn: assembly.
+	generator generateTurnRightOn: assembly.
 	
 	assembly
 		label: #end;
@@ -365,7 +365,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn1 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnRightProcedureOn: assembly.
+	generator generateTurnRightOn: assembly.
 	
 	assembly
 		label: #end;
@@ -395,7 +395,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn2 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnRightProcedureOn: assembly.
+	generator generateTurnRightOn: assembly.
 	
 	assembly
 		label: #end;
@@ -425,7 +425,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn3 [
 		popFromDataStack: #A;
 		jump: #end.
 	
-	generator generateTurnRightProcedureOn: assembly.
+	generator generateTurnRightOn: assembly.
 	
 	assembly
 		label: #end;
