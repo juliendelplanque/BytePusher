@@ -8,36 +8,29 @@ Class {
 BPLangtonAntCodeGenerator >> generate [
 	| assembly |
 	assembly := BPAssembler new.
-	self generateFullLangtonAntOn: assembly.
+	self generateOn: assembly.
 	^ assembly
 ]
 
 { #category : #'code generation' }
-BPLangtonAntCodeGenerator >> generateFullLangtonAntOn: assembly [
-	"Read"
-	"Inverse color"
-	"Write new color"
-	"Decide direction"
-	"Move ant"
+BPLangtonAntCodeGenerator >> generateInversePixelValueOn: assembly [
 	assembly
-		label: #initialize;
-			serializePC: #iterate;
-			move: 127 to: #A; "X"
-			move: 127 to: #B; "Y"
-			move: 0 to:  #C; "North"
-			"Backup A, B and C"
-			pushOnDataStack: #C;
-			pushOnDataStack: #B;
-			pushOnDataStack: #A;
-			"At the end of initialization, 3 values are on the data stack (from top to bottom):
-			- x position
-			- y position
-			- orientation
-			"
-			jump: #end;
+		label: #inverse_pixel_value;
+		popFromDataStack: #A; "pixel value"
+		cmp: #A with: 0;
+		jumpIfNotEqual: #inverse_pixel_value_not_zero;
+		pushOnDataStack: 215;
+		return;
 		
-		label: #iterate;
-		"Retrieve values from previous iteration."
+		label: #inverse_pixel_value_not_zero;
+		pushOnDataStack: 0;
+		return
+]
+
+{ #category : #'code generation' }
+BPLangtonAntCodeGenerator >> generateLangtonAntOn: assembly [
+	assembly
+		label: #langton_ant;
 		popFromDataStack: #A;
 		popFromDataStack: #B;
 		popFromDataStack: #C;
@@ -83,33 +76,6 @@ BPLangtonAntCodeGenerator >> generateFullLangtonAntOn: assembly [
 		pushOnDataStack: #B;
 		pushOnDataStack: #A;
 		call: #next_ant_position;
-		jump: #end.
-			
-	self generateTurnLeftOn: assembly.
-	self generateTurnRightOn: assembly.
-	self generateTurnOn: assembly.
-	self generateReadCurrentPixelValueOn: assembly.
-	self generateNextAntPositionOn: assembly.
-	self generateInversePixelValueOn: assembly.
-	self generateWritePixelValueOn: assembly.
-	
-	assembly
-		label: #end;
-		nop.
-]
-
-{ #category : #'code generation' }
-BPLangtonAntCodeGenerator >> generateInversePixelValueOn: assembly [
-	assembly
-		label: #inverse_pixel_value;
-		popFromDataStack: #A; "pixel value"
-		cmp: #A with: 0;
-		jumpIfNotEqual: #inverse_pixel_value_not_zero;
-		pushOnDataStack: 215;
-		return;
-		
-		label: #inverse_pixel_value_not_zero;
-		pushOnDataStack: 0;
 		return
 ]
 
@@ -151,6 +117,48 @@ BPLangtonAntCodeGenerator >> generateNextAntPositionOn: assembly [
 		pushOnDataStack: #B;
 		pushOnDataStack: #A;
 		return
+]
+
+{ #category : #'code generation' }
+BPLangtonAntCodeGenerator >> generateOn: assembly [
+	"Read"
+	"Inverse color"
+	"Write new color"
+	"Decide direction"
+	"Move ant"
+	assembly
+		label: #initialize;
+			serializePC: #iterate;
+			move: 127 to: #A; "X"
+			move: 127 to: #B; "Y"
+			move: 0 to:  #C; "North"
+			"Backup A, B and C"
+			pushOnDataStack: #C;
+			pushOnDataStack: #B;
+			pushOnDataStack: #A;
+			"At the end of initialization, 3 values are on the data stack (from top to bottom):
+			- x position
+			- y position
+			- orientation
+			"
+			jump: #end;
+		
+		label: #iterate;
+			call: #langton_ant;
+			jump: #end.
+			
+	self generateTurnLeftOn: assembly.
+	self generateTurnRightOn: assembly.
+	self generateTurnOn: assembly.
+	self generateReadCurrentPixelValueOn: assembly.
+	self generateNextAntPositionOn: assembly.
+	self generateInversePixelValueOn: assembly.
+	self generateWritePixelValueOn: assembly.
+	self generateLangtonAntOn: assembly.
+	
+	assembly
+		label: #end;
+		nop.
 ]
 
 { #category : #'code generation' }
