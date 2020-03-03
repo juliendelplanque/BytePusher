@@ -248,8 +248,10 @@ BPAssembler >> pushOnReturnStack: toPush [
 { #category : #instructions }
 BPAssembler >> readPixel [
 	"Reads value of the pixel at the address pointed by 16bits address formed by A and B registers.
-	 A register holds middle byte for address.
-	 B register holds lower byte for address.
+	 A register holds middle byte for address (Y coordinate).
+	 B register holds lower byte for address (X coordinate).
+	
+	 The 0,0 coordinate is top-left on the screen. 
 	
 	 Stores the pixel value in register A.
 	"
@@ -322,8 +324,10 @@ BPAssembler >> simpleAdd: source to: target [
 { #category : #instructions }
 BPAssembler >> writePixel: pixelValue [
 	"Writes #pixelValue on the pixel at the address pointed by 16bits address formed by A and B registers.
-	 A register holds middle byte for address.
-	 B register holds lower byte for address.
+	 A register holds middle byte for address (Y coordinate).
+	 B register holds lower byte for address (X coordinate).
+	
+	The 0,0 coordinate is top-left on the screen.
 	"
 	BPWritePixel new
 		pixelValue: pixelValue;
