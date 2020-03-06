@@ -1,24 +1,14 @@
 Class {
-	#name : #BPFetchDataAtAddress,
+	#name : #BPStoreDataAtAddress,
 	#superclass : #BPAssemblerInstruction,
 	#instVars : [
-		'destination'
+		'source'
 	],
 	#category : #'BytePusher-Assembler-Assembler'
 }
 
-{ #category : #accessing }
-BPFetchDataAtAddress >> destination [
-	^ destination
-]
-
-{ #category : #accessing }
-BPFetchDataAtAddress >> destination: anObject [
-	destination := anObject
-]
-
 { #category : #generating }
-BPFetchDataAtAddress >> generateFor: anAssembler [
+BPStoreDataAtAddress >> generateFor: anAssembler [
 	|instruction1 instruction2 instruction3 instruction4|
 	instruction1 := self newInstruction
 							from: (anAssembler registerNamed: #A);
@@ -36,19 +26,29 @@ BPFetchDataAtAddress >> generateFor: anAssembler [
 							yourself.
 							
 	instruction4 := self newInstruction
-							from: 0 asBPAddress; "Will be filled by previous instructions."
-							to: (self destination forAssembler: anAssembler);
+							from: (self source forAssembler: anAssembler);
+							to: 0 asBPAddress; "Will be filled by previous instructions."
 							jump: BPNextInstructionReference new;
 							beAddedTo: anAssembler;
 							yourself.
 	
 	instruction1
-		to: (instruction4 asReference byteIndex: 0);
+		to: (instruction4 asReference byteIndex: 3);
 		jump: instruction2 asReference.
 	instruction2
-		to: (instruction4 asReference byteIndex: 1);
+		to: (instruction4 asReference byteIndex: 4);
 		jump: instruction3 asReference.
 	instruction3
-		to: (instruction4 asReference byteIndex: 2);
+		to: (instruction4 asReference byteIndex: 5);
 		jump: instruction4 asReference.
+]
+
+{ #category : #accessing }
+BPStoreDataAtAddress >> source [
+	^ source
+]
+
+{ #category : #accessing }
+BPStoreDataAtAddress >> source: anObject [
+	source := anObject
 ]

@@ -423,6 +423,54 @@ BPAssemblerTest >> testDecrement3 [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testDecrementAddress [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 0 to: #A;
+		move: 0 to: #B;
+		move: 0 to: #C;
+		decrementAddress.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm step.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 255.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 255.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 255.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testDecrementAddress2 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 0 to: #A;
+		move: 0 to: #B;
+		move: 255 to: #C;
+		decrementAddress.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm step.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 255.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 255.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 254.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testFetchDataAtAddressInto [
 	| assembler vm memory |
 	assembler := BPAssembler new.
@@ -537,6 +585,102 @@ BPAssemblerTest >> testIncrement3 [
 	3 timesRepeat: [ vm innerStep ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 0.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testIncrementAddress [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 0 to: #A;
+		move: 0 to: #B;
+		move: 0 to: #C;
+		incrementAddress.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm step.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 1.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 0.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testIncrementAddress2 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 255 to: #A;
+		move: 0 to: #B;
+		move: 0 to: #C;
+		incrementAddress.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm step.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 1.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 0.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testIncrementAddress3 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 255 to: #A;
+		move: 255 to: #B;
+		move: 0 to: #C;
+		incrementAddress.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm step.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 1.
+]
+
+{ #category : #test }
+BPAssemblerTest >> testIncrementAddress4 [
+	| assembler vm memory |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 255 to: #A;
+		move: 255 to: #B;
+		move: 255 to: #C;
+		incrementAddress.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm step.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 0
 ]
 
 { #category : #test }

@@ -50,6 +50,15 @@ BPAssembler >> assemble [
 ]
 
 { #category : #instructions }
+BPAssembler >> atAddressStoreData: source [
+	"Moves data in source to memory address located at address formed by registers A (high-byte), B (middle byte), C (low byte).
+	"
+	BPStoreDataAtAddress new
+		source: source;
+		generateFor: self
+]
+
+{ #category : #instructions }
 BPAssembler >> call: address [
 	BPCall new
 		address: address;
@@ -84,6 +93,25 @@ BPAssembler >> decrement: register [
 		generateFor: self
 ]
 
+{ #category : #instructions }
+BPAssembler >> decrementAddress [
+	"Decrement the address address formed by content of registers A (high-byte), B (middle byte), C (low byte)."
+	
+	| decrementAddressFinishedLabel |
+	decrementAddressFinishedLabel := ('decrementAddressFinished-' , UUIDGenerator next asString) asSymbol.
+	
+	self
+		decrement: #A;
+		cmp: #A with: 255;
+		jumpIfNotEqual: decrementAddressFinishedLabel;
+		decrement: #B;
+		cmp: #B with: 255;
+		jumpIfNotEqual: decrementAddressFinishedLabel;
+		decrement: #C;
+		label: decrementAddressFinishedLabel;
+		nop "Ensure it works even if this is the last instruction of program."
+]
+
 { #category : #accessing }
 BPAssembler >> defaultMemoryLayout [
 	^ self class defaultMemoryLayout
@@ -108,6 +136,25 @@ BPAssembler >> increment: register [
 	BPIncrement new
 		register: register;
 		generateFor: self
+]
+
+{ #category : #instructions }
+BPAssembler >> incrementAddress [
+	"Increment the address address formed by content of registers A (high-byte), B (middle byte), C (low byte)."
+	
+	| incrementAddressFinishedLabel |
+	incrementAddressFinishedLabel := ('incrementAddressFinished-' , UUIDGenerator next asString) asSymbol.
+	
+	self
+		increment: #A;
+		cmp: #A with: 0;
+		jumpIfNotEqual: incrementAddressFinishedLabel;
+		increment: #B;
+		cmp: #B with: 0;
+		jumpIfNotEqual: incrementAddressFinishedLabel;
+		increment: #C;
+		label: incrementAddressFinishedLabel;
+		nop "Ensure it works even if this is the last instruction of program."
 ]
 
 { #category : #initialization }
