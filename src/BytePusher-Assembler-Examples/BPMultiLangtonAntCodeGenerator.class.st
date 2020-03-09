@@ -1,11 +1,11 @@
 Class {
-	#name : #MPMultiLangtonAntCodeGenerator,
+	#name : #BPMultiLangtonAntCodeGenerator,
 	#superclass : #BPLangtonAntCodeGenerator,
 	#category : #'BytePusher-Assembler-Examples'
 }
 
 { #category : #'code generation' }
-MPMultiLangtonAntCodeGenerator >> generateOn: assembly [
+BPMultiLangtonAntCodeGenerator >> generateOn: assembly [
 	"Read"
 	"Inverse color"
 	"Write new color"
@@ -79,12 +79,9 @@ MPMultiLangtonAntCodeGenerator >> generateOn: assembly [
 ]
 
 { #category : #'as yet unclassified' }
-MPMultiLangtonAntCodeGenerator >> generateSimulateAntAtAddressOn: assembly [
+BPMultiLangtonAntCodeGenerator >> generateSimulateAntAtAddressOn: assembly [
 	assembly
 		label: #simulate_ant_at_address;
-		jump: #end_local_ant_data;
-		label: #local_ant_address; nop;
-		label: #end_local_ant_data;
 		popFromDataStack: #C;
 		popFromDataStack: #B;
 		popFromDataStack: #A;
@@ -103,19 +100,16 @@ MPMultiLangtonAntCodeGenerator >> generateSimulateAntAtAddressOn: assembly [
 		pushOnDataStack: #D;
 		
 		call: #langton_ant;
-		flag: #TODO; "Fix below because it is not the address at top of the stack."
+		popFromDataStack: #F;
+		popFromDataStack: #E;
+		popFromDataStack: #D;
 		popFromDataStack: #C;
 		popFromDataStack: #B;
 		popFromDataStack: #A;
+		atAddressStoreData: #D;
 		incrementAddress;
+		atAddressStoreData: #E;
 		incrementAddress;
-		popFromDataStack: #D;
-		atAddressStoreData: #D;
-		decrementAddress;
-		popFromDataStack: #D;
-		atAddressStoreData: #D;
-		decrementAddress;
-		popFromDataStack: #D;
-		atAddressStoreData: #D;
+		atAddressStoreData: #F;
 		return
 ]
