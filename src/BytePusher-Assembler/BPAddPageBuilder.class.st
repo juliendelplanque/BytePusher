@@ -11,11 +11,6 @@ BPAddPageBuilder class >> reservedMemoryZone [
 		yourself
 ]
 
-{ #category : #writing }
-BPAddPageBuilder class >> startAddress [
-	^ 16r10000 asBPAddress
-]
-
 { #category : #generating }
 BPAddPageBuilder >> byteForAddress: anInteger [
 	| x y |

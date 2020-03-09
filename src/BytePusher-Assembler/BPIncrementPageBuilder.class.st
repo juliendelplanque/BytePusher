@@ -16,11 +16,6 @@ BPIncrementPageBuilder class >> reservedMemoryZone [
 		yourself
 ]
 
-{ #category : #accessing }
-BPIncrementPageBuilder class >> startAddress [
-	^ 16r40100 asBPAddress
-]
-
 { #category : #generating }
 BPIncrementPageBuilder >> byteForAddress: anInteger [
 	^ (anInteger & 16rFF) + 1 % 16r100

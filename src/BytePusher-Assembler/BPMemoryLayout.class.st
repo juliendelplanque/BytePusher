@@ -46,16 +46,16 @@ BPMemoryLayout class >> standard [
 		BPReservedMemoryZone name: #INFINITE_NOP startAddress: USER_MEMORY_ADDRESS + 8 + (2 * INSTRUCTION_SIZE) size: INSTRUCTION_SIZE.
 		BPReservedMemoryZone name: #DISPLAY_FRAME startAddress: 16r60000 size: PIXELS_COUNT.
 		BPReservedMemoryZone name: #AUDIO_SAMPLE startAddress: 16r70000 size: AUDIO_SAMPLE_SIZE.
-		BPAddPageBuilder reservedMemoryZone.
-		BPAddZeroFlagPageBuilder reservedMemoryZone.
-		BPAddCarryFlagPageBuilder reservedMemoryZone.
-		BPCmpPageBuilder reservedMemoryZone.
-		BPIdentityPageBuilder reservedMemoryZone.
-		BPBitAndPageBuilder reservedMemoryZone.
-		BPIncrementPageBuilder reservedMemoryZone.
-		BPDecrementPageBuilder reservedMemoryZone.
-		BPReservedMemoryZone name: #DATA_STACK startAddress: 16r040300 size: 16rFF.
-		BPReservedMemoryZone name: #RETURN_STACK startAddress: 16r040400 size: 16rFF };
+		BPAddPageBuilder reservedMemoryZoneStartingAt: 16r10000.
+		BPAddZeroFlagPageBuilder reservedMemoryZoneStartingAt: 16r20000.
+		BPAddCarryFlagPageBuilder reservedMemoryZoneStartingAt: 16r50000.
+		BPCmpPageBuilder reservedMemoryZoneStartingAt: 16r30000.
+		BPIdentityPageBuilder reservedMemoryZoneStartingAt: 16r40000.
+		BPBitAndPageBuilder reservedMemoryZoneStartingAt: 16r80000.
+		BPIncrementPageBuilder reservedMemoryZoneStartingAt: 16r41000.
+		BPDecrementPageBuilder reservedMemoryZoneStartingAt: 16r42000.
+		BPReservedMemoryZone name: #DATA_STACK startAddress: 16r40300 size: 16rFF.
+		BPReservedMemoryZone name: #RETURN_STACK startAddress: 16r40400 size: 16rFF };
 	yourself
 ]
 

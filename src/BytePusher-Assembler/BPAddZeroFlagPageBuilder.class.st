@@ -14,11 +14,6 @@ BPAddZeroFlagPageBuilder class >> reservedMemoryZone [
 		yourself
 ]
 
-{ #category : #accessing }
-BPAddZeroFlagPageBuilder class >> startAddress [
-	^ 16r20000 asBPAddress
-]
-
 { #category : #generating }
 BPAddZeroFlagPageBuilder >> byteForAddress: anInteger [
 	| x y |

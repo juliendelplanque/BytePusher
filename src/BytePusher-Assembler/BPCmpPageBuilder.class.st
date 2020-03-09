@@ -14,11 +14,6 @@ BPCmpPageBuilder class >> reservedMemoryZone [
 		yourself
 ]
 
-{ #category : #accessing }
-BPCmpPageBuilder class >> startAddress [
-	^ 16r30000 asBPAddress
-]
-
 { #category : #generating }
 BPCmpPageBuilder >> byteForAddress: anInteger [
 	| x y |

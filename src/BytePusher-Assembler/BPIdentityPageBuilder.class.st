@@ -16,11 +16,6 @@ BPIdentityPageBuilder class >> reservedMemoryZone [
 		yourself
 ]
 
-{ #category : #accessing }
-BPIdentityPageBuilder class >> startAddress [
-	^ 16r40000 asBPAddress
-]
-
 { #category : #generating }
 BPIdentityPageBuilder >> byteForAddress: anInteger [
 	^ anInteger & 16rFF

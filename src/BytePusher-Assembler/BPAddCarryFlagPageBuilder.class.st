@@ -11,11 +11,6 @@ BPAddCarryFlagPageBuilder class >> reservedMemoryZone [
 		yourself
 ]
 
-{ #category : #accessing }
-BPAddCarryFlagPageBuilder class >> startAddress [
-	^ 16r50000 asBPAddress
-]
-
 { #category : #generating }
 BPAddCarryFlagPageBuilder >> byteForAddress: anInteger [
 	| x y |

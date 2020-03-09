@@ -7,6 +7,11 @@ Class {
 	#category : #'BytePusher-Assembler-Memory'
 }
 
+{ #category : #accessing }
+BPOpcodeBankReservedMemoryZone >> endAddress [
+	^ self startAddress + self opcodeBank bankSize
+]
+
 { #category : #testing }
 BPOpcodeBankReservedMemoryZone >> isForOpcodeBank [
 	^ true

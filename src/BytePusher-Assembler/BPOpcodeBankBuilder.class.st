@@ -9,47 +9,27 @@ BPOpcodeBankBuilder class >> bankSize [
 	^ 16rFFFF
 ]
 
-{ #category : #accessing }
-BPOpcodeBankBuilder class >> endAddress [
-	^ self startAddress + self bankSize
-]
-
-{ #category : #accessing }
+{ #category : #'instance creation' }
 BPOpcodeBankBuilder class >> reservedMemoryZone [
 	^ BPOpcodeBankReservedMemoryZone new
-		startAddress: self startAddress;
-		endAddress: self endAddress;
 		opcodeBank: self new;
 		yourself
 ]
 
-{ #category : #accessing }
-BPOpcodeBankBuilder class >> startAddress [
-	^ self subclassResponsibility
+{ #category : #'instance creation' }
+BPOpcodeBankBuilder class >> reservedMemoryZoneStartingAt: anAddress [
+	^ self reservedMemoryZone
+		startAddress: anAddress asBPAddress;
+		yourself
 ]
 
-{ #category : #writing }
-BPOpcodeBankBuilder class >> writeBankOn: aByteArray [
-	^ self new writeBankOn: aByteArray
+{ #category : #accessing }
+BPOpcodeBankBuilder >> bankSize [
+	^ self class bankSize
 ]
 
 { #category : #generating }
 BPOpcodeBankBuilder >> byteForAddress: anInteger [
 	"Generates the byte for the address of the bank provided."
 	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-BPOpcodeBankBuilder >> endAddress [
-	^ self class endAddress
-]
-
-{ #category : #accessing }
-BPOpcodeBankBuilder >> reservedMemoryZone [
-	^ self class reservedMemoryZone
-]
-
-{ #category : #accessing }
-BPOpcodeBankBuilder >> startAddress [
-	^ self class startAddress
 ]
