@@ -44,6 +44,8 @@ BPMemoryLayout class >> standard [
 		BPReservedMemoryZone name: #JUMP_IF_ZERO startAddress: USER_MEMORY_ADDRESS + 8 size: INSTRUCTION_SIZE.
 		BPReservedMemoryZone name: #JUMP_IF_NONZERO startAddress: USER_MEMORY_ADDRESS + 8 + INSTRUCTION_SIZE size: INSTRUCTION_SIZE.
 		BPReservedMemoryZone name: #INFINITE_NOP startAddress: USER_MEMORY_ADDRESS + 8 + (2 * INSTRUCTION_SIZE) size: INSTRUCTION_SIZE.
+		BPRegister name: #E address: USER_MEMORY_ADDRESS + 8 + (3 * INSTRUCTION_SIZE).
+		BPRegister name: #F address: USER_MEMORY_ADDRESS + 8 + (3 * INSTRUCTION_SIZE) + 1.
 		BPReservedMemoryZone name: #DISPLAY_FRAME startAddress: 16r60000 size: PIXELS_COUNT.
 		BPReservedMemoryZone name: #AUDIO_SAMPLE startAddress: 16r70000 size: AUDIO_SAMPLE_SIZE.
 		BPAddPageBuilder reservedMemoryZoneStartingAt: 16r10000.
