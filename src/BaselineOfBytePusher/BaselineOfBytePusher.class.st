@@ -17,5 +17,9 @@ BaselineOfBytePusher >> baseline: spec [
 			package: 'BytePusher-Assembler-GTInspectorExtensions'
 				with: [ spec requires: #('BytePusher-Assembler') ];
 			package: 'BytePusher-Assembler-Tests'
-				with: [ spec requires: #('BytePusher-Assembler') ] ]
+				with: [ spec requires: #('BytePusher-Assembler') ];
+			package: 'BytePusher-VM-Debugging'
+				with: [ spec requires: #('BytePusher-VM') ];
+			package: 'BytePusher-VM-Debugging-Tests'
+				with: [ spec requires: #('BytePusher-VM-Debugging') ] ]
 ]
