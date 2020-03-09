@@ -30,7 +30,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateInversePixelValueOn0 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 215.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -60,7 +60,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateInversePixelValueOn215 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -93,7 +93,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateNextAntPositionOn0 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: ((assembly registerNamed: #B) valueIn: memory) equals: 0.
@@ -127,7 +127,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateNextAntPositionOn1 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 2.
 	self assert: ((assembly registerNamed: #B) valueIn: memory) equals: 1.
@@ -161,7 +161,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateNextAntPositionOn2 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: ((assembly registerNamed: #B) valueIn: memory) equals: 2.
@@ -195,7 +195,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateNextAntPositionOn3 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: ((assembly registerNamed: #B) valueIn: memory) equals: 1.
@@ -226,7 +226,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn0 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 3.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -256,7 +256,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn1 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -286,7 +286,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn2 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -316,7 +316,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnLeftProcedureOn3 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 2.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -346,7 +346,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn0 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -376,7 +376,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn1 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 2.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -406,7 +406,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn2 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 3.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -436,7 +436,7 @@ BPLangtonAntCodeGeneratorTest >> testGenerateTurnRightProcedureOn3 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.

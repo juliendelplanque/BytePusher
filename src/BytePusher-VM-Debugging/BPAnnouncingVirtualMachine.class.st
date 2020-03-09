@@ -23,7 +23,7 @@ BPAnnouncingVirtualMachine >> announcer: anObject [
 ]
 
 { #category : #running }
-BPAnnouncingVirtualMachine >> innerStep [
+BPAnnouncingVirtualMachine >> executeInnerLoop [
 	self announce: (BPAboutToExecute vm: self pc: self programCounter).
-	^ super innerStep
+	^ super executeInnerLoop
 ]

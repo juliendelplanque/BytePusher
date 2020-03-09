@@ -15,16 +15,8 @@ BPVirtualMachineTest >> setUp [
 	vm := BPVirtualMachine new
 ]
 
-{ #category : #'tests-memory manipulation' }
-BPVirtualMachineTest >> testExtractBytesStartingAt [
-	vm memory: #[16rFF 16r0F 16r42 16r22].
-	
-	self assert: (vm extract: 2 bytesStartingAt: 0) equals: 16rFF0F.
-	self assert: (vm extract: 2 bytesStartingAt: 2) equals: 16r4222.
-]
-
 { #category : #test }
-BPVirtualMachineTest >> testInnerStep [
+BPVirtualMachineTest >> testExecuteInnerLoop [
 	"Write 42 data at address 50."
 	vm memoryAt: 50 put: 42.
 	"Write 43 data at address 10."
@@ -36,11 +28,19 @@ BPVirtualMachineTest >> testInnerStep [
 	"Set the program counter."
 	vm programCounter: vm userMemoryAddress.
 	
-	vm innerStep.
+	vm executeInnerLoop.
 	
 	self assert: vm programCounter equals: 50.
 	self assert: (vm memoryAt: 50) equals: 42.
 	self assert: (vm memoryAt: 51) equals: 42
+]
+
+{ #category : #'tests-memory manipulation' }
+BPVirtualMachineTest >> testExtractBytesStartingAt [
+	vm memory: #[16rFF 16r0F 16r42 16r22].
+	
+	self assert: (vm extract: 2 bytesStartingAt: 0) equals: 16rFF0F.
+	self assert: (vm extract: 2 bytesStartingAt: 2) equals: 16r4222.
 ]
 
 { #category : #test }

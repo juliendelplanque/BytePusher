@@ -70,7 +70,7 @@ BPAssemblerTest >> test2AddCompare [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	22 timesRepeat: [ vm innerStep ].
+	22 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 3.
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: FALSE_VALUE.
@@ -92,7 +92,7 @@ BPAssemblerTest >> testAddTo [
 				loadProgramCounter;
 				yourself.
 	
-	11 timesRepeat: [ vm innerStep ].
+	11 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -113,7 +113,7 @@ BPAssemblerTest >> testAddTo2 [
 				loadProgramCounter;
 				yourself.
 	
-	10 timesRepeat: [ vm innerStep ].
+	10 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
@@ -136,7 +136,7 @@ BPAssemblerTest >> testAddToThenMoveTo [
 				loadProgramCounter;
 				yourself.
 	
-	12 timesRepeat: [ vm innerStep ].
+	12 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 11.
@@ -160,7 +160,7 @@ BPAssemblerTest >> testCall [
 				loadProgramCounter;
 				yourself.
 	
-	16 timesRepeat: [ vm innerStep ].
+	16 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #RETURN_SP) address access: memory) equals: 3.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 42.
@@ -192,7 +192,7 @@ BPAssemblerTest >> testCmpWith [
 				loadProgramCounter;
 				yourself.
 	
-	7 timesRepeat: [ vm innerStep ].
+	7 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: FALSE_VALUE.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 5.
@@ -215,7 +215,7 @@ BPAssemblerTest >> testCmpWith2 [
 				loadProgramCounter;
 				yourself.
 	
-	7 timesRepeat: [ vm innerStep ].
+	7 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: TRUE_VALUE.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
@@ -237,7 +237,7 @@ BPAssemblerTest >> testCmpWith3 [
 				loadProgramCounter;
 				yourself.
 	
-	4 timesRepeat: [ vm innerStep ].
+	4 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: FALSE_VALUE.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
@@ -259,7 +259,7 @@ BPAssemblerTest >> testCmpWith4 [
 				loadProgramCounter;
 				yourself.
 	
-	4 timesRepeat: [ vm innerStep ].
+	4 timesRepeat: [ vm executeInnerLoop ].
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: TRUE_VALUE.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
@@ -282,7 +282,7 @@ BPAssemblerTest >> testCounter [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	100 timesRepeat: [ vm innerStep ].
+	100 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 5
 ]
@@ -304,7 +304,7 @@ BPAssemblerTest >> testCounterWithIncrement [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	100 timesRepeat: [ vm innerStep ].
+	100 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 5
 ]
@@ -326,7 +326,7 @@ BPAssemblerTest >> testDataStack [
 				loadProgramCounter;
 				yourself.
 	
-	12 timesRepeat: [ vm innerStep ].
+	12 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 0.
 	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory) equals: 42.
@@ -351,7 +351,7 @@ BPAssemblerTest >> testDataStack2 [
 				loadProgramCounter;
 				yourself.
 	
-	12 timesRepeat: [ vm innerStep ].
+	12 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 2.
 	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory) equals: 42.
@@ -374,7 +374,7 @@ BPAssemblerTest >> testDecrement [
 				loadProgramCounter;
 				yourself.
 	
-	3 timesRepeat: [ vm innerStep ].
+	3 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 4.
 ]
@@ -396,7 +396,7 @@ BPAssemblerTest >> testDecrement2 [
 				loadProgramCounter;
 				yourself.
 	
-	6 timesRepeat: [ vm innerStep ].
+	6 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 4.
 	self assert: ((assembler registerNamed: #B) address access: memory) equals: 0.
@@ -417,7 +417,7 @@ BPAssemblerTest >> testDecrement3 [
 				loadProgramCounter;
 				yourself.
 	
-	3 timesRepeat: [ vm innerStep ].
+	3 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 255.
 ]
@@ -439,7 +439,7 @@ BPAssemblerTest >> testDecrementAddress [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 255.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 255.
@@ -463,7 +463,7 @@ BPAssemblerTest >> testDecrementAddress2 [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 255.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 255.
@@ -491,7 +491,7 @@ BPAssemblerTest >> testFetchDataAtAddressInto [
 			loadProgramCounter;
 			yourself.
 			
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembler memoryLayout registerNamed: #A) valueIn: memory) equals: 0
 ]
@@ -518,7 +518,7 @@ BPAssemblerTest >> testFibonacci [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	200 timesRepeat: [ vm innerStep ].
+	200 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 8.
 	self assert: ((assembly registerNamed: #C) address access: memory) equals: 5
@@ -539,7 +539,7 @@ BPAssemblerTest >> testIncrement [
 				loadProgramCounter;
 				yourself.
 	
-	3 timesRepeat: [ vm innerStep ].
+	3 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 6.
 ]
@@ -561,7 +561,7 @@ BPAssemblerTest >> testIncrement2 [
 				loadProgramCounter;
 				yourself.
 	
-	6 timesRepeat: [ vm innerStep ].
+	6 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembler registerNamed: #B) address access: memory) equals: 2.
@@ -582,7 +582,7 @@ BPAssemblerTest >> testIncrement3 [
 				loadProgramCounter;
 				yourself.
 	
-	3 timesRepeat: [ vm innerStep ].
+	3 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembler registerNamed: #A) address access: memory) equals: 0.
 ]
@@ -604,7 +604,7 @@ BPAssemblerTest >> testIncrementAddress [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
@@ -628,7 +628,7 @@ BPAssemblerTest >> testIncrementAddress2 [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 1.
@@ -652,7 +652,7 @@ BPAssemblerTest >> testIncrementAddress3 [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
@@ -676,7 +676,7 @@ BPAssemblerTest >> testIncrementAddress4 [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
@@ -705,7 +705,7 @@ BPAssemblerTest >> testJump [
 	
 	memoryBeforeStep := memory copy.
 	
-	vm innerStep.
+	vm executeInnerLoop.
 	
 	self assert: vm programCounter equals: 16rE0000.
 	self assert: vm memory equals: memoryBeforeStep
@@ -725,7 +725,7 @@ BPAssemblerTest >> testJump2 [
 	
 	memoryBeforeStep := memory copy.
 	
-	vm innerStep.
+	vm executeInnerLoop.
 	
 	self assert: vm programCounter equals: 16rE0000.
 	self assert: vm memory equals: memoryBeforeStep
@@ -750,7 +750,7 @@ BPAssemblerTest >> testJumpIfEqual [
 				loadProgramCounter;
 				yourself.
 	
-	13 timesRepeat: [ vm innerStep ].
+	13 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: TRUE_VALUE.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
@@ -778,7 +778,7 @@ BPAssemblerTest >> testJumpIfEqual2 [
 				loadProgramCounter;
 				yourself.
 	
-	45 timesRepeat: [ vm innerStep ].
+	45 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 5.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 5.
@@ -805,7 +805,7 @@ BPAssemblerTest >> testJumpIfEqual3 [
 				loadProgramCounter;
 				yourself.
 	
-	100 timesRepeat: [ vm innerStep ].
+	100 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 7.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -831,7 +831,7 @@ BPAssemblerTest >> testJumpIfEqual4 [
 				loadProgramCounter;
 				yourself.
 	
-	100 timesRepeat: [ vm innerStep ].
+	100 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 7.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 7
@@ -856,7 +856,7 @@ BPAssemblerTest >> testJumpIfNotEqual [
 				loadProgramCounter;
 				yourself.
 	
-	13 timesRepeat: [ vm innerStep ].
+	13 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #ZERO) address access: memory) equals: FALSE_VALUE.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 5.
@@ -884,7 +884,7 @@ BPAssemblerTest >> testJumpIfNotEqual2 [
 				loadProgramCounter;
 				yourself.
 	
-	45 timesRepeat: [ vm innerStep ].
+	45 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -911,7 +911,7 @@ BPAssemblerTest >> testJumpIfNotEqual3 [
 				loadProgramCounter;
 				yourself.
 	
-	100 timesRepeat: [ vm innerStep ].
+	100 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -937,7 +937,7 @@ BPAssemblerTest >> testJumpIfNotEqual4 [
 				loadProgramCounter;
 				yourself.
 	
-	100 timesRepeat: [ vm innerStep ].
+	100 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 7
@@ -963,7 +963,7 @@ BPAssemblerTest >> testJumpIfNotEqual5 [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 1.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0
@@ -991,7 +991,7 @@ BPAssemblerTest >> testJumpIfNotEqual6 [
 				loadProgramCounter;
 				yourself.
 	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 10.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 10
@@ -1012,7 +1012,7 @@ BPAssemblerTest >> testMoveTo [
 				loadProgramCounter;
 				yourself.
 	
-	2 timesRepeat: [ vm innerStep ].
+	2 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 5.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -1031,7 +1031,7 @@ BPAssemblerTest >> testMoveTo3 [
 				loadProgramCounter;
 				yourself.
 	
-	vm innerStep.
+	vm executeInnerLoop.
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 5.
 ]
@@ -1052,7 +1052,7 @@ BPAssemblerTest >> testMoveTo4 [
 				loadProgramCounter;
 				yourself.
 	
-	3 timesRepeat: [ vm innerStep ].
+	3 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -1076,7 +1076,7 @@ BPAssemblerTest >> testMoveTo5 [
 				loadProgramCounter;
 				yourself.
 	
-	5 timesRepeat: [ vm innerStep ].
+	5 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 7.
@@ -1098,7 +1098,7 @@ BPAssemblerTest >> testPopFromDataStack [
 				loadProgramCounter;
 				yourself.
 	
-	8 timesRepeat: [ vm innerStep ].
+	8 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 0.
 	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory) equals: 42.
@@ -1119,7 +1119,7 @@ BPAssemblerTest >> testPushAddressOfPCOnDataStack [
 				loadProgramCounter;
 				yourself.
 	
-	16 timesRepeat: [ vm innerStep ].
+	16 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #RETURN_SP) address access: memory) equals: 3.
 	self assert: ((assembly reservedMemoryZoneNamed: #RETURN_STACK) address access: memory) equals: (assembly memoryLayout firstGenerationAddress higherByte).
@@ -1144,7 +1144,7 @@ BPAssemblerTest >> testPushAddressOfPCOnDataStack2 [
 				loadProgramCounter;
 				yourself.
 	
-	34 timesRepeat: [ vm innerStep ].
+	34 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #RETURN_SP) address access: memory) equals: 6.
 	self assert: ((assembly reservedMemoryZoneNamed: #RETURN_STACK) address access: memory) equals: (assembly memoryLayout firstGenerationAddress higherByte).
@@ -1176,7 +1176,7 @@ BPAssemblerTest >> testPushOnDataStack [
 				loadProgramCounter;
 				yourself.
 	
-	4 timesRepeat: [ vm innerStep ].
+	4 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 1.
 	self assert: ((assembly reservedMemoryZoneNamed: #DATA_STACK) address access: memory) equals: 42.
@@ -1202,7 +1202,7 @@ BPAssemblerTest >> testReadPixel [
 				loadProgramCounter;
 				yourself.
 				
-	vm step.
+	vm executeOuterLoop.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 42.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 16r00.
 	self assert: ((assembly reservedMemoryZoneNamed: #DISPLAY_FRAME) address + 16r0500 access: memory) equals: 42
@@ -1220,7 +1220,7 @@ BPAssemblerTest >> testRecursiveFibonacci0 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1239,7 +1239,7 @@ BPAssemblerTest >> testRecursiveFibonacci1 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1258,7 +1258,7 @@ BPAssemblerTest >> testRecursiveFibonacci2 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1277,7 +1277,7 @@ BPAssemblerTest >> testRecursiveFibonacci3 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 2.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1296,7 +1296,7 @@ BPAssemblerTest >> testRecursiveFibonacci4 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 3.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1315,7 +1315,7 @@ BPAssemblerTest >> testRecursiveFibonacci5 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 5.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1334,7 +1334,7 @@ BPAssemblerTest >> testRecursiveFibonacci6 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 8.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1353,7 +1353,7 @@ BPAssemblerTest >> testRecursiveFibonacci7 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) valueIn: memory) equals: 13.
 	self assert: (assembly memoryLayout extractDataStack: memory) isEmpty.
@@ -1379,7 +1379,7 @@ BPAssemblerTest >> testReturn [
 				loadProgramCounter;
 				yourself.
 	
-	28 timesRepeat: [ vm innerStep ].
+	28 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #SP) address access: memory) equals: 0.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 42.
@@ -1406,7 +1406,7 @@ BPAssemblerTest >> testReturn2 [
 				loadProgramCounter;
 				yourself.
 	
-	32 timesRepeat: [ vm innerStep ].
+	32 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #RETURN_SP) address access: memory) equals: 0.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 42.
@@ -1431,7 +1431,7 @@ BPAssemblerTest >> testSerializePC [
 				loadProgramCounter;
 				yourself.
 				
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed:#foo) address.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6
@@ -1455,7 +1455,7 @@ BPAssemblerTest >> testSerializePC2 [
 				loadProgramCounter;
 				yourself.
 				
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed: #foo) address.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 6
@@ -1484,12 +1484,12 @@ BPAssemblerTest >> testSerializePC3 [
 				loadProgramCounter;
 				yourself.
 				
-	vm step.
+	vm executeOuterLoop.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 1.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
 	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed: #start) address.
 	
-	vm step.
+	vm executeOuterLoop.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 2.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
 	self assert: vm loadProgramCounter programCounter asBPAddress equals: (assembled labelNamed: #start) address.
@@ -1511,7 +1511,7 @@ BPAssemblerTest >> testSimpleAddTo [
 				loadProgramCounter;
 				yourself.
 	
-	5 timesRepeat: [ vm innerStep ].
+	5 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 6.
@@ -1532,7 +1532,7 @@ BPAssemblerTest >> testSimpleAddTo2 [
 				loadProgramCounter;
 				yourself.
 	
-	4 timesRepeat: [ vm innerStep ].
+	4 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 0.
@@ -1555,7 +1555,7 @@ BPAssemblerTest >> testSimpleAddToThenMoveTo [
 				loadProgramCounter;
 				yourself.
 	
-	6 timesRepeat: [ vm innerStep ].
+	6 timesRepeat: [ vm executeInnerLoop ].
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 11.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 11.
@@ -1578,7 +1578,7 @@ BPAssemblerTest >> testWritePixel [
 				loadProgramCounter;
 				yourself.
 				
-	vm step.
+	vm executeOuterLoop.
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 16r05.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 16r00.
 	self assert: ((assembly reservedMemoryZoneNamed: #DISPLAY_FRAME) address + 16r0500 access: memory) equals: 42
@@ -1603,7 +1603,7 @@ BPAssemblerTest >> testWritePixel2 [
 				memory: memory;
 				loadProgramCounter;
 				yourself.	
-	vm step.
+	vm executeOuterLoop.
 	
 	self assert: ((assembly registerNamed: #A) address access: memory) equals: 16r00.
 	self assert: ((assembly registerNamed: #B) address access: memory) equals: 16r05.

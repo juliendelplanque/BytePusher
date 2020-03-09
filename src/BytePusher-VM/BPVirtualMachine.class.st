@@ -12,6 +12,27 @@ Class {
 	#category : #'BytePusher-VM-Core'
 }
 
+{ #category : #running }
+BPVirtualMachine >> executeInnerLoop [
+	self
+		memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter + 3)
+		put: (self memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter)).
+	
+	programCounter := self
+		extract: ADDRESS_SIZE
+		bytesStartingAt: programCounter + 6.
+		
+	
+]
+
+{ #category : #running }
+BPVirtualMachine >> executeOuterLoop [
+	self loadKeyboardData.
+	self loadProgramCounter.
+	INSTRUCTIONS_PER_STEP timesRepeat: [ self executeInnerLoop ].
+	self renderDisplayFrame
+]
+
 { #category : #'memory manipulation' }
 BPVirtualMachine >> extract: n bytesStartingAt: startAddress [
 	"Extract #n bytes starting at the #startAddress and returns the integer formed by those #n bytes concatenated.
@@ -30,19 +51,6 @@ BPVirtualMachine >> initialize [
 	self
 		resetMemory;
 		ioDriver: BPIODriver default
-]
-
-{ #category : #running }
-BPVirtualMachine >> innerStep [
-	self
-		memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter + 3)
-		put: (self memoryAt: (self extract: ADDRESS_SIZE bytesStartingAt: programCounter)).
-	
-	programCounter := self
-		extract: ADDRESS_SIZE
-		bytesStartingAt: programCounter + 6.
-		
-	
 ]
 
 { #category : #accessing }
@@ -152,14 +160,6 @@ BPVirtualMachine >> renderDisplayFrame [
 { #category : #'memory manipulation' }
 BPVirtualMachine >> resetMemory [
 	self memory: (ByteArray new: MEMORY_SIZE)
-]
-
-{ #category : #running }
-BPVirtualMachine >> step [
-	self loadKeyboardData.
-	self loadProgramCounter.
-	INSTRUCTIONS_PER_STEP timesRepeat: [ self innerStep ].
-	self renderDisplayFrame
 ]
 
 { #category : #accessing }
