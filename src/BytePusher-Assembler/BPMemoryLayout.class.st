@@ -107,10 +107,7 @@ BPMemoryLayout >> extractReturnStack: memory [
 
 { #category : #accessing }
 BPMemoryLayout >> firstGenerationAddress [
-	self layoutObjects overlappingPairsDo: [ :layoutObjectBefore :layoutObjectAfter |
-		(layoutObjectBefore endAddress + 1 = layoutObjectAfter startAddress)
-			ifFalse: [ ^ layoutObjectBefore endAddress + 1 ] ].
-	self error: 'Invalid layout.'
+	^ (self layoutObjects detectMax: #endAddress) endAddress + 1
 ]
 
 { #category : #initialization }
