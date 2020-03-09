@@ -61,6 +61,15 @@ BPVirtualMachine >> keyboardStateAddress [
 ]
 
 { #category : #running }
+BPVirtualMachine >> loadKeyboardData [
+	| keyPressed |
+	keyPressed := 0.	"self ioDriver keyPressed"
+	self
+		memoryAt: KEYBOARD_STATE_ADDRESS put: keyPressed >> 8 & 16rFF;
+		memoryAt: KEYBOARD_STATE_ADDRESS + 1 put: keyPressed & 16rFF
+]
+
+{ #category : #running }
 BPVirtualMachine >> loadProgramCounter [
 	programCounter := self extract: 3 bytesStartingAt: PROGRAM_COUNTER_ADDRESS.
 ]
@@ -131,6 +140,15 @@ BPVirtualMachine >> programCounter: anObject [
 	programCounter := anObject
 ]
 
+{ #category : #running }
+BPVirtualMachine >> renderDisplayFrame [
+	self ioDriver
+		renderDisplayFrame:
+			(self
+				memoryCopy: PIXELS_COUNT
+				bytesFrom: (self memoryAt: PIXEL_POINTER_ADDRESS) << 16)
+]
+
 { #category : #'memory manipulation' }
 BPVirtualMachine >> resetMemory [
 	self memory: (ByteArray new: MEMORY_SIZE)
@@ -138,20 +156,10 @@ BPVirtualMachine >> resetMemory [
 
 { #category : #running }
 BPVirtualMachine >> step [
-	| keyPressed |
-	keyPressed := 0"self ioDriver keyPressed".
-	self 
-		memoryAt: KEYBOARD_STATE_ADDRESS put: (keyPressed >> 8) & 16rFF;
-		memoryAt: KEYBOARD_STATE_ADDRESS + 1 put: keyPressed & 16rFF.
-		
+	self loadKeyboardData.
 	self loadProgramCounter.
-	
-	INSTRUCTIONS_PER_STEP 
-		timesRepeat: [ self innerStep ].
-	
-	self ioDriver
-		renderDisplayFrame: (self memoryCopy: PIXELS_COUNT bytesFrom: (self memoryAt: PIXEL_POINTER_ADDRESS) << 16).
-	
+	INSTRUCTIONS_PER_STEP timesRepeat: [ self innerStep ].
+	self renderDisplayFrame
 ]
 
 { #category : #accessing }
