@@ -12,7 +12,7 @@ Class {
 
 { #category : #executing }
 BPVMInnerLoop >> executeFor: stepper [
-	stepper virtualMachine executeInnerLoop.
+	stepper executeInnerLoop.
 	counter := counter + 1.
 	counter = INSTRUCTIONS_PER_STEP
 		ifTrue: [ 

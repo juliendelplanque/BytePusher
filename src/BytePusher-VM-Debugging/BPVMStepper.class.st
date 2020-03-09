@@ -40,10 +40,20 @@ BPVMStepper >> beInSendDisplayState [
 	self state: BPVMSendDisplayFrame new
 ]
 
+{ #category : #vm }
+BPVMStepper >> executeInnerLoop [
+	self virtualMachine executeInnerLoop
+]
+
 { #category : #initialization }
 BPVMStepper >> initialize [
 	super initialize.
 	self state: BPVMReadKeyboard new
+]
+
+{ #category : #vm }
+BPVMStepper >> loadProgramCounter [
+	self virtualMachine loadProgramCounter
 ]
 
 { #category : #accessing }

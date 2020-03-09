@@ -6,5 +6,6 @@ Class {
 
 { #category : #executing }
 BPVMReadProgramCounter >> executeFor: stepper [
+	stepper loadProgramCounter.
 	stepper beInInnerLoopState
 ]
