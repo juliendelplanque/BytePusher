@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'programCounter'
 	],
-	#category : #'BytePusher-VM-Debugging'
+	#category : #'BytePusher-VM-Debugging-Announcing'
 }
 
 { #category : #'instance creation' }

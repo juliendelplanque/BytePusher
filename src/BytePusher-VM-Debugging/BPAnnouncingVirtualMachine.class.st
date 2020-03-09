@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : #'BytePusher-VM-Debugging'
+	#category : #'BytePusher-VM-Debugging-Announcing'
 }
 
 { #category : #announce }

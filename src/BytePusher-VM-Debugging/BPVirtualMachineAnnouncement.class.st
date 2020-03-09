@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'virtualMachine'
 	],
-	#category : #'BytePusher-VM-Debugging'
+	#category : #'BytePusher-VM-Debugging-Announcing'
 }
 
 { #category : #accessing }
