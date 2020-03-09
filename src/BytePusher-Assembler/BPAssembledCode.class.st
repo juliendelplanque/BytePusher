@@ -100,7 +100,7 @@ BPAssembledCode >> serializeOn: aByteArray [
 	self memoryLayout
 		initializeOpcodeBankMemoryZonesOn: aByteArray.
 	"Create the infinite NOP loop."
-	((self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * INSTRUCTION_SIZE))
+	((self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * ADDRESS_SIZE))
 		storeAddress: (self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress in: aByteArray.
 	
 	self instructions do: [ :instruction |
