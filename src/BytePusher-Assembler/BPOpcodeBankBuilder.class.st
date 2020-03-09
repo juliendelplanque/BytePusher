@@ -33,9 +33,10 @@ BPOpcodeBankBuilder class >> writeBankOn: aByteArray [
 	^ self new writeBankOn: aByteArray
 ]
 
-{ #category : #private }
-BPOpcodeBankBuilder >> addressesRange [
-	^ self startAddress memoryAddress to: self endAddress memoryAddress
+{ #category : #generating }
+BPOpcodeBankBuilder >> byteForAddress: anInteger [
+	"Generates the byte for the address of the bank provided."
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -51,9 +52,4 @@ BPOpcodeBankBuilder >> reservedMemoryZone [
 { #category : #accessing }
 BPOpcodeBankBuilder >> startAddress [
 	^ self class startAddress
-]
-
-{ #category : #writing }
-BPOpcodeBankBuilder >> writeBankOn: aByteArray [
-	^ self subclassResponsibility
 ]

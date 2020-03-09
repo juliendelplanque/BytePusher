@@ -16,13 +16,10 @@ BPBitAndPageBuilder class >> startAddress [
 	^ 16r80000 asBPAddress
 ]
 
-{ #category : #writing }
-BPBitAndPageBuilder >> writeBankOn: aByteArray [
-	self addressesRange do: [ :address | 
-		| x y |
-		x := (address & 16rFF00) >> 8.
-		y := address & 16rFF.
-		aByteArray
-			at: address + 1 "In byte pusher, addressing starts at 0, in Pharo it starts at 1."
-			put: (x bitAnd: y)	 ]
+{ #category : #generating }
+BPBitAndPageBuilder >> byteForAddress: anInteger [
+	| x y |
+	x := (anInteger & 16rFF00) >> 8.
+	y := anInteger & 16rFF.
+	^ x bitAnd: y
 ]

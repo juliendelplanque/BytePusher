@@ -24,5 +24,8 @@ BPOpcodeBankReservedMemoryZone >> opcodeBank: anObject [
 
 { #category : #serialization }
 BPOpcodeBankReservedMemoryZone >> writeBankOn: aByteArray [ 
-	self opcodeBank writeBankOn: aByteArray
+	self startAddress memoryAddress to: self endAddress memoryAddress do: [ :address | 
+		aByteArray
+			at: address + 1 "In byte pusher, addressing starts at 0, in Pharo it starts at 1."
+			put: (self opcodeBank byteForAddress: address)	 ]
 ]

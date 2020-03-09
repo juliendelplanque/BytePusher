@@ -19,13 +19,12 @@ BPCmpPageBuilder class >> startAddress [
 	^ 16r30000 asBPAddress
 ]
 
-{ #category : #writing }
-BPCmpPageBuilder >> writeBankOn: aByteArray [
-	self addressesRange do: [ :address | 
-		| x y |
-		x := (address & 16rFF00) >> 8.
-		y := address & 16rFF.
-		aByteArray
-			at: address + 1 "In byte pusher, addressing starts at 0, in Pharo it starts at 1."
-			put: (x = y ifTrue: [ TRUE_VALUE ] ifFalse: [ FALSE_VALUE ]) ]
+{ #category : #generating }
+BPCmpPageBuilder >> byteForAddress: anInteger [
+	| x y |
+	x := (anInteger & 16rFF00) >> 8.
+	y := anInteger & 16rFF.
+	^ x = y
+		ifTrue: [ TRUE_VALUE ]
+		ifFalse: [ FALSE_VALUE ]
 ]

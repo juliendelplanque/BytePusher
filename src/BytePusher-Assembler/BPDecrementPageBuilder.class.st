@@ -21,12 +21,7 @@ BPDecrementPageBuilder class >> startAddress [
 	^ 16r40200 asBPAddress
 ]
 
-{ #category : #writing }
-BPDecrementPageBuilder >> writeBankOn: aByteArray [
-	self addressesRange do: [ :address | 
-		|x|
-		x := (address & 16rFF) - 1 % 16r100.
-		aByteArray
-			at: address + 1 "In byte pusher, addressing starts at 0, in Pharo it starts at 1."
-			put: x ]
+{ #category : #generating }
+BPDecrementPageBuilder >> byteForAddress: anInteger [
+	^ (anInteger & 16rFF) - 1 % 16r100
 ]
