@@ -50,10 +50,10 @@ BPMemoryLayout class >> standard [
 		BPAddZeroFlagPageBuilder reservedMemoryZoneStartingAt: 16r20000.
 		BPAddCarryFlagPageBuilder reservedMemoryZoneStartingAt: 16r50000.
 		BPCmpPageBuilder reservedMemoryZoneStartingAt: 16r30000.
-		BPIdentityPageBuilder reservedMemoryZoneStartingAt: 16r40000.
 		BPBitAndPageBuilder reservedMemoryZoneStartingAt: 16r80000.
-		BPIncrementPageBuilder reservedMemoryZoneStartingAt: 16r41000.
-		BPDecrementPageBuilder reservedMemoryZoneStartingAt: 16r42000.
+		BPIdentityPageBuilder reservedMemoryZoneStartingAt: 16r40000.
+		BPIncrementPageBuilder reservedMemoryZoneStartingAt: 16r40100.
+		BPDecrementPageBuilder reservedMemoryZoneStartingAt: 16r40200.
 		BPReservedMemoryZone name: #DATA_STACK startAddress: 16r40300 size: 16rFF.
 		BPReservedMemoryZone name: #RETURN_STACK startAddress: 16r40400 size: 16rFF };
 	yourself
