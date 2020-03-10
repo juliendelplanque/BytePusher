@@ -85,10 +85,8 @@ BPMultiLangtonAntCodeGenerator >> generateSimulateAntAtAddressOn: assembly [
 		popFromDataStack: #C;
 		popFromDataStack: #B;
 		popFromDataStack: #A;
-		"Backup ant address"
-		pushOnDataStack: #A;
-		pushOnDataStack: #B;
-		pushOnDataStack: #C;
+		"Backup ant address: we put back stack pointer where it was before poping A,B and C."
+		simpleAdd: #SP to: 3;
 		"Fetch ant data and put them on the stack."
 		fetchDataAtAddressInto: #D;
 		pushOnDataStack: #D;
