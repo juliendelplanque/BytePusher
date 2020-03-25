@@ -1,6 +1,6 @@
 Class {
-	#name : #BPCmpPageBuilder,
-	#superclass : #BPOpcodeBankBuilder,
+	#name : #BPCmpBankBuilder,
+	#superclass : #BPBankInitializer,
 	#pools : [
 		'BPConstants'
 	],
@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #accessing }
-BPCmpPageBuilder class >> reservedMemoryZone [
+BPCmpBankBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
 		name: #CMP_PAGE;
 		yourself
 ]
 
 { #category : #generating }
-BPCmpPageBuilder >> byteForAddress: anInteger [
+BPCmpBankBuilder >> byteForAddress: anInteger [
 	| x y |
 	x := (anInteger & 16rFF00) >> 8.
 	y := anInteger & 16rFF.

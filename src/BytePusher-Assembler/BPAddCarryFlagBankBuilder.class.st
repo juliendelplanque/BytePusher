@@ -1,18 +1,18 @@
 Class {
-	#name : #BPAddCarryFlagPageBuilder,
-	#superclass : #BPOpcodeBankBuilder,
+	#name : #BPAddCarryFlagBankBuilder,
+	#superclass : #BPBankInitializer,
 	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #accessing }
-BPAddCarryFlagPageBuilder class >> reservedMemoryZone [
+BPAddCarryFlagBankBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
 		name: #ADD_CARY_FLAG_PAGE;
 		yourself
 ]
 
 { #category : #generating }
-BPAddCarryFlagPageBuilder >> byteForAddress: anInteger [
+BPAddCarryFlagBankBuilder >> byteForAddress: anInteger [
 	| x y |
 	x := (anInteger & 16rFF00) >> 8.
 	y := anInteger & 16rFF.

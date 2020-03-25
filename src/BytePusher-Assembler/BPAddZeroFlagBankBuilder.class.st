@@ -1,6 +1,6 @@
 Class {
-	#name : #BPAddZeroFlagPageBuilder,
-	#superclass : #BPOpcodeBankBuilder,
+	#name : #BPAddZeroFlagBankBuilder,
+	#superclass : #BPBankInitializer,
 	#pools : [
 		'BPConstants'
 	],
@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #accessing }
-BPAddZeroFlagPageBuilder class >> reservedMemoryZone [
+BPAddZeroFlagBankBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
 		name: #ADD_ZERO_FLAG_PAGE;
 		yourself
 ]
 
 { #category : #generating }
-BPAddZeroFlagPageBuilder >> byteForAddress: anInteger [
+BPAddZeroFlagBankBuilder >> byteForAddress: anInteger [
 	| x y |
 	x := (anInteger & 16rFF00) >> 8.
 	y := anInteger & 16rFF.

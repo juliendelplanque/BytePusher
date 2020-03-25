@@ -1,11 +1,11 @@
 Class {
-	#name : #BPNotAndTableBuilder,
-	#superclass : #BPOpcodeBankBuilder,
+	#name : #BPNotAndBankBuilder,
+	#superclass : #BPBankInitializer,
 	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #generating }
-BPNotAndTableBuilder >> byteForAddress: anInteger [
+BPNotAndBankBuilder >> byteForAddress: anInteger [
 	| x y result |
 	x := (anInteger & 16rFF00) >> 8.
 	y := anInteger & 16rFF.

@@ -1,35 +1,35 @@
 Class {
-	#name : #BPOpcodeBankBuilder,
+	#name : #BPMemoryInitializer,
 	#superclass : #Object,
 	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #accessing }
-BPOpcodeBankBuilder class >> bankSize [
-	^ 16rFFFF
+BPMemoryInitializer class >> bankSize [
+	^ self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
-BPOpcodeBankBuilder class >> reservedMemoryZone [
+BPMemoryInitializer class >> reservedMemoryZone [
 	^ BPOpcodeBankReservedMemoryZone new
 		opcodeBank: self new;
 		yourself
 ]
 
 { #category : #'instance creation' }
-BPOpcodeBankBuilder class >> reservedMemoryZoneStartingAt: anAddress [
+BPMemoryInitializer class >> reservedMemoryZoneStartingAt: anAddress [
 	^ self reservedMemoryZone
 		startAddress: anAddress asBPAddress;
 		yourself
 ]
 
 { #category : #accessing }
-BPOpcodeBankBuilder >> bankSize [
+BPMemoryInitializer >> bankSize [
 	^ self class bankSize
 ]
 
 { #category : #generating }
-BPOpcodeBankBuilder >> byteForAddress: anInteger [
+BPMemoryInitializer >> byteForAddress: anInteger [
 	"Generates the byte for the address of the bank provided."
 	^ self subclassResponsibility
 ]

@@ -1,13 +1,8 @@
 Class {
 	#name : #BPIdentityPageBuilder,
-	#superclass : #BPOpcodeBankBuilder,
+	#superclass : #BPPageInitializer,
 	#category : #'BytePusher-Assembler-Memory'
 }
-
-{ #category : #accessing }
-BPIdentityPageBuilder class >> bankSize [
-	^ 16rFF
-]
 
 { #category : #accessing }
 BPIdentityPageBuilder class >> reservedMemoryZone [

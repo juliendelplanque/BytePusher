@@ -1,13 +1,8 @@
 Class {
 	#name : #BPDecrementPageBuilder,
-	#superclass : #BPOpcodeBankBuilder,
+	#superclass : #BPPageInitializer,
 	#category : #'BytePusher-Assembler-Memory'
 }
-
-{ #category : #accessing }
-BPDecrementPageBuilder class >> bankSize [
-	^ 16rFF
-]
 
 { #category : #accessing }
 BPDecrementPageBuilder class >> reservedMemoryZone [

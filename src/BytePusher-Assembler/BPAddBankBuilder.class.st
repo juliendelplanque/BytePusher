@@ -1,20 +1,20 @@
 Class {
-	#name : #BPBitAndPageBuilder,
-	#superclass : #BPOpcodeBankBuilder,
+	#name : #BPAddBankBuilder,
+	#superclass : #BPBankInitializer,
 	#category : #'BytePusher-Assembler-Memory'
 }
 
 { #category : #accessing }
-BPBitAndPageBuilder class >> reservedMemoryZone [
+BPAddBankBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
-		name: #BIT_AND_PAGE;
+		name: #ADD_PAGE;
 		yourself
 ]
 
 { #category : #generating }
-BPBitAndPageBuilder >> byteForAddress: anInteger [
+BPAddBankBuilder >> byteForAddress: anInteger [
 	| x y |
 	x := (anInteger & 16rFF00) >> 8.
 	y := anInteger & 16rFF.
-	^ x bitAnd: y
+	^ (x + y) % 16rFF
 ]

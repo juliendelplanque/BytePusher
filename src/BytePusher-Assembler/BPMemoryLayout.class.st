@@ -48,11 +48,11 @@ BPMemoryLayout class >> standard [
 		BPRegister name: #F address: USER_MEMORY_ADDRESS + 8 + (3 * INSTRUCTION_SIZE) + 1.
 		BPReservedMemoryZone name: #DISPLAY_FRAME startAddress: 16r60000 size: PIXELS_COUNT.
 		BPReservedMemoryZone name: #AUDIO_SAMPLE startAddress: 16r70000 size: AUDIO_SAMPLE_SIZE.
-		BPAddPageBuilder reservedMemoryZoneStartingAt: 16r10000.
-		BPAddZeroFlagPageBuilder reservedMemoryZoneStartingAt: 16r20000.
-		BPAddCarryFlagPageBuilder reservedMemoryZoneStartingAt: 16r50000.
-		BPCmpPageBuilder reservedMemoryZoneStartingAt: 16r30000.
-		BPBitAndPageBuilder reservedMemoryZoneStartingAt: 16r80000.
+		BPAddBankBuilder reservedMemoryZoneStartingAt: 16r10000.
+		BPAddZeroFlagBankBuilder reservedMemoryZoneStartingAt: 16r20000.
+		BPAddCarryFlagBankBuilder reservedMemoryZoneStartingAt: 16r50000.
+		BPCmpBankBuilder reservedMemoryZoneStartingAt: 16r30000.
+		BPBitAndBankBuilder reservedMemoryZoneStartingAt: 16r80000.
 		BPIdentityPageBuilder reservedMemoryZoneStartingAt: 16r40000.
 		BPIncrementPageBuilder reservedMemoryZoneStartingAt: 16r40100.
 		BPDecrementPageBuilder reservedMemoryZoneStartingAt: 16r40200.
