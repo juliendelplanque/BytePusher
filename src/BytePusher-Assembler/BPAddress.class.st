@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+BPAddress class >> fromByteArray: aByteArray [
+	^ self lowByte: aByteArray third middleByte: aByteArray second highByte: aByteArray first
+]
+
+{ #category : #'instance creation' }
 BPAddress class >> lowByte: lowByte middleByte: middleByte highByte: highByte [
 	^ self memoryAddress: lowByte | (middleByte << 8) | (highByte << 16)
 ]

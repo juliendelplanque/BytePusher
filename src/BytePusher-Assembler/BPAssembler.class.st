@@ -82,6 +82,15 @@ BPAssembler >> cmp: x with: y [
 ]
 
 { #category : #instructions }
+BPAssembler >> data: aByteArray [
+	"Inject data in the bytecode.
+	"
+	BPDataZone new
+		byteArray: aByteArray;
+		generateFor: self
+]
+
+{ #category : #instructions }
 BPAssembler >> decrement: register [
 	"Decrement value stored in register.
 	 This operations will modify the carry and zero flag. 
