@@ -280,6 +280,13 @@ BPAssembler >> processAddressDataReference [
 
 { #category : #instructions }
 BPAssembler >> pushAddressOfLabelOnDataStack: label [
+	"Push the memory address on the data stack in the following order: higher-byte, middle-byte, lower-byte.
+	 So after the code related to this instruction is executed, the top of the stack contains:
+	
+	 	label address lower-byte <- top of the stack
+		label address middle-byte
+	   label address higher-byte
+	"
 	BPPushLabelAddressOnDataStack new
 		label: label;
 		generateFor: self
