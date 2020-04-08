@@ -59,6 +59,12 @@ BPInstruction >> beAssembledIn: aBPAssembledCode [
 ]
 
 { #category : #accessing }
+BPInstruction >> endAddress [
+	"Returns the last address that this instruction occupies in memory."
+	^ self address + INSTRUCTION_SIZE
+]
+
+{ #category : #accessing }
 BPInstruction >> fromAddress [
 	^ fromAddress
 ]
