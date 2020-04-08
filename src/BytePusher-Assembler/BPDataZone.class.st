@@ -10,11 +10,11 @@ Class {
 	#category : #'BytePusher-Assembler-Assembler'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 BPDataZone >> adjustedByteArray [
 	^ self byteArray , ((self byteArray size \\ INSTRUCTION_SIZE) > 0
-								ifTrue: [ ByteArray new: self byteArray size \\ INSTRUCTION_SIZE ]
-								ifFalse: [ ByteArray new ])
+								ifTrue: [ ByteArray new: (INSTRUCTION_SIZE - self byteArray size \\ INSTRUCTION_SIZE) ]
+								ifFalse: [ #[] ])
 ]
 
 { #category : #accessing }
