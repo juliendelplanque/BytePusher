@@ -606,9 +606,9 @@ BPAssemblerTest >> testIncrementAddress [
 	
 	vm executeOuterLoop.
 	
-	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 1.
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
-	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 1.
 ]
 
 { #category : #test }
@@ -617,9 +617,9 @@ BPAssemblerTest >> testIncrementAddress2 [
 	assembler := BPAssembler new.
 	
 	assembler
-		move: 255 to: #A;
+		move: 0 to: #A;
 		move: 0 to: #B;
-		move: 0 to: #C;
+		move: 255 to: #C;
 		incrementAddress.
 	
 	memory := assembler assemble serialize.
@@ -641,9 +641,9 @@ BPAssemblerTest >> testIncrementAddress3 [
 	assembler := BPAssembler new.
 	
 	assembler
-		move: 255 to: #A;
+		move: 0 to: #A;
 		move: 255 to: #B;
-		move: 0 to: #C;
+		move: 255 to: #C;
 		incrementAddress.
 	
 	memory := assembler assemble serialize.
@@ -654,9 +654,9 @@ BPAssemblerTest >> testIncrementAddress3 [
 	
 	vm executeOuterLoop.
 	
-	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 1.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
-	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 1.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 0.
 ]
 
 { #category : #test }

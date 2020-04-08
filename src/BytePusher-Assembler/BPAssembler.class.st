@@ -155,13 +155,13 @@ BPAssembler >> incrementAddress [
 	incrementAddressFinishedLabel := ('incrementAddressFinished-' , UUIDGenerator next asString) asSymbol.
 	
 	self
-		increment: #A;
-		cmp: #A with: 0;
+		increment: #C;
+		cmp: #C with: 0;
 		jumpIfNotEqual: incrementAddressFinishedLabel;
 		increment: #B;
 		cmp: #B with: 0;
 		jumpIfNotEqual: incrementAddressFinishedLabel;
-		increment: #C;
+		increment: #A;
 		label: incrementAddressFinishedLabel;
 		nop "Ensure it works even if this is the last instruction of program."
 ]
