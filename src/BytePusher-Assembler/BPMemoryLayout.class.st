@@ -25,8 +25,9 @@ Class {
 
 { #category : #factory }
 BPMemoryLayout class >> standard [
+	<sampleInstance>
 	^ self new
-		name: 'Standard';
+		name: 'BytePusher';
 		addAll: {
 		BPRegister name: #KEYBOARD_HIGH address: KEYBOARD_STATE_ADDRESS.
 		BPRegister name: #KEYBOARD_LOW address: KEYBOARD_STATE_ADDRESS + 1.
