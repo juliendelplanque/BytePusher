@@ -90,12 +90,14 @@ BPAssembledCode >> serializeOn: aByteArray [
 	initialProgramCounter := self firstInstruction address.
 	(self memoryLayout reservedMemoryZoneNamed: #PROGRAM_COUNTER) address
 		storeAddress: initialProgramCounter in: aByteArray.
-	(self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME_POINTER) address
-		store: (self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: aByteArray.
-	(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address
-		store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address higherByte in: aByteArray.
-	(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address + 1
-		store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: aByteArray.
+	self memoryLayout name = 'BytePusher'
+		ifTrue: [ self flag: #TODO. "Ugly, should be responsibility of the layout..."
+			(self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME_POINTER) address
+				store: (self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: aByteArray.
+			(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address
+				store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address higherByte in: aByteArray.
+			(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address + 1
+				store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: aByteArray ].
 	"Initialize memory of opcode banks."
 	self memoryLayout
 		initializeOpcodeBankMemoryZonesOn: aByteArray.
