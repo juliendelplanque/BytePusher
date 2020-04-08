@@ -4,7 +4,7 @@ Class {
 	#category : #'BytePusher-Assembler-Examples'
 }
 
-{ #category : #translating }
+{ #category : #'code generation' }
 BPLangtonAntCodeGenerator >> generate [
 	| assembly |
 	assembly := BPAssembler new.
