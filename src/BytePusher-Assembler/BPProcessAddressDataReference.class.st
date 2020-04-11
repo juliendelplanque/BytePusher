@@ -40,6 +40,7 @@ BPProcessAddressDataReference >> visitBPAddressDataReference: aBPAddressDataRefe
 
 { #category : #visiting }
 BPProcessAddressDataReference >> visitBPAssembler: aBPAssembler [
+	super visitBPAssembler: aBPAssembler.
 	assembler := aBPAssembler.
 	aBPAssembler instructions copy doWithIndex: [ :instructionToResolve :index |
 		currentInstructionIndex := index.

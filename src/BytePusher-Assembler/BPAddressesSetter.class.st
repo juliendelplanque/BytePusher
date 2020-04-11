@@ -26,12 +26,6 @@ BPAddressesSetter >> incrementCurrentAddress: numberOfBytes [
 	currentAddress := currentAddress + numberOfBytes
 ]
 
-{ #category : #initialization }
-BPAddressesSetter >> initialize [
-	super initialize.
-	currentAddress := self memoryLayout firstGenerationAddress.
-]
-
 { #category : #visiting }
 BPAddressesSetter >> visitBPAddress: aBPAddress [
 	self error: 'There should be no BPAddress reached at this step.'
@@ -49,6 +43,8 @@ BPAddressesSetter >> visitBPAddressDataReference: aBPAddressDataReference [
 
 { #category : #visiting }
 BPAddressesSetter >> visitBPAssembler: aBPAssembler [
+	super visitBPAssembler: aBPAssembler.
+	currentAddress := self memoryLayout firstGenerationAddress.
 	aBPAssembler instructions do: [ :instructionToResolve |
 		self visit: instructionToResolve ]
 ]

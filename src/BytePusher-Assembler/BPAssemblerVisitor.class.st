@@ -7,24 +7,14 @@ Class {
 	#category : #'BytePusher-Assembler-Visitors'
 }
 
-{ #category : #accessing }
-BPAssemblerVisitor class >> defaultMemoryLayout [
-	^ BPMemoryLayout standard
-]
-
 { #category : #visiting }
 BPAssemblerVisitor class >> visit: anObject [
 	^ self new visit: anObject
 ]
 
 { #category : #accessing }
-BPAssemblerVisitor >> defaultMemoryLayout [
-	^ self class defaultMemoryLayout
-]
-
-{ #category : #accessing }
 BPAssemblerVisitor >> memoryLayout [
-	^ memoryLayout ifNil: [ memoryLayout := self defaultMemoryLayout ]
+	^ memoryLayout
 ]
 
 { #category : #accessing }
@@ -58,8 +48,7 @@ BPAssemblerVisitor >> visitBPAddressDataReference: aBPAddressDataReference [
 
 { #category : #visiting }
 BPAssemblerVisitor >> visitBPAssembler: aBPAssembler [
-	<generated>
-	^ self subclassResponsibility
+	self memoryLayout: aBPAssembler memoryLayout.
 ]
 
 { #category : #visiting }

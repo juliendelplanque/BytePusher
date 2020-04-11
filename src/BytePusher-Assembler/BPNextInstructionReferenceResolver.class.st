@@ -36,6 +36,7 @@ BPNextInstructionReferenceResolver >> visitBPAddressDataReference: aBPAddressDat
 
 { #category : #visiting }
 BPNextInstructionReferenceResolver >> visitBPAssembler: aBPAssembler [
+	super visitBPAssembler: aBPAssembler.
 	assembler := aBPAssembler.
 	aBPAssembler instructions copy doWithIndex: [ :instructionToResolve :index |
 		currentInstructionIndex := index.

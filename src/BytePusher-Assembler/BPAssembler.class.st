@@ -10,7 +10,7 @@ Class {
 
 { #category : #accessing }
 BPAssembler class >> defaultMemoryLayout [
-	^ BPMemoryLayout standard
+	^ BPBytePusherLayout new
 ]
 
 { #category : #visiting }

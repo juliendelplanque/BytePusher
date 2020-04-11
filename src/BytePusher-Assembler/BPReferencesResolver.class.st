@@ -19,6 +19,7 @@ BPReferencesResolver >> visitBPAddress: aBPAddress [
 { #category : #visiting }
 BPReferencesResolver >> visitBPAssembler: aBPAssembler [
 	| assembled |
+	super visitBPAssembler: aBPAssembler.
 	assembled := BPAssembledCode new.
 	assembled memoryLayout: aBPAssembler memoryLayout.
 	aBPAssembler instructions do: [ :instructionToResolve |

@@ -24,6 +24,7 @@ BPLabelAddressesSetter >> visitBPAddressDataReference: aBPAddressDataReference [
 
 { #category : #visiting }
 BPLabelAddressesSetter >> visitBPAssembler: aBPAssembler [
+	super visitBPAssembler: aBPAssembler.
 	assembler := aBPAssembler.
 	aBPAssembler instructions do: [ :instructionToResolve |
 		self visit: instructionToResolve ]
