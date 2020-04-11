@@ -471,6 +471,73 @@ BPAssemblerTest >> testDecrementAddress2 [
 ]
 
 { #category : #test }
+BPAssemblerTest >> testDecrementAddressAtDataStackTop [
+	| assembler vm memory stack |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 42 to: #A;
+		move: 43 to: #B;
+		move: 44 to: #C;
+		pushOnDataStack: 1;
+		pushOnDataStack: 0;
+		pushOnDataStack: 0;
+		decrementAddressAtDataStackTop.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm executeOuterLoop.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 42.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 43.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 44.
+	stack := assembler memoryLayout extractDataStack: memory.
+	self assert: stack size equals: 3.
+	self assert: stack pop equals: 0.
+	self assert: stack pop equals: 0.
+	self assert: stack pop equals: 0.
+	self assert: stack isEmpty
+]
+
+{ #category : #test }
+BPAssemblerTest >> testFetchDataAtAddressAtDataStackTopInto [
+	| assembler vm memory stack |
+	assembler := BPAssembler new.
+	assembler
+		jump: #data_end;
+		label: #my_6_bytes;
+		nop;nop; "Allocate  6 bytes"
+		label: #data_end;
+		move: 42 to: #A;
+		move: 43 to: #B;
+		move: 44 to: #C;
+		move: 45 to: #D;
+		pushAddressOfLabelOnDataStack: #my_6_bytes;
+		fetchDataAtAddressAtDataStackTopInto: #A.
+
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+			memory: memory;
+			loadProgramCounter;
+			yourself.
+			
+	vm executeOuterLoop.
+	
+	self assert: ((assembler memoryLayout registerNamed: #A) valueIn: memory) equals: 0.
+	self assert: ((assembler memoryLayout registerNamed: #B) valueIn: memory) equals: 43.
+	self assert: ((assembler memoryLayout registerNamed: #C) valueIn: memory) equals: 44.
+	self assert: ((assembler memoryLayout registerNamed: #D) valueIn: memory) equals: 45.
+	
+	"Address should still be on stack."
+	stack := assembler memoryLayout extractDataStack: memory.
+	self assert: stack size equals: 3.
+]
+
+{ #category : #test }
 BPAssemblerTest >> testFetchDataAtAddressInto [
 	| assembler vm memory |
 	assembler := BPAssembler new.
@@ -681,6 +748,39 @@ BPAssemblerTest >> testIncrementAddress4 [
 	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 0.
 	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 0.
 	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 0
+]
+
+{ #category : #test }
+BPAssemblerTest >> testIncrementAddressAtDataStackTop [
+	| assembler vm memory stack |
+	assembler := BPAssembler new.
+	
+	assembler
+		move: 42 to: #A;
+		move: 43 to: #B;
+		move: 44 to: #C;
+		pushOnDataStack: 0;
+		pushOnDataStack: 0;
+		pushOnDataStack: 0;
+		incrementAddressAtDataStackTop.
+	
+	memory := assembler assemble serialize.
+	vm := BPVirtualMachine new
+				memory: memory;
+				loadProgramCounter;
+				yourself.
+	
+	vm executeOuterLoop.
+	
+	self assert: ((assembler registerNamed: #A) valueIn: memory) equals: 42.
+	self assert: ((assembler registerNamed: #B) valueIn: memory) equals: 43.
+	self assert: ((assembler registerNamed: #C) valueIn: memory) equals: 44.
+	stack := assembler memoryLayout extractDataStack: memory.
+	self assert: stack size equals: 3.
+	self assert: stack pop equals: 1.
+	self assert: stack pop equals: 0.
+	self assert: stack pop equals: 0.
+	self assert: stack isEmpty
 ]
 
 { #category : #test }

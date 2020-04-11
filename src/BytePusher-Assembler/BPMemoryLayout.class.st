@@ -29,7 +29,7 @@ BPMemoryLayout class >> jolly [
 	| available_memory_start |
 	available_memory_start := 9.
 	^ self new
-		name: 'Jolly';
+		name: 'JollyV1';
 		addAll: {
 		BPReservedMemoryZone name: #PROGRAM_COUNTER startAddress: 0 size: 2.
 		BPRegister name: #PRIMITIVE_IS_READY address: 3.
