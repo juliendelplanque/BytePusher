@@ -24,7 +24,7 @@ BPAssembledCode >> addLabel: aBPLabel [
 
 { #category : #accessing }
 BPAssembledCode >> firstInstruction [
-	^ self instructions detect: #isInstruction
+	^ self instructions first
 ]
 
 { #category : #initialization }

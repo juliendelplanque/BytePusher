@@ -74,11 +74,6 @@ BPInstruction >> fromAddress: anObject [
 	fromAddress := anObject
 ]
 
-{ #category : #testing }
-BPInstruction >> isInstruction [
-	^ true
-]
-
 { #category : #accessing }
 BPInstruction >> jumpAddress [
 	^ jumpAddress
