@@ -69,3 +69,15 @@ BPBytePusherLayout >> initialize [
 		BPReservedMemoryZone name: #DATA_STACK startAddress: 16r40300 size: 16rFF.
 		BPReservedMemoryZone name: #RETURN_STACK startAddress: 16r40400 size: 16rFF }
 ]
+
+{ #category : #'initialize memory' }
+BPBytePusherLayout >> initializeMemory: aByteArray [
+	super initializeMemory: aByteArray.
+	
+	(self reservedMemoryZoneNamed: #DISPLAY_FRAME_POINTER) address
+		store: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: aByteArray.
+	(self reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address
+		store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address higherByte in: aByteArray.
+	(self reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address + 1
+		store: (self reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: aByteArray
+]

@@ -106,6 +106,16 @@ BPMemoryLayout >> initialize [
 ]
 
 { #category : #'initialize memory' }
+BPMemoryLayout >> initializeMemory: aByteArray [
+	"Initialize memory of opcode banks."
+	self
+		initializeOpcodeBankMemoryZonesOn: aByteArray.
+	"Create the infinite NOP loop."
+	((self reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * ADDRESS_SIZE))
+		storeAddress: (self reservedMemoryZoneNamed: #INFINITE_NOP) startAddress in: aByteArray.
+]
+
+{ #category : #'initialize memory' }
 BPMemoryLayout >> initializeOpcodeBankMemoryZonesOn: aByteArray [
 	self layoutObjects
 		select: [ :layoutObject | 

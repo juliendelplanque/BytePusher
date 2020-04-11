@@ -88,22 +88,13 @@ BPAssembledCode >> serialize [
 BPAssembledCode >> serializeOn: aByteArray [
 	| initialProgramCounter |
 	initialProgramCounter := self firstInstruction address.
+	
+	"We consider that any memory layout defines a program counter."
 	(self memoryLayout reservedMemoryZoneNamed: #PROGRAM_COUNTER) address
 		storeAddress: initialProgramCounter in: aByteArray.
-	self memoryLayout name = 'BytePusher'
-		ifTrue: [ self flag: #TODO. "Ugly, should be responsibility of the layout..."
-			(self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME_POINTER) address
-				store: (self memoryLayout reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: aByteArray.
-			(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address
-				store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address higherByte in: aByteArray.
-			(self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE_POINTER) address + 1
-				store: (self memoryLayout reservedMemoryZoneNamed: #AUDIO_SAMPLE) address middleByte in: aByteArray ].
-	"Initialize memory of opcode banks."
+	
 	self memoryLayout
-		initializeOpcodeBankMemoryZonesOn: aByteArray.
-	"Create the infinite NOP loop."
-	((self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * ADDRESS_SIZE))
-		storeAddress: (self memoryLayout reservedMemoryZoneNamed: #INFINITE_NOP) startAddress in: aByteArray.
+		initializeMemory: aByteArray.
 	
 	self instructions do: [ :instruction |
 		instruction writeOn: aByteArray ]
