@@ -204,6 +204,11 @@ BPAssembler >> fetchDataAtAddressInto: destination [
 		generateFor: self
 ]
 
+{ #category : #including }
+BPAssembler >> include: aLibrary [
+	aLibrary beIncludedTo: self
+]
+
 { #category : #instructions }
 BPAssembler >> increment: register [
 	"Increment value stored in register.
