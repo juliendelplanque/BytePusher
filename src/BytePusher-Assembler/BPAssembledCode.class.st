@@ -24,7 +24,14 @@ BPAssembledCode >> addLabel: aBPLabel [
 
 { #category : #accessing }
 BPAssembledCode >> firstInstruction [
-	^ self instructions first
+	"We first search for the instruction labelled with #_start.
+	 If it exists, we return it.
+	 If it does not exist, we return the first instruction.
+	"
+	"1 halt."
+	^ self instructionForLabelNamed: #_start
+		ifFound: #yourself
+		ifNone: [ self instructions first ]
 ]
 
 { #category : #initialization }
@@ -32,6 +39,14 @@ BPAssembledCode >> initialize [
 	super initialize.
 	self instructions: OrderedCollection new.
 	labels := OrderedCollection new
+]
+
+{ #category : #accessing }
+BPAssembledCode >> instructionForLabelNamed: aSymbol ifFound: foundBlock ifNone: notFoundBlock [
+	^ self instructions
+		detect: [ :instruction | (self labelsFor: instruction) anySatisfy: [ :any | any label = aSymbol ] ]
+		ifFound: foundBlock
+		ifNone: notFoundBlock
 ]
 
 { #category : #accessing }
