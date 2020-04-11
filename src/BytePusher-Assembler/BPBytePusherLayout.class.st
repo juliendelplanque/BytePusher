@@ -1,8 +1,36 @@
+"
+I model the whole layout of BytePusher VM memory.
+
+I follow BytePusher specification to describe memory.
+"
 Class {
 	#name : #BPBytePusherLayout,
 	#superclass : #BPMemoryLayout,
 	#category : #'BytePusher-Assembler-Memory'
 }
+
+{ #category : #accessing }
+BPBytePusherLayout >> endAddress [
+	"The end address is the maximal address specified by BytePusher specifications."
+	^ MAX_ADDRESS asBPAddress
+]
+
+{ #category : #extracting }
+BPBytePusherLayout >> extractDataStack: memory [
+	^ (((self reservedMemoryZoneNamed: #DATA_STACK) access: memory)
+			copyFrom: 1 to: ((self registerNamed: #SP) valueIn: memory)) reversed as: Stack
+]
+
+{ #category : #extracting }
+BPBytePusherLayout >> extractReturnStack: memory [
+	"Returns a high-level object (instance of Stack) representing the return stack.
+	 Instead of storing bytes of the address, instances of BPAddress are created to make
+	 the content of the stack easier to understand.
+	"
+	^ ((((self reservedMemoryZoneNamed: #RETURN_STACK) access: memory)
+			copyFrom: 1 to: ((self registerNamed: #RETURN_SP) valueIn: memory)) reversed groupsOf: 3 atATimeCollect: [ :low :middle :high |
+				BPAddress lowByte: low middleByte: middle highByte: high ]) as: Stack
+]
 
 { #category : #initialization }
 BPBytePusherLayout >> initialize [

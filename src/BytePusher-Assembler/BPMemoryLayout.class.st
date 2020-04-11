@@ -1,15 +1,15 @@
 "
-I model the whole layout of BytePusher VM memory.
+I model the whole layout of a virtual machine memory.
 I am a composite object containing registers and reserved memory zones.
 My purpose is to describe to the assembler how the memory is organized allowing it to know how to generate the bytecode.
 
-My #startAddress and #endAddress are defined by BytePusher specifications.
+My #startAddress and #endAddress are defined by the virtual machine specifications.
 
 I provide a nice API to manipulate my registers and reserved memory zones.
 
 I also ensure that the memory layout built by my client is consistent (none of my layout objects overlap in the memory).
 
-For an example of memory layout, check my class-side method #standard.
+Check my subclasses for concrete memory layouts.
 "
 Class {
 	#name : #BPMemoryLayout,
@@ -79,8 +79,8 @@ BPMemoryLayout >> addAll: aCollectionOfLayoutObjects [
 
 { #category : #accessing }
 BPMemoryLayout >> endAddress [
-	"The end address is the maximal address specified by BytePusher specifications."
-	^ MAX_ADDRESS asBPAddress
+	"The end address is the maximal address addressable by the virtual machine."
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
@@ -92,23 +92,6 @@ BPMemoryLayout >> ensureLayoutObjectDoesNotCreateConflict: aLayoutObject [
 			self error: 'The layout object ',aLayoutObject name,' overlaps with an existing layout object ', overlapingWith name ].
 		
 	
-]
-
-{ #category : #extracting }
-BPMemoryLayout >> extractDataStack: memory [
-	^ (((self reservedMemoryZoneNamed: #DATA_STACK) access: memory)
-			copyFrom: 1 to: ((self registerNamed: #SP) valueIn: memory)) reversed as: Stack
-]
-
-{ #category : #extracting }
-BPMemoryLayout >> extractReturnStack: memory [
-	"Returns a high-level object (instance of Stack) representing the return stack.
-	 Instead of storing bytes of the address, instances of BPAddress are created to make
-	 the content of the stack easier to understand.
-	"
-	^ ((((self reservedMemoryZoneNamed: #RETURN_STACK) access: memory)
-			copyFrom: 1 to: ((self registerNamed: #RETURN_SP) valueIn: memory)) reversed groupsOf: 3 atATimeCollect: [ :low :middle :high |
-				BPAddress lowByte: low middleByte: middle highByte: high ]) as: Stack
 ]
 
 { #category : #accessing }
@@ -160,7 +143,7 @@ BPMemoryLayout >> reservedMemoryZoneNamed: aSymbol [
 
 { #category : #accessing }
 BPMemoryLayout >> startAddress [
-	"Beginning of BytePusher memory, address is 0."
+	"Beginning of virtual machine memory."
 	^ 0 asBPAddress
 ]
 
