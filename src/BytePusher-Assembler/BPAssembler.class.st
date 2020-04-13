@@ -167,13 +167,13 @@ BPAssembler >> fetchDataAtAddressAtDataStackTopInto: destination [
 	 Ensures that registers values are not modified.
 	"
 	self
-		"Backup current values of A, B C and D."
+		"Backup current values of A, B, C and D."
 		pushOnDataStack: #A;
 		pushOnDataStack: #B;
 		pushOnDataStack: #C;
 		pushOnDataStack: #D;
 		decrement: #SP; decrement: #SP; decrement: #SP; decrement: #SP;
-		"Increment address stored on the stack."
+		"Fetch data at address stored on the stack."
 		popFromDataStack: #C;
 		popFromDataStack: #B;
 		popFromDataStack: #A;
