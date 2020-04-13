@@ -67,10 +67,7 @@ BPMemoryLayout >> initialize [
 BPMemoryLayout >> initializeMemory: aByteArray [
 	"Initialize memory of opcode banks."
 	self
-		initializeOpcodeBankMemoryZonesOn: aByteArray.
-	"Create the infinite NOP loop."
-	((self reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * ADDRESS_SIZE))
-		storeAddress: (self reservedMemoryZoneNamed: #INFINITE_NOP) startAddress in: aByteArray.
+		initializeOpcodeBankMemoryZonesOn: aByteArray
 ]
 
 { #category : #'initialize memory' }

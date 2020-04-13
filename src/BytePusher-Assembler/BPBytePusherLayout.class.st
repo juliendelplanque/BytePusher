@@ -73,6 +73,9 @@ BPBytePusherLayout >> initialize [
 { #category : #'initialize memory' }
 BPBytePusherLayout >> initializeMemory: aByteArray [
 	super initializeMemory: aByteArray.
+	"Create the infinite NOP loop."
+	((self reservedMemoryZoneNamed: #INFINITE_NOP) startAddress + (2 * ADDRESS_SIZE))
+		storeAddress: (self reservedMemoryZoneNamed: #INFINITE_NOP) startAddress in: aByteArray.
 	
 	(self reservedMemoryZoneNamed: #DISPLAY_FRAME_POINTER) address
 		store: (self reservedMemoryZoneNamed: #DISPLAY_FRAME) address higherByte in: aByteArray.
