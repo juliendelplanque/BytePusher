@@ -1,22 +1,12 @@
 Class {
 	#name : #BPAssembler,
-	#superclass : #Object,
-	#instVars : [
-		'memoryLayout',
-		'instructions'
-	],
+	#superclass : #BPAbstractAssembler,
 	#category : #'BytePusher-Assembler-Assembler'
 }
 
 { #category : #accessing }
 BPAssembler class >> defaultMemoryLayout [
 	^ BPBytePusherLayout new
-]
-
-{ #category : #visiting }
-BPAssembler >> acceptVisitor: aBPAssemblerVisitor [
-	<generated>
-	^ aBPAssemblerVisitor visitBPAssembler: self
 ]
 
 { #category : #instructions }
@@ -33,20 +23,6 @@ BPAssembler >> add: source to: target [
 		source: source;
 		target: target;
 		generateFor: self
-]
-
-{ #category : #adding }
-BPAssembler >> addInstruction: anInstructionToResolve [
-	self instructions add: anInstructionToResolve
-]
-
-{ #category : #assembling }
-BPAssembler >> assemble [
-	self setAddresses.
-	self resolveNextInstructionReferences.
-	self setLabelAddresses.
-	self processAddressDataReference.
-	^ self resolve
 ]
 
 { #category : #instructions }
@@ -151,11 +127,6 @@ BPAssembler >> decrementAddressAtDataStackTop [
 		popFromDataStack: #A
 ]
 
-{ #category : #accessing }
-BPAssembler >> defaultMemoryLayout [
-	^ self class defaultMemoryLayout
-]
-
 { #category : #instructions }
 BPAssembler >> fetchDataAtAddressAtDataStackTopInto: destination [
 	"Moves data located at address formed by top 3 bytes of data stack to destination.
@@ -202,11 +173,6 @@ BPAssembler >> fetchDataAtAddressInto: destination [
 	BPFetchDataAtAddress new
 		destination: destination;
 		generateFor: self
-]
-
-{ #category : #including }
-BPAssembler >> include: aLibrary [
-	aLibrary beIncludedTo: self
 ]
 
 { #category : #instructions }
@@ -270,23 +236,6 @@ BPAssembler >> incrementAddressAtDataStackTop [
 		popFromDataStack: #A
 ]
 
-{ #category : #initialization }
-BPAssembler >> initialize [
-	super initialize.
-	self memoryLayout: self defaultMemoryLayout.
-	self instructions: OrderedCollection new.
-]
-
-{ #category : #accessing }
-BPAssembler >> instructions [
-	^ instructions
-]
-
-{ #category : #accessing }
-BPAssembler >> instructions: anObject [
-	instructions := anObject
-]
-
 { #category : #instructions }
 BPAssembler >> jump: address [
 	"Let the instruction pointer do a unconditional jump to the defined address.
@@ -318,21 +267,6 @@ BPAssembler >> jumpIfNotEqual: address [
 	BPJumpIfNotEqual new
 		address: address;
 		generateFor: self
-]
-
-{ #category : #labelling }
-BPAssembler >> label: aSymbol [
-	self addInstruction: (BPLabel label: aSymbol)
-]
-
-{ #category : #accessing }
-BPAssembler >> memoryLayout [
-	^ memoryLayout
-]
-
-{ #category : #accessing }
-BPAssembler >> memoryLayout: anObject [
-	memoryLayout := anObject
 ]
 
 { #category : #instructions }
@@ -375,11 +309,6 @@ BPAssembler >> popFromReturnStack: destination [
 	BPPopFromReturnStack new
 		destination: destination;
 		generateFor: self
-]
-
-{ #category : #assembling }
-BPAssembler >> processAddressDataReference [
-	BPProcessAddressDataReference visit: self
 ]
 
 { #category : #instructions }
@@ -442,26 +371,6 @@ BPAssembler >> readPixel [
 		generateFor: self
 ]
 
-{ #category : #accessing }
-BPAssembler >> registerNamed: aSymbol [
-	^ self memoryLayout registerNamed: aSymbol
-]
-
-{ #category : #accessing }
-BPAssembler >> reservedMemoryZoneNamed: aSymbol [
-	^ self memoryLayout reservedMemoryZoneNamed: aSymbol
-]
-
-{ #category : #assembling }
-BPAssembler >> resolve [
-	^ BPReferencesResolver visit: self
-]
-
-{ #category : #assembling }
-BPAssembler >> resolveNextInstructionReferences [
-	BPNextInstructionReferenceResolver visit: self
-]
-
 { #category : #instructions }
 BPAssembler >> return [
 	BPReturn new
@@ -476,16 +385,6 @@ BPAssembler >> serializePC: aSymbol [
 	BPSerializePC new
 		address: aSymbol;
 		generateFor: self
-]
-
-{ #category : #assembling }
-BPAssembler >> setAddresses [
-	BPAddressesSetter visit: self
-]
-
-{ #category : #assembling }
-BPAssembler >> setLabelAddresses [
-	BPLabelAddressesSetter visit: self
 ]
 
 { #category : #instructions }
