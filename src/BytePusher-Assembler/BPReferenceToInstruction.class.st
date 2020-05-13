@@ -30,6 +30,11 @@ BPReferenceToInstruction >> acceptVisitor: aBPAssemblerVisitor [
 ]
 
 { #category : #accessing }
+BPReferenceToInstruction >> address [
+	^ self instruction address
+]
+
+{ #category : #accessing }
 BPReferenceToInstruction >> byteIndex [
 	^ byteIndex
 ]
