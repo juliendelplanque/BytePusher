@@ -49,6 +49,21 @@ BPReferenceToInstruction >> forAssembler: aBPAssembler [
 	^ self
 ]
 
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> fromAddressHighByte [
+	self byteIndex: 0
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> fromAddressLowByte [
+	self byteIndex: 2
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> fromAddressMiddleByte [
+	self byteIndex: 1
+]
+
 { #category : #initialization }
 BPReferenceToInstruction >> initialize [
 	super initialize.
@@ -63,4 +78,34 @@ BPReferenceToInstruction >> instruction [
 { #category : #accessing }
 BPReferenceToInstruction >> instruction: anObject [
 	instruction := anObject
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> jumpAddressHighByte [
+	self byteIndex: 6
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> jumpAddressLowByte [
+	self byteIndex: 8
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> jumpAddressMiddleByte [
+	self byteIndex: 7
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> toAddressHighByte [
+	self byteIndex: 3
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> toAddressLowByte [
+	self byteIndex: 5
+]
+
+{ #category : #'instance creation' }
+BPReferenceToInstruction >> toAddressMiddleByte [
+	self byteIndex: 4
 ]
