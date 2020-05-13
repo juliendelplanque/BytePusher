@@ -1,5 +1,5 @@
 Class {
-	#name : #BPAddressDataAccess,
+	#name : #BPAddressReference,
 	#superclass : #BPReferenceToResolve,
 	#instVars : [
 		'byteIndex',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-BPAddressDataAccess class >> address: address byteIndex: byteIndex [
+BPAddressReference class >> address: address byteIndex: byteIndex [
 	^ self new
 		address: address;
 		byteIndex: byteIndex;
@@ -17,13 +17,13 @@ BPAddressDataAccess class >> address: address byteIndex: byteIndex [
 ]
 
 { #category : #visiting }
-BPAddressDataAccess >> acceptVisitor: aBPAssemblerVisitor [
+BPAddressReference >> acceptVisitor: aBPAssemblerVisitor [
 	<generated>
 	^ aBPAssemblerVisitor visitBPAddressDataAccess: self
 ]
 
 { #category : #accessing }
-BPAddressDataAccess >> address [
+BPAddressReference >> address [
 	self
 		deprecated: 'Please use #objectWithAddress instead'
 		transformWith: '`@receiver address' -> '`@receiver objectWithAddress'.
@@ -31,7 +31,7 @@ BPAddressDataAccess >> address [
 ]
 
 { #category : #accessing }
-BPAddressDataAccess >> address: anObject [
+BPAddressReference >> address: anObject [
 	self
 		deprecated: 'Use #objectWithAddress: instead'
 		transformWith: '`@receiver address: `@statements' -> '`@receiver objectWithAddress: `@statements'.
@@ -39,27 +39,27 @@ BPAddressDataAccess >> address: anObject [
 ]
 
 { #category : #accessing }
-BPAddressDataAccess >> byteIndex [
+BPAddressReference >> byteIndex [
 	^ byteIndex
 ]
 
 { #category : #accessing }
-BPAddressDataAccess >> byteIndex: anObject [
+BPAddressReference >> byteIndex: anObject [
 	byteIndex := anObject
 ]
 
 { #category : #initialization }
-BPAddressDataAccess >> initialize [
+BPAddressReference >> initialize [
 	super initialize.
 	self byteIndex: 0
 ]
 
 { #category : #accessing }
-BPAddressDataAccess >> objectWithAddress [
+BPAddressReference >> objectWithAddress [
 	^ objectWithAddress
 ]
 
 { #category : #accessing }
-BPAddressDataAccess >> objectWithAddress: anObject [
+BPAddressReference >> objectWithAddress: anObject [
 	objectWithAddress := anObject
 ]

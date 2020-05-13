@@ -36,18 +36,18 @@ BPAddressTest >> testAccessInteger [
 ]
 
 { #category : #test }
-BPAddressTest >> testAsBPAddress [
-	self assert: (BPAddress memoryAddress: 1234) equals: 1234 asBPAddress
+BPAddressTest >> testAsAddressReference [
+	| address access |
+	address := 123 asBPAddress.
+	access := address asAddressReference.
+	self assert: access class equals: BPAddressReference.
+	self assert: access objectWithAddress equals: address.
+	self assert: access byteIndex equals: 0
 ]
 
 { #category : #test }
-BPAddressTest >> testAsDataAccess [
-	| address access |
-	address := 123 asBPAddress.
-	access := address asDataAccess.
-	self assert: access class equals: BPAddressDataAccess.
-	self assert: access objectWithAddress equals: address.
-	self assert: access byteIndex equals: 0
+BPAddressTest >> testAsBPAddress [
+	self assert: (BPAddress memoryAddress: 1234) equals: 1234 asBPAddress
 ]
 
 { #category : #test }

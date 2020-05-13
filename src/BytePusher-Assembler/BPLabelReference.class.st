@@ -26,8 +26,8 @@ BPLabelReference >> address [
 ]
 
 { #category : #converting }
-BPLabelReference >> asDataAccess [
-	^ BPAddressDataAccess new
+BPLabelReference >> asAddressReference [
+	^ BPAddressReference new
 		objectWithAddress: self;
 		yourself
 ]

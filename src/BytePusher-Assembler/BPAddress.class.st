@@ -97,15 +97,15 @@ BPAddress >> address [
 ]
 
 { #category : #converting }
-BPAddress >> asBPAddress [
-	^ self
+BPAddress >> asAddressReference [
+	^ BPAddressReference new
+		objectWithAddress: self;
+		yourself
 ]
 
 { #category : #converting }
-BPAddress >> asDataAccess [
-	^ BPAddressDataAccess new
-		objectWithAddress: self;
-		yourself
+BPAddress >> asBPAddress [
+	^ self
 ]
 
 { #category : #converting }

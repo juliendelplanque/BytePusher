@@ -11,9 +11,9 @@ Class {
 BPPushLabelAddressOnReturnStack >> generateFor: anAssembler [
 	| labelObject |
 	labelObject := self label forAssembler: anAssembler.
-	anAssembler pushOnReturnStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asDataAccess byteIndex: 0).
-	anAssembler pushOnReturnStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asDataAccess byteIndex: 1).
-	anAssembler pushOnReturnStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asDataAccess byteIndex: 2)
+	anAssembler pushOnReturnStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference byteIndex: 0).
+	anAssembler pushOnReturnStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference byteIndex: 1).
+	anAssembler pushOnReturnStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference byteIndex: 2)
 ]
 
 { #category : #private }

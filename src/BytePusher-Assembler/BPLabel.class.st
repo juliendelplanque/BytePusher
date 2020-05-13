@@ -40,15 +40,15 @@ BPLabel >> address: anObject [
 ]
 
 { #category : #converting }
-BPLabel >> asBPAddress [
-	^ self address
+BPLabel >> asAddressReference [
+	^ BPAddressReference new
+		address: self;
+		yourself
 ]
 
 { #category : #converting }
-BPLabel >> asDataAccess [
-	^ BPAddressDataAccess new
-		address: self;
-		yourself
+BPLabel >> asBPAddress [
+	^ self address
 ]
 
 { #category : #converting }
