@@ -2,8 +2,7 @@ Class {
 	#name : #BPNextInstructionReference,
 	#superclass : #BPReferenceToResolve,
 	#instVars : [
-		'offset',
-		'byteIndex'
+		'offset'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -43,24 +42,10 @@ BPNextInstructionReference >> asDataReference [
 		yourself
 ]
 
-{ #category : #accessing }
-BPNextInstructionReference >> byteIndex [
-	self deprecated: 'Normally this is not used, needs to be removed'.
-	^ byteIndex
-]
-
-{ #category : #accessing }
-BPNextInstructionReference >> byteIndex: anObject [
-	self deprecated: 'Normally this is not used, needs to be removed'.
-	byteIndex := anObject
-]
-
 { #category : #initialization }
 BPNextInstructionReference >> initialize [
 	super initialize.
-	self
-		offset: 0.
-	byteIndex := 0
+	self offset: 0
 ]
 
 { #category : #accessing }
