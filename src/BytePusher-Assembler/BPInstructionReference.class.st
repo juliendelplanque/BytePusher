@@ -1,5 +1,5 @@
 Class {
-	#name : #BPReferenceToInstruction,
+	#name : #BPInstructionReference,
 	#superclass : #BPReferenceToResolve,
 	#instVars : [
 		'instruction',
@@ -9,14 +9,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-BPReferenceToInstruction class >> instruction: instruction [
+BPInstructionReference class >> instruction: instruction [
 	^ self new
 		instruction: instruction;
 		yourself
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction class >> instruction: instruction byteIndex: byteIndex [
+BPInstructionReference class >> instruction: instruction byteIndex: byteIndex [
 	^ self new
 		instruction: instruction;
 		byteIndex: byteIndex;
@@ -24,88 +24,88 @@ BPReferenceToInstruction class >> instruction: instruction byteIndex: byteIndex 
 ]
 
 { #category : #visiting }
-BPReferenceToInstruction >> acceptVisitor: aBPAssemblerVisitor [
+BPInstructionReference >> acceptVisitor: aBPAssemblerVisitor [
 	<generated>
 	^ aBPAssemblerVisitor visitBPReferenceToInstruction: self
 ]
 
 { #category : #accessing }
-BPReferenceToInstruction >> address [
+BPInstructionReference >> address [
 	^ self instruction address
 ]
 
 { #category : #accessing }
-BPReferenceToInstruction >> byteIndex [
+BPInstructionReference >> byteIndex [
 	^ byteIndex
 ]
 
 { #category : #accessing }
-BPReferenceToInstruction >> byteIndex: anObject [
+BPInstructionReference >> byteIndex: anObject [
 	byteIndex := anObject
 ]
 
 { #category : #'assembler-dispatch' }
-BPReferenceToInstruction >> forAssembler: aBPAssembler [ 
+BPInstructionReference >> forAssembler: aBPAssembler [ 
 	^ self
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> fromAddressHighByte [
+BPInstructionReference >> fromAddressHighByte [
 	self byteIndex: 0
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> fromAddressLowByte [
+BPInstructionReference >> fromAddressLowByte [
 	self byteIndex: 2
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> fromAddressMiddleByte [
+BPInstructionReference >> fromAddressMiddleByte [
 	self byteIndex: 1
 ]
 
 { #category : #initialization }
-BPReferenceToInstruction >> initialize [
+BPInstructionReference >> initialize [
 	super initialize.
 	self byteIndex: 0
 ]
 
 { #category : #accessing }
-BPReferenceToInstruction >> instruction [
+BPInstructionReference >> instruction [
 	^ instruction
 ]
 
 { #category : #accessing }
-BPReferenceToInstruction >> instruction: anObject [
+BPInstructionReference >> instruction: anObject [
 	instruction := anObject
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> jumpAddressHighByte [
+BPInstructionReference >> jumpAddressHighByte [
 	self byteIndex: 6
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> jumpAddressLowByte [
+BPInstructionReference >> jumpAddressLowByte [
 	self byteIndex: 8
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> jumpAddressMiddleByte [
+BPInstructionReference >> jumpAddressMiddleByte [
 	self byteIndex: 7
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> toAddressHighByte [
+BPInstructionReference >> toAddressHighByte [
 	self byteIndex: 3
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> toAddressLowByte [
+BPInstructionReference >> toAddressLowByte [
 	self byteIndex: 5
 ]
 
 { #category : #'instance creation' }
-BPReferenceToInstruction >> toAddressMiddleByte [
+BPInstructionReference >> toAddressMiddleByte [
 	self byteIndex: 4
 ]

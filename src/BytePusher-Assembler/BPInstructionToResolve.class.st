@@ -38,7 +38,7 @@ BPInstructionToResolve >> address: anObject [
 
 { #category : #converting }
 BPInstructionToResolve >> asReference [
-	^ BPReferenceToInstruction instruction: self
+	^ BPInstructionReference instruction: self
 ]
 
 { #category : #accessing }
