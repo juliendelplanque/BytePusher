@@ -44,11 +44,9 @@ BPAddressTest >> testAsBPAddress [
 BPAddressTest >> testAsDataAccess [
 	| address access |
 	address := 123 asBPAddress.
-	
 	access := address asDataAccess.
-	
 	self assert: access class equals: BPAddressDataAccess.
-	self assert: access address equals: address.
+	self assert: access objectWithAddress equals: address.
 	self assert: access byteIndex equals: 0
 ]
 
@@ -60,7 +58,7 @@ BPAddressTest >> testAsDataReference [
 	access := address asDataReference.
 	
 	self assert: access class equals: BPAddressDataReference.
-	self assert: access address equals: address.
+	self assert: access objectWithAddress equals: address.
 	self assert: access byteIndex equals: 0
 ]
 

@@ -2,8 +2,8 @@ Class {
 	#name : #BPAddressDataAccess,
 	#superclass : #BPReferenceToResolve,
 	#instVars : [
-		'address',
-		'byteIndex'
+		'byteIndex',
+		'objectWithAddress'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -24,12 +24,18 @@ BPAddressDataAccess >> acceptVisitor: aBPAssemblerVisitor [
 
 { #category : #accessing }
 BPAddressDataAccess >> address [
-	^ address
+	self
+		deprecated: 'Please use #objectWithAddress instead'
+		transformWith: '`@receiver address' -> '`@receiver objectWithAddress'.
+	^ self objectWithAddress
 ]
 
 { #category : #accessing }
 BPAddressDataAccess >> address: anObject [
-	address := anObject
+	self
+		deprecated: 'Use #objectWithAddress: instead'
+		transformWith: '`@receiver address: `@statements' -> '`@receiver objectWithAddress: `@statements'.
+	self objectWithAddress: anObject
 ]
 
 { #category : #accessing }
@@ -46,4 +52,14 @@ BPAddressDataAccess >> byteIndex: anObject [
 BPAddressDataAccess >> initialize [
 	super initialize.
 	self byteIndex: 0
+]
+
+{ #category : #accessing }
+BPAddressDataAccess >> objectWithAddress [
+	^ objectWithAddress
+]
+
+{ #category : #accessing }
+BPAddressDataAccess >> objectWithAddress: anObject [
+	objectWithAddress := anObject
 ]

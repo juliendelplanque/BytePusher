@@ -91,6 +91,11 @@ BPAddress >> accessInteger: aByteArray [
 			| ((self + 2) access: aByteArray)
 ]
 
+{ #category : #accessing }
+BPAddress >> address [
+	^ self
+]
+
 { #category : #converting }
 BPAddress >> asBPAddress [
 	^ self
@@ -99,14 +104,14 @@ BPAddress >> asBPAddress [
 { #category : #converting }
 BPAddress >> asDataAccess [
 	^ BPAddressDataAccess new
-		address: self;
+		objectWithAddress: self;
 		yourself
 ]
 
 { #category : #converting }
 BPAddress >> asDataReference [
 	^ BPAddressDataReference new
-		address: self;
+		objectWithAddress: self;
 		yourself
 ]
 

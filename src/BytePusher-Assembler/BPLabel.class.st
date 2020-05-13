@@ -54,7 +54,7 @@ BPLabel >> asDataAccess [
 { #category : #converting }
 BPLabel >> asDataReference [
 	^ BPAddressDataReference new
-		address: self;
+		objectWithAddress: self;
 		yourself
 ]
 

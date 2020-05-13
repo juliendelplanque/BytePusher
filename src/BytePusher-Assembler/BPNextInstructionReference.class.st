@@ -39,17 +39,19 @@ BPNextInstructionReference >> asDataAccess [
 { #category : #converting }
 BPNextInstructionReference >> asDataReference [
 	^ BPAddressDataReference new
-		address: self;
+		objectWithAddress: self;
 		yourself
 ]
 
 { #category : #accessing }
 BPNextInstructionReference >> byteIndex [
+	self deprecated: 'Normally this is not used, needs to be removed'.
 	^ byteIndex
 ]
 
 { #category : #accessing }
 BPNextInstructionReference >> byteIndex: anObject [
+	self deprecated: 'Normally this is not used, needs to be removed'.
 	byteIndex := anObject
 ]
 
@@ -57,8 +59,8 @@ BPNextInstructionReference >> byteIndex: anObject [
 BPNextInstructionReference >> initialize [
 	super initialize.
 	self
-		offset: 0;
-		byteIndex: 0
+		offset: 0.
+	byteIndex := 0
 ]
 
 { #category : #accessing }

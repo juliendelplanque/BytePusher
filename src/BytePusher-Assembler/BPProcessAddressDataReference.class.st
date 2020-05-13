@@ -22,17 +22,14 @@ BPProcessAddressDataReference >> visitBPAddress: aBPAddress [
 
 { #category : #visiting }
 BPProcessAddressDataReference >> visitBPAddressDataAccess: aBPAddressDataAccess [
-	^ aBPAddressDataAccess address address byteAt: aBPAddressDataAccess byteIndex
+	^ aBPAddressDataAccess objectWithAddress address
+		byteAt: aBPAddressDataAccess byteIndex
 ]
 
 { #category : #visiting }
 BPProcessAddressDataReference >> visitBPAddressDataReference: aBPAddressDataReference [ 
 	| address |
 	address := aBPAddressDataReference address.
-	address class = BPLabel
-		ifTrue: [ address := address address ].
-	address class = BPReferenceToInstruction
-		ifTrue: [ address := address instruction address ].
 	
 	^ (self memoryLayout reservedMemoryZoneNamed: #IDENTITY_PAGE) address
 		+ (address byteAt: aBPAddressDataReference byteIndex)
