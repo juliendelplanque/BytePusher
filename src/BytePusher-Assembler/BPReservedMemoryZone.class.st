@@ -33,12 +33,12 @@ BPReservedMemoryZone class >> name: aString startAddress: startAddress size: siz
 
 { #category : #arithmetic }
 BPReservedMemoryZone >> + anInteger [
-	^ BPOffsetReference on: self offset: anInteger
+	^ BPMemoryReference on: self offset: anInteger
 ]
 
 { #category : #arithmetic }
 BPReservedMemoryZone >> - anInteger [
-	^ BPOffsetReference on: self offset: anInteger negated
+	^ BPMemoryReference on: self offset: anInteger negated
 ]
 
 { #category : #visiting }

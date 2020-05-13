@@ -1,5 +1,5 @@
 Class {
-	#name : #BPOffsetReference,
+	#name : #BPMemoryReference,
 	#superclass : #BPReferenceToResolve,
 	#instVars : [
 		'objectWithAddress',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-BPOffsetReference class >> on: anObjectWithAddress offset: anInteger [
+BPMemoryReference class >> on: anObjectWithAddress offset: anInteger [
 	^ self new
 		objectWithAddress: anObjectWithAddress;
 		offset: anInteger;
@@ -17,32 +17,32 @@ BPOffsetReference class >> on: anObjectWithAddress offset: anInteger [
 ]
 
 { #category : #visiting }
-BPOffsetReference >> acceptVisitor: aBPAssemblerVisitor [
+BPMemoryReference >> acceptVisitor: aBPAssemblerVisitor [
 	<generated>
 	^ aBPAssemblerVisitor visitBPOffsetReference: self
 ]
 
 { #category : #'assembler-dispatch' }
-BPOffsetReference >> forAssembler: aBPAssembler [ 
+BPMemoryReference >> forAssembler: aBPAssembler [ 
 	^ self
 ]
 
 { #category : #accessing }
-BPOffsetReference >> objectWithAddress [
+BPMemoryReference >> objectWithAddress [
 	^ objectWithAddress
 ]
 
 { #category : #accessing }
-BPOffsetReference >> objectWithAddress: anObject [
+BPMemoryReference >> objectWithAddress: anObject [
 	objectWithAddress := anObject
 ]
 
 { #category : #accessing }
-BPOffsetReference >> offset [
+BPMemoryReference >> offset [
 	^ offset
 ]
 
 { #category : #accessing }
-BPOffsetReference >> offset: anObject [
+BPMemoryReference >> offset: anObject [
 	offset := anObject
 ]
