@@ -33,9 +33,3 @@ BPAddressReference >> address: anObject [
 		transformWith: '`@receiver address: `@statements' -> '`@receiver objectWithAddress: `@statements'.
 	self objectWithAddress: anObject
 ]
-
-{ #category : #initialization }
-BPAddressReference >> initialize [
-	super initialize.
-	self offset: 0
-]

@@ -22,9 +22,3 @@ BPAddressDataReference >> acceptVisitor: aBPAssemblerVisitor [
 BPAddressDataReference >> address [
 	^ self objectWithAddress address
 ]
-
-{ #category : #initialization }
-BPAddressDataReference >> initialize [
-	super initialize.
-	self offset: 0
-]

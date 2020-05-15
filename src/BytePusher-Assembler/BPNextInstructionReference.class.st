@@ -1,6 +1,6 @@
 Class {
 	#name : #BPNextInstructionReference,
-	#superclass : #BPEntityToResolve,
+	#superclass : #BPAbstractInstructionReference,
 	#category : #'BytePusher-Assembler-Model'
 }
 
@@ -37,10 +37,4 @@ BPNextInstructionReference >> asDataReference [
 	^ BPAddressDataReference new
 		objectWithAddress: self;
 		yourself
-]
-
-{ #category : #initialization }
-BPNextInstructionReference >> initialize [
-	super initialize.
-	self offset: 0
 ]
