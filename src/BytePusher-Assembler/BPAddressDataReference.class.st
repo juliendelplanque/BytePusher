@@ -1,9 +1,9 @@
 Class {
 	#name : #BPAddressDataReference,
-	#superclass : #BPReferenceToResolve,
+	#superclass : #BPEntityToResolve,
 	#instVars : [
-		'byteIndex',
-		'objectWithAddress'
+		'objectWithAddress',
+		'offset'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -12,7 +12,7 @@ Class {
 BPAddressDataReference class >> address: address byteIndex: byteIndex [
 	^ self new
 		address: address;
-		byteIndex: byteIndex;
+		offset: byteIndex;
 		yourself
 ]
 
@@ -27,20 +27,10 @@ BPAddressDataReference >> address [
 	^ self objectWithAddress address
 ]
 
-{ #category : #accessing }
-BPAddressDataReference >> byteIndex [
-	^ byteIndex
-]
-
-{ #category : #accessing }
-BPAddressDataReference >> byteIndex: anObject [
-	byteIndex := anObject
-]
-
 { #category : #initialization }
 BPAddressDataReference >> initialize [
 	super initialize.
-	self byteIndex: 0
+	self offset: 0
 ]
 
 { #category : #accessing }
@@ -51,4 +41,14 @@ BPAddressDataReference >> objectWithAddress [
 { #category : #accessing }
 BPAddressDataReference >> objectWithAddress: anObject [
 	objectWithAddress := anObject
+]
+
+{ #category : #accessing }
+BPAddressDataReference >> offset [
+	^ offset
+]
+
+{ #category : #accessing }
+BPAddressDataReference >> offset: anObject [
+	offset := anObject
 ]

@@ -1,9 +1,9 @@
 Class {
 	#name : #BPInstructionReference,
-	#superclass : #BPReferenceToResolve,
+	#superclass : #BPEntityToResolve,
 	#instVars : [
 		'instruction',
-		'byteIndex'
+		'offset'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -19,7 +19,7 @@ BPInstructionReference class >> instruction: instruction [
 BPInstructionReference class >> instruction: instruction byteIndex: byteIndex [
 	^ self new
 		instruction: instruction;
-		byteIndex: byteIndex;
+		offset: byteIndex;
 		yourself
 ]
 
@@ -34,16 +34,6 @@ BPInstructionReference >> address [
 	^ self instruction address
 ]
 
-{ #category : #accessing }
-BPInstructionReference >> byteIndex [
-	^ byteIndex
-]
-
-{ #category : #accessing }
-BPInstructionReference >> byteIndex: anObject [
-	byteIndex := anObject
-]
-
 { #category : #'assembler-dispatch' }
 BPInstructionReference >> forAssembler: aBPAssembler [ 
 	^ self
@@ -51,23 +41,23 @@ BPInstructionReference >> forAssembler: aBPAssembler [
 
 { #category : #'instance creation' }
 BPInstructionReference >> fromAddressHighByte [
-	self byteIndex: 0
+	self offset: 0
 ]
 
 { #category : #'instance creation' }
 BPInstructionReference >> fromAddressLowByte [
-	self byteIndex: 2
+	self offset: 2
 ]
 
 { #category : #'instance creation' }
 BPInstructionReference >> fromAddressMiddleByte [
-	self byteIndex: 1
+	self offset: 1
 ]
 
 { #category : #initialization }
 BPInstructionReference >> initialize [
 	super initialize.
-	self byteIndex: 0
+	self offset: 0
 ]
 
 { #category : #accessing }
@@ -82,30 +72,40 @@ BPInstructionReference >> instruction: anObject [
 
 { #category : #'instance creation' }
 BPInstructionReference >> jumpAddressHighByte [
-	self byteIndex: 6
+	self offset: 6
 ]
 
 { #category : #'instance creation' }
 BPInstructionReference >> jumpAddressLowByte [
-	self byteIndex: 8
+	self offset: 8
 ]
 
 { #category : #'instance creation' }
 BPInstructionReference >> jumpAddressMiddleByte [
-	self byteIndex: 7
+	self offset: 7
+]
+
+{ #category : #accessing }
+BPInstructionReference >> offset [
+	^ offset
+]
+
+{ #category : #accessing }
+BPInstructionReference >> offset: anObject [
+	offset := anObject
 ]
 
 { #category : #'instance creation' }
 BPInstructionReference >> toAddressHighByte [
-	self byteIndex: 3
+	self offset: 3
 ]
 
 { #category : #'instance creation' }
 BPInstructionReference >> toAddressLowByte [
-	self byteIndex: 5
+	self offset: 5
 ]
 
 { #category : #'instance creation' }
 BPInstructionReference >> toAddressMiddleByte [
-	self byteIndex: 4
+	self offset: 4
 ]

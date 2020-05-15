@@ -43,12 +43,12 @@ BPFetchDataAtAddress >> generateFor: anAssembler [
 							yourself.
 	
 	instruction1
-		to: (instruction4 asReference byteIndex: 0);
+		to: (instruction4 asReference offset: 0);
 		jump: instruction2 asReference.
 	instruction2
-		to: (instruction4 asReference byteIndex: 1);
+		to: (instruction4 asReference offset: 1);
 		jump: instruction3 asReference.
 	instruction3
-		to: (instruction4 asReference byteIndex: 2);
+		to: (instruction4 asReference offset: 2);
 		jump: instruction4 asReference.
 ]

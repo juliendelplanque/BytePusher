@@ -34,7 +34,7 @@ BPPopFromStack >> generateFor: anAssembler [
 							yourself.
 							
 	instruction1
-		to: (instruction2 asReference byteIndex: 2);
+		to: (instruction2 asReference offset: 2);
 		jump: instruction2 asReference;
 		beAddedTo: anAssembler.
 		

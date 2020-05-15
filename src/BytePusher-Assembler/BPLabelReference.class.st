@@ -1,6 +1,6 @@
 Class {
 	#name : #BPLabelReference,
-	#superclass : #BPReferenceToResolve,
+	#superclass : #BPEntityToResolve,
 	#instVars : [
 		'label'
 	],

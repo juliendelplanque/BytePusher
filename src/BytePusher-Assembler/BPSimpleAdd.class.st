@@ -39,10 +39,10 @@ BPSimpleAdd >> generateFor: anAssembler [
 		to: sourceForAssembler;
 		beAddedTo: anAssembler.
 	instruction1
-		to: (instruction3 asReference byteIndex: 1);
+		to: (instruction3 asReference offset: 1);
 		jump: instruction2 asReference.
 	instruction2
-		to: (instruction3 asReference byteIndex: 2);
+		to: (instruction3 asReference offset: 2);
 		jump: instruction3 asReference.
 	instruction3
 		jump: BPNextInstructionReference new.

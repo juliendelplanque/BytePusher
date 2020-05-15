@@ -27,11 +27,11 @@ BPWritePixel >> generateFor: anAssembler [
 		to: (anAssembler reservedMemoryZoneNamed: #DISPLAY_FRAME) address;
 		yourself.
 	instruction1
-		to: (instruction3 asReference byteIndex: 4);
+		to: (instruction3 asReference offset: 4);
 		jump: instruction2 asReference;
 		beAddedTo: anAssembler.
 	instruction2
-		to: (instruction3 asReference byteIndex: 5);
+		to: (instruction3 asReference offset: 5);
 		jump: instruction3 asReference;
 		beAddedTo: anAssembler.
 	instruction3

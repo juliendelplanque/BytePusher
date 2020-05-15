@@ -1,6 +1,6 @@
 Class {
 	#name : #BPMemoryReference,
-	#superclass : #BPReferenceToResolve,
+	#superclass : #BPEntityToResolve,
 	#instVars : [
 		'objectWithAddress',
 		'offset'

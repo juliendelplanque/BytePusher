@@ -59,7 +59,7 @@ BPReferencesResolver >> visitBPOffsetReference: aBPOffsetReference [
 
 { #category : #visiting }
 BPReferencesResolver >> visitBPReferenceToInstruction: aBPReferenceToInstruction [
-	^ aBPReferenceToInstruction instruction address + aBPReferenceToInstruction byteIndex
+	^ aBPReferenceToInstruction instruction address + aBPReferenceToInstruction offset
 ]
 
 { #category : #visiting }

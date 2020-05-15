@@ -36,7 +36,7 @@ BPLookupPage >> generateFor: anAssembler [
 	instruction2 := self newInstruction.
 	instruction1
 		from: (self addressForInput forAssembler: anAssembler);
-		to: (instruction2 asReference byteIndex: 2);
+		to: (instruction2 asReference offset: 2);
 		jump: instruction2 asReference;
 		beAddedTo: anAssembler.
 	instruction2

@@ -11,9 +11,9 @@ Class {
 BPPushLabelAddressOnDataStack >> generateFor: anAssembler [
 	| labelObject |
 	labelObject := self label forAssembler: anAssembler.
-	anAssembler pushOnDataStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference byteIndex: 0).
-	anAssembler pushOnDataStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference byteIndex: 1).
-	anAssembler pushOnDataStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference byteIndex: 2)
+	anAssembler pushOnDataStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference offset: 0).
+	anAssembler pushOnDataStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference offset: 1).
+	anAssembler pushOnDataStack: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelObject asAddressReference offset: 2)
 ]
 
 { #category : #private }

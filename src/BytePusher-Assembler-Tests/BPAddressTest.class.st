@@ -42,7 +42,7 @@ BPAddressTest >> testAsAddressReference [
 	access := address asAddressReference.
 	self assert: access class equals: BPAddressReference.
 	self assert: access objectWithAddress equals: address.
-	self assert: access byteIndex equals: 0
+	self assert: access offset equals: 0
 ]
 
 { #category : #test }
@@ -59,7 +59,7 @@ BPAddressTest >> testAsDataReference [
 	
 	self assert: access class equals: BPAddressDataReference.
 	self assert: access objectWithAddress equals: address.
-	self assert: access byteIndex equals: 0
+	self assert: access offset equals: 0
 ]
 
 { #category : #test }

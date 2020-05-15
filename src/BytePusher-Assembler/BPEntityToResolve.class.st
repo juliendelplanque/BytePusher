@@ -1,5 +1,5 @@
 Class {
-	#name : #BPReferenceToResolve,
+	#name : #BPEntityToResolve,
 	#superclass : #Object,
 	#category : #'BytePusher-Assembler-Model'
 }

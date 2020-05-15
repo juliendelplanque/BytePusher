@@ -20,7 +20,7 @@ BPPushOnStack >> generateFor: anAssembler [
 							yourself.
 							
 	instruction1
-		to: (instruction2 asReference byteIndex: 5);
+		to: (instruction2 asReference offset: 5);
 		jump: instruction2 asReference;
 		beAddedTo: anAssembler.
 		

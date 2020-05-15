@@ -33,10 +33,10 @@ BPCmp >> generateFor: anAssembler [
 		beAddedTo: anAssembler.
 		
 	inst1
-		to: (inst3 asReference byteIndex: 1);
+		to: (inst3 asReference offset: 1);
 		jump: inst2 asReference.
 	inst2
-		to: (inst3 asReference byteIndex: 2);
+		to: (inst3 asReference offset: 2);
 		jump: inst3 asReference.
 ]
 

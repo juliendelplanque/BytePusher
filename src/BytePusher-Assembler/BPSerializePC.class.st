@@ -30,11 +30,11 @@ BPSerializePC >> generateFor: anAssembler [
 		to: (anAssembler reservedMemoryZoneNamed: #PROGRAM_COUNTER);
 		yourself.
 	instruction2 := self newInstruction
-		from: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asAddressReference byteIndex: 1);
+		from: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asAddressReference offset: 1);
 		to: (anAssembler reservedMemoryZoneNamed: #PROGRAM_COUNTER) + 1;
 		yourself.
 	instruction3 := self newInstruction
-		from: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asAddressReference byteIndex: 2);
+		from: (anAssembler reservedMemoryZoneNamed: #IDENTITY_PAGE) + (labelAddress asAddressReference offset: 2);
 		to: (anAssembler reservedMemoryZoneNamed: #PROGRAM_COUNTER) + 2;
 		yourself.
 	instruction1

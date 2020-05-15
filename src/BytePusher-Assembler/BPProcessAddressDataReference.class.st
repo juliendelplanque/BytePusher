@@ -23,7 +23,7 @@ BPProcessAddressDataReference >> visitBPAddress: aBPAddress [
 { #category : #visiting }
 BPProcessAddressDataReference >> visitBPAddressDataAccess: aBPAddressDataAccess [
 	^ aBPAddressDataAccess objectWithAddress address
-		byteAt: aBPAddressDataAccess byteIndex
+		byteAt: aBPAddressDataAccess offset
 ]
 
 { #category : #visiting }
@@ -32,7 +32,7 @@ BPProcessAddressDataReference >> visitBPAddressDataReference: aBPAddressDataRefe
 	address := aBPAddressDataReference address.
 	
 	^ (self memoryLayout reservedMemoryZoneNamed: #IDENTITY_PAGE) address
-		+ (address byteAt: aBPAddressDataReference byteIndex)
+		+ (address byteAt: aBPAddressDataReference offset)
 ]
 
 { #category : #visiting }

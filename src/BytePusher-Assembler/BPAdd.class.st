@@ -71,22 +71,22 @@ BPAdd >> generateFor: anAssembler [
 		jump: BPNextInstructionReference new;
 		beAddedTo: anAssembler.
 	instruction1
-		to: (instruction7 asReference byteIndex: 1);
+		to: (instruction7 asReference offset: 1);
 		jump: instruction2 asReference.
 	instruction2
-		to: (instruction8 asReference byteIndex: 1);
+		to: (instruction8 asReference offset: 1);
 		jump: instruction3 asReference.
 	instruction3
-		to: (instruction9 asReference byteIndex: 1);
+		to: (instruction9 asReference offset: 1);
 		jump: instruction4 asReference.
 	instruction4
-		to: (instruction7 asReference byteIndex: 2);
+		to: (instruction7 asReference offset: 2);
 		jump: instruction5 asReference.
 	instruction5
-		to: (instruction8 asReference byteIndex: 2);
+		to: (instruction8 asReference offset: 2);
 		jump: instruction6 asReference.
 	instruction6
-		to: (instruction9 asReference byteIndex: 2);
+		to: (instruction9 asReference offset: 2);
 		jump: instruction7 asReference.
 	instruction7
 		jump: instruction8 asReference.

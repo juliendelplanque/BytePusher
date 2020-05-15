@@ -1,6 +1,6 @@
 Class {
 	#name : #BPNextInstructionReference,
-	#superclass : #BPReferenceToResolve,
+	#superclass : #BPEntityToResolve,
 	#instVars : [
 		'offset'
 	],
@@ -18,7 +18,7 @@ BPNextInstructionReference class >> offset: offset [
 BPNextInstructionReference class >> offset: offset byteIndex: byteIndex [
 	^ self new
 		offset: offset;
-		byteIndex: byteIndex;
+		offset: byteIndex;
 		yourself
 ]
 

@@ -33,13 +33,13 @@ BPStoreDataAtAddress >> generateFor: anAssembler [
 							yourself.
 	
 	instruction1
-		to: (instruction4 asReference byteIndex: 3);
+		to: (instruction4 asReference offset: 3);
 		jump: instruction2 asReference.
 	instruction2
-		to: (instruction4 asReference byteIndex: 4);
+		to: (instruction4 asReference offset: 4);
 		jump: instruction3 asReference.
 	instruction3
-		to: (instruction4 asReference byteIndex: 5);
+		to: (instruction4 asReference offset: 5);
 		jump: instruction4 asReference.
 ]
 
