@@ -2,8 +2,7 @@ Class {
 	#name : #BPInstructionReference,
 	#superclass : #BPEntityToResolve,
 	#instVars : [
-		'instruction',
-		'offset'
+		'instruction'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -83,16 +82,6 @@ BPInstructionReference >> jumpAddressLowByte [
 { #category : #'instance creation' }
 BPInstructionReference >> jumpAddressMiddleByte [
 	self offset: 7
-]
-
-{ #category : #accessing }
-BPInstructionReference >> offset [
-	^ offset
-]
-
-{ #category : #accessing }
-BPInstructionReference >> offset: anObject [
-	offset := anObject
 ]
 
 { #category : #'instance creation' }

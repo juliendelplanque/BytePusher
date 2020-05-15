@@ -1,9 +1,6 @@
 Class {
 	#name : #BPNextInstructionReference,
 	#superclass : #BPEntityToResolve,
-	#instVars : [
-		'offset'
-	],
 	#category : #'BytePusher-Assembler-Model'
 }
 
@@ -46,14 +43,4 @@ BPNextInstructionReference >> asDataReference [
 BPNextInstructionReference >> initialize [
 	super initialize.
 	self offset: 0
-]
-
-{ #category : #accessing }
-BPNextInstructionReference >> offset [
-	^ offset
-]
-
-{ #category : #accessing }
-BPNextInstructionReference >> offset: anObject [
-	offset := anObject
 ]

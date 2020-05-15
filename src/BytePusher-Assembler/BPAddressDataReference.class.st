@@ -2,8 +2,7 @@ Class {
 	#name : #BPAddressDataReference,
 	#superclass : #BPEntityToResolve,
 	#instVars : [
-		'objectWithAddress',
-		'offset'
+		'objectWithAddress'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -41,14 +40,4 @@ BPAddressDataReference >> objectWithAddress [
 { #category : #accessing }
 BPAddressDataReference >> objectWithAddress: anObject [
 	objectWithAddress := anObject
-]
-
-{ #category : #accessing }
-BPAddressDataReference >> offset [
-	^ offset
-]
-
-{ #category : #accessing }
-BPAddressDataReference >> offset: anObject [
-	offset := anObject
 ]
