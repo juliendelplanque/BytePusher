@@ -1,11 +1,10 @@
 Class {
 	#name : #BPInstructionToResolve,
-	#superclass : #Object,
+	#superclass : #BPEntityWithAddress,
 	#instVars : [
 		'from',
 		'to',
 		'jump',
-		'address',
 		'assemblerInstruction'
 	],
 	#category : #'BytePusher-Assembler-Model'
@@ -24,16 +23,6 @@ BPInstructionToResolve class >> from: from to: to jump: jump [
 BPInstructionToResolve >> acceptVisitor: aBPAssemblerVisitor [
 	<generated>
 	^ aBPAssemblerVisitor visitBPInstructionToResolve: self
-]
-
-{ #category : #accessing }
-BPInstructionToResolve >> address [
-	^ address
-]
-
-{ #category : #accessing }
-BPInstructionToResolve >> address: anObject [
-	address := anObject
 ]
 
 { #category : #converting }

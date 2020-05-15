@@ -1,9 +1,8 @@
 Class {
 	#name : #BPLabel,
-	#superclass : #Object,
+	#superclass : #BPEntityWithAddress,
 	#instVars : [
-		'label',
-		'address'
+		'label'
 	],
 	#category : #'BytePusher-Assembler-Model'
 }
@@ -27,16 +26,6 @@ BPLabel class >> label: label address: address [
 BPLabel >> acceptVisitor: aBPAssemblerVisitor [
 	<generated>
 	^ aBPAssemblerVisitor visitBPLabel: self
-]
-
-{ #category : #accessing }
-BPLabel >> address [
-	^ address
-]
-
-{ #category : #accessing }
-BPLabel >> address: anObject [
-	address := anObject
 ]
 
 { #category : #converting }

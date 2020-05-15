@@ -1,6 +1,6 @@
 Class {
 	#name : #BPAddress,
-	#superclass : #Object,
+	#superclass : #BPEntity,
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [

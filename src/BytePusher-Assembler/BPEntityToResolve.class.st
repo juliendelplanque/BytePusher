@@ -1,6 +1,6 @@
 Class {
 	#name : #BPEntityToResolve,
-	#superclass : #Object,
+	#superclass : #BPEntity,
 	#instVars : [
 		'offset'
 	],
