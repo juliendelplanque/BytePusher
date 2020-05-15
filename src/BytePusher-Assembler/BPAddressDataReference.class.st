@@ -1,9 +1,6 @@
 Class {
 	#name : #BPAddressDataReference,
-	#superclass : #BPEntityToResolve,
-	#instVars : [
-		'objectWithAddress'
-	],
+	#superclass : #BPReferenceToEntityWithAddress,
 	#category : #'BytePusher-Assembler-Model'
 }
 
@@ -30,14 +27,4 @@ BPAddressDataReference >> address [
 BPAddressDataReference >> initialize [
 	super initialize.
 	self offset: 0
-]
-
-{ #category : #accessing }
-BPAddressDataReference >> objectWithAddress [
-	^ objectWithAddress
-]
-
-{ #category : #accessing }
-BPAddressDataReference >> objectWithAddress: anObject [
-	objectWithAddress := anObject
 ]

@@ -1,9 +1,6 @@
 Class {
 	#name : #BPMemoryReference,
-	#superclass : #BPEntityToResolve,
-	#instVars : [
-		'objectWithAddress'
-	],
+	#superclass : #BPReferenceToEntityWithAddress,
 	#category : #'BytePusher-Assembler-Model'
 }
 
@@ -24,14 +21,4 @@ BPMemoryReference >> acceptVisitor: aBPAssemblerVisitor [
 { #category : #'assembler-dispatch' }
 BPMemoryReference >> forAssembler: aBPAssembler [ 
 	^ self
-]
-
-{ #category : #accessing }
-BPMemoryReference >> objectWithAddress [
-	^ objectWithAddress
-]
-
-{ #category : #accessing }
-BPMemoryReference >> objectWithAddress: anObject [
-	objectWithAddress := anObject
 ]
