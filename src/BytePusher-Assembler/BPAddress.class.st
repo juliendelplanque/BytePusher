@@ -109,6 +109,11 @@ BPAddress >> asBPAddress [
 ]
 
 { #category : #converting }
+BPAddress >> asByteArray [
+	^ { self higherByte. self middleByte. self lowerByte } asByteArray
+]
+
+{ #category : #converting }
 BPAddress >> asDataReference [
 	^ BPAddressDataReference new
 		objectWithAddress: self;
