@@ -39,6 +39,11 @@ BPLabelReference >> asDataReference [
 		yourself
 ]
 
+{ #category : #'assembler-dispatch' }
+BPLabelReference >> forAssembler: aJollyAssembler [ 
+	^ self
+]
+
 { #category : #accessing }
 BPLabelReference >> label [
 	^ label
