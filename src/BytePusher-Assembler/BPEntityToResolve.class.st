@@ -7,6 +7,18 @@ Class {
 	#category : #'BytePusher-Assembler-Model'
 }
 
+{ #category : #offset }
+BPEntityToResolve >> + anInteger [ 
+	^ self copy
+		offset: self offset + anInteger;
+		yourself
+]
+
+{ #category : #testing }
+BPEntityToResolve >> hasOffset [
+	^ self offset ~= 0
+]
+
 { #category : #initialization }
 BPEntityToResolve >> initialize [
 	super initialize.
