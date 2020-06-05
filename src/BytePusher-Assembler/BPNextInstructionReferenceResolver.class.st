@@ -59,7 +59,16 @@ BPNextInstructionReferenceResolver >> visitBPLabel: aBPLabel [
 
 { #category : #visiting }
 BPNextInstructionReferenceResolver >> visitBPLabelReference: aBPLabelReference [
-	^ assembler instructions detect: [ :instruction | instruction class = BPLabel and: [ instruction label = aBPLabelReference label ] ]
+	| label |
+	label := assembler instructions detect: [ :instruction | instruction class = BPLabel and: [ instruction label = aBPLabelReference label ] ].
+	
+	aBPLabelReference hasOffset
+		ifFalse: [ ^ label ].
+		
+	^ BPMemoryReference new
+		offset: aBPLabelReference offset;
+		objectWithAddress: label;
+		yourself
 ]
 
 { #category : #visiting }
