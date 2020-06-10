@@ -107,6 +107,39 @@ BPAddressTest >> testMiddleByte [
 ]
 
 { #category : #test }
+BPAddressTest >> testSetHigherByte [
+	| address |
+	address := 16r040506 asBPAddress.
+	
+	address higherByte: 16r07.
+	
+	self assert: address higherByte equals: 16r07.
+	self assert: address memoryAddress equals: 16r070506
+]
+
+{ #category : #test }
+BPAddressTest >> testSetLowerByte [
+	| address |
+	address := 16r040506 asBPAddress.
+	
+	address lowerByte: 16r07.
+	
+	self assert: address lowerByte equals: 16r07.
+	self assert: address memoryAddress equals: 16r040507
+]
+
+{ #category : #test }
+BPAddressTest >> testSetMiddleByte [
+	| address |
+	address := 16r040506 asBPAddress.
+	
+	address middleByte: 16r07.
+	
+	self assert: address middleByte equals: 16r07.
+	self assert: address memoryAddress equals: 16r040706
+]
+
+{ #category : #test }
 BPAddressTest >> testStoreAddressIn [
 	| memory |
 	memory := #[0 0 0 0 0] shallowCopy.

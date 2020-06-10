@@ -164,8 +164,18 @@ BPAddress >> higherByte [
 ]
 
 { #category : #accessing }
+BPAddress >> higherByte: aByte [
+	self memoryAddress: (self memoryAddress & 16r00FFFF) | (aByte << 16)
+]
+
+{ #category : #accessing }
 BPAddress >> lowerByte [
 	^ self memoryAddress & 16r0000FF
+]
+
+{ #category : #accessing }
+BPAddress >> lowerByte: aByte [
+	self memoryAddress: (self memoryAddress & 16rFFFF00) | aByte
 ]
 
 { #category : #accessing }
@@ -183,6 +193,11 @@ BPAddress >> memoryAddress: anInteger [
 { #category : #accessing }
 BPAddress >> middleByte [
 	^ (self memoryAddress & 16r00FF00) >> 8
+]
+
+{ #category : #accessing }
+BPAddress >> middleByte: aByte [
+	self memoryAddress: (self memoryAddress & 16rFF00FF) | (aByte << 8)
 ]
 
 { #category : #printing }
