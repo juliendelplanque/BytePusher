@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 BPAddCarryFlagBankBuilder class >> reservedMemoryZone [
 	^ super reservedMemoryZone
-		name: #ADD_CARY_FLAG_PAGE;
+		name: #ADD_CARRY_FLAG_PAGE;
 		yourself
 ]
 

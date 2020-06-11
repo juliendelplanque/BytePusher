@@ -57,7 +57,7 @@ BPAdd >> generateFor: anAssembler [
 	 overwritten at runtime whatever what is written on it).
 	"
 	instruction8 := self newInstruction
-		from: (anAssembler reservedMemoryZoneNamed: #ADD_CARY_FLAG_PAGE);
+		from: (anAssembler reservedMemoryZoneNamed: #ADD_CARRY_FLAG_PAGE);
 		to: (anAssembler registerNamed: #CARRY);
 		beAddedTo: anAssembler.
 	"Third, create the actual zero flag instruction (beware the 16 least
