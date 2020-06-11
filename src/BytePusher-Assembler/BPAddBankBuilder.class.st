@@ -16,5 +16,5 @@ BPAddBankBuilder >> byteForAddress: anInteger [
 	| x y |
 	x := (anInteger & 16rFF00) >> 8.
 	y := anInteger & 16rFF.
-	^ (x + y) % 16rFF
+	^ (x + y) % 256
 ]
