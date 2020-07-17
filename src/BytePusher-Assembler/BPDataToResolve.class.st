@@ -42,6 +42,11 @@ BPDataToResolve >> data: anObject [
 	data := anObject
 ]
 
+{ #category : #testing }
+BPDataToResolve >> isInstructionToResolve [
+	^ false
+]
+
 { #category : #accessing }
 BPDataToResolve >> spaceInMemoryRequired [
 	self data class = ByteArray
