@@ -30,6 +30,17 @@ BPAssemblerInstruction >> initialize [
 ]
 
 { #category : #factory }
+BPAssemblerInstruction >> newData [
+	"Creates a data object to be resolved later.
+	 The aim of this factory is to set specific meta-data on the instruction depending
+	 on the assembler instruction from which it is originated.
+	"
+	^ BPDataToResolve new
+		assemblerInstruction: self assemblerInstructionForNewInstructions;
+		yourself
+]
+
+{ #category : #factory }
 BPAssemblerInstruction >> newInstruction [
 	"Creates an instruction to be resolved later.
 	 The aim of this factory is to set specific meta-data on the instruction depending

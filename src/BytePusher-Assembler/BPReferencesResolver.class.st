@@ -8,6 +8,8 @@ Class {
 BPReferencesResolver >> visit: anObject [
 	anObject isInteger
 		ifTrue: [ ^ anObject ].
+	anObject class = ByteArray
+		ifTrue: [ ^ anObject ].
 	^ super visit: anObject
 ]
 
@@ -29,6 +31,15 @@ BPReferencesResolver >> visitBPAssembler: aBPAssembler [
 				(self visit: instructionToResolve)
 					beAssembledIn: assembled ] ].
 	^ assembled
+]
+
+{ #category : #visiting }
+BPReferencesResolver >> visitBPDataToResolve: aBPDataToResolve [
+	^ BPData new
+		address: aBPDataToResolve address;
+		data: (self visit: aBPDataToResolve data);
+		assemblerInstruction: aBPDataToResolve assemblerInstruction;
+		yourself
 ]
 
 { #category : #visiting }

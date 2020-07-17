@@ -12,6 +12,8 @@ Class {
 BPProcessAddressDataReference >> visit: anObject [
 	anObject isInteger
 		ifTrue: [ ^ anObject ].
+	anObject class = ByteArray
+		ifTrue: [ ^ anObject ].
 	^ super visit: anObject
 ]
 
@@ -42,6 +44,13 @@ BPProcessAddressDataReference >> visitBPAssembler: aBPAssembler [
 	aBPAssembler instructions copy doWithIndex: [ :instructionToResolve :index |
 		currentInstructionIndex := index.
 		self visit: instructionToResolve ]
+]
+
+{ #category : #visiting }
+BPProcessAddressDataReference >> visitBPDataToResolve: aBPDataToResolve [
+	^ aBPDataToResolve
+		data: (self visit: aBPDataToResolve data);
+		address
 ]
 
 { #category : #visiting }

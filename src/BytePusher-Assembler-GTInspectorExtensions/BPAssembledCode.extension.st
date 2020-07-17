@@ -20,9 +20,17 @@ BPAssembledCode >> gtInspectorInstructionsIn: composite [
 		wantsAutomaticRefresh: true;
 		column: 'Labels' evaluated: [ :instruction | ((self labelsFor: instruction) collect: #label) joinUsing: ', ' ] width: 100;
 		column: 'Address' evaluated: [ :instruction | instruction address hex ] width: 75;
-		column: 'Source' evaluated: [ :instruction | instruction fromAddress hex ] width: 75;
-		column: 'Target' evaluated: [ :instruction | instruction toAddress hex ] width: 75;
-		column: 'Jump' evaluated: [ :instruction |instruction jumpAddress hex ] width: 75;
+		column: 'Source' evaluated: [ :instruction | instruction class = BPInstruction
+				ifTrue: [ instruction fromAddress hex ]
+				ifFalse: [ instruction data hex ] ] width: 75;
+		column: 'Target' evaluated: [ :instruction | 
+			instruction class = BPInstruction
+				ifTrue: [ instruction toAddress hex ]
+				ifFalse: [ '' ] ] width: 75;
+		column: 'Jump' evaluated: [ :instruction |
+			instruction class = BPInstruction
+				ifTrue: [ instruction jumpAddress hex ]
+				ifFalse: [ '' ] ] width: 75;
 		column: 'Tag' evaluated: [ :instruction | GTObjectPrinter asTruncatedTextFrom: instruction tag ]
 ]
 

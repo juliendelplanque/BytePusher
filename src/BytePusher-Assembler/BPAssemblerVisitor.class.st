@@ -52,6 +52,12 @@ BPAssemblerVisitor >> visitBPAssembler: aBPAssembler [
 ]
 
 { #category : #visiting }
+BPAssemblerVisitor >> visitBPDataToResolve: aBPDataToResolve [
+	<generated>
+	^ self subclassResponsibility
+]
+
+{ #category : #visiting }
 BPAssemblerVisitor >> visitBPInstructionToResolve: aBPInstructionToResolve [
 	<generated>
 	^ self subclassResponsibility

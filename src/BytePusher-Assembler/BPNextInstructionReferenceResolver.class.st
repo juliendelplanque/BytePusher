@@ -12,6 +12,8 @@ Class {
 BPNextInstructionReferenceResolver >> visit: anObject [
 	anObject isInteger
 		ifTrue: [ ^ anObject ].
+	anObject class = ByteArray
+		ifTrue: [ ^ anObject ].
 	^ super visit: anObject
 ]
 
@@ -41,6 +43,13 @@ BPNextInstructionReferenceResolver >> visitBPAssembler: aBPAssembler [
 	aBPAssembler instructions copy doWithIndex: [ :instructionToResolve :index |
 		currentInstructionIndex := index.
 		self visit: instructionToResolve ]
+]
+
+{ #category : #visiting }
+BPNextInstructionReferenceResolver >> visitBPDataToResolve: aBPDataToResolve [
+	^ aBPDataToResolve
+		data: (self visit: aBPDataToResolve data);
+		yourself
 ]
 
 { #category : #visiting }

@@ -31,6 +31,11 @@ BPLabelAddressesSetter >> visitBPAssembler: aBPAssembler [
 ]
 
 { #category : #visiting }
+BPLabelAddressesSetter >> visitBPDataToResolve: aBPDataToResolve [
+	^ aBPDataToResolve
+]
+
+{ #category : #visiting }
 BPLabelAddressesSetter >> visitBPInstructionToResolve: aBPInstructionToResolve [
 	^ aBPInstructionToResolve
 ]
@@ -41,7 +46,7 @@ BPLabelAddressesSetter >> visitBPLabel: aBPLabel [
 	start := assembler instructions indexOf: aBPLabel.
 	
 	assembler instructions from: start to: assembler instructions size do: [ :inst |
-		inst class = BPInstructionToResolve
+		({BPInstructionToResolve. BPDataToResolve} includes: inst class)
 			ifTrue: [ aBPLabel address: inst address. ^ aBPLabel ] ].
 		
 	self error: 'Should not reach this point.'

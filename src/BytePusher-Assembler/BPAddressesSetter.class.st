@@ -50,6 +50,12 @@ BPAddressesSetter >> visitBPAssembler: aBPAssembler [
 ]
 
 { #category : #visiting }
+BPAddressesSetter >> visitBPDataToResolve: aBPDataToResolve [
+	aBPDataToResolve address: self currentAddress.
+	self incrementCurrentAddress: aBPDataToResolve spaceInMemoryRequired
+]
+
+{ #category : #visiting }
 BPAddressesSetter >> visitBPInstructionToResolve: aBPInstructionToResolve [
 	aBPInstructionToResolve address: self currentAddress.
 	self incrementCurrentAddress: INSTRUCTION_SIZE
