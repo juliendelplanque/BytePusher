@@ -56,6 +56,11 @@ BPInstructionToResolve >> from: anObject [
 ]
 
 { #category : #testing }
+BPInstructionToResolve >> isData [
+	^ false
+]
+
+{ #category : #testing }
 BPInstructionToResolve >> isInstructionToResolve [
 	^ true
 ]

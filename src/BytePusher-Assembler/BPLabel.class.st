@@ -53,6 +53,11 @@ BPLabel >> beAssembledIn: aBPAssembledCode [
 ]
 
 { #category : #testing }
+BPLabel >> isData [
+	^ false
+]
+
+{ #category : #testing }
 BPLabel >> isInstructionToResolve [
 	^ false
 ]

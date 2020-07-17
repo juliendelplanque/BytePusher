@@ -43,6 +43,11 @@ BPDataToResolve >> data: anObject [
 ]
 
 { #category : #testing }
+BPDataToResolve >> isData [
+	^ true
+]
+
+{ #category : #testing }
 BPDataToResolve >> isInstructionToResolve [
 	^ false
 ]

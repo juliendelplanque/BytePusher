@@ -50,7 +50,12 @@ BPData >> tag [
 ]
 
 { #category : #writing }
-BPData >> writeOn: aByteArray [ 
+BPData >> writeOn: aByteArray [
+	self data class = BPAddress
+		ifTrue: [ 
+			self address storeAddress: self data in: aByteArray.
+			^ self ].
+
 	self data doWithIndex: [ :byte :index |
 		(self address + (index - 1)) store: byte in: aByteArray ]
 ]
