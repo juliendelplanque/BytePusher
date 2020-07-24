@@ -135,6 +135,11 @@ BPAddress >> byteAt: anInteger [
 	self error: 'A BytePusher address is encoded on 3 bytes.'
 ]
 
+{ #category : #accessing }
+BPAddress >> bytesRequired [
+	^ ADDRESS_SIZE
+]
+
 { #category : #'assembler-dispatch' }
 BPAddress >> forAssembler: aBPAssembler [ 
 	^ self

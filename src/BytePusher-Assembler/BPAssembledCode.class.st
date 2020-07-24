@@ -22,6 +22,11 @@ BPAssembledCode >> addLabel: aBPLabel [
 	labels add: aBPLabel
 ]
 
+{ #category : #'as yet unclassified' }
+BPAssembledCode >> bytesRequired [
+	^ self instructions detectSum: #bytesRequired
+]
+
 { #category : #accessing }
 BPAssembledCode >> firstInstruction [
 	"We first search for the instruction labelled with #_start.

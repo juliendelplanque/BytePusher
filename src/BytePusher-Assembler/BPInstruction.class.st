@@ -58,6 +58,11 @@ BPInstruction >> beAssembledIn: aBPAssembledCode [
 	aBPAssembledCode addInstruction: self
 ]
 
+{ #category : #'as yet unclassified' }
+BPInstruction >> bytesRequired [
+	^ INSTRUCTION_SIZE
+]
+
 { #category : #accessing }
 BPInstruction >> endAddress [
 	"Returns the last address that this instruction occupies in memory."

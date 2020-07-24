@@ -34,6 +34,11 @@ BPData >> beAssembledIn: aBPAssembledCode [
 	aBPAssembledCode addInstruction: self
 ]
 
+{ #category : #'as yet unclassified' }
+BPData >> bytesRequired [
+	^ self data bytesRequired
+]
+
 { #category : #accessing }
 BPData >> data [
 	^ data
