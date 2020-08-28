@@ -69,6 +69,8 @@ BPLabel >> label [
 
 { #category : #accessing }
 BPLabel >> label: anObject [
+	(anObject includes: $,)
+		ifTrue: [ self error: 'Labels can not contain character '',''.' ].
 	label := anObject
 ]
 
